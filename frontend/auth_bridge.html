@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Session Bridge</title>
+</head>
+<body>
+  <script type="module">
+    import { setToken, setUser } from '/assets/js/auth.js';
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const userStr = params.get('user');
+    const redirect = params.get('redirect') || '/associate/dashboard.html';
+
+    if (token && userStr) {
+      setToken(token);
+      setUser(JSON.parse(decodeURIComponent(userStr)));
+      window.location.replace(redirect);
+    }
+  </script>
+</body>
+</html>
+

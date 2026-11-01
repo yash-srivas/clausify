@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: legal_risk_db
+    restart: always
+    environment:
+      POSTGRES_DB: legal_risk_analyzer
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d legal_risk_analyzer"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - legal_network
+
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: legal_risk_ai
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/legal_risk_analyzer
+      INTERNAL_API_KEY: dev-internal-secret-key-32chars-min!
+      EMBEDDING_PROVIDER: mock
+      LLM_PROVIDER: mock
+      EMBEDDING_MODEL: text-embedding-3-small
+      LLM_MODEL: gpt-4o-mini
+      EMBEDDING_DIM: 1536
+      ANALYZE_BATCH_SIZE: 3
+      ANALYZE_BATCH_DELAY_MS: 100
+      TOP_K: 4
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      - ./backend/uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - legal_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: legal_risk_backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/legal_risk_analyzer
+      JWT_SECRET: dev-jwt-super-secret-key-must-be-long-and-random-12345
+      JWT_EXPIRES_IN: 8h
+      AI_SERVICE_URL: http://ai-service:8000
+      INTERNAL_API_KEY: dev-internal-secret-key-32chars-min!
+      CORS_ORIGIN: "http://localhost:3000"
+      UPLOAD_DIR: /app/uploads
+      MAX_UPLOAD_MB: 20
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./frontend:/app/frontend
+    depends_on:
+      db:
+        condition: service_healthy
+      ai-service:
+        condition: service_started
+    networks:
+      - legal_network
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  legal_network:
+    driver: bridge

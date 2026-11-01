@@ -1,0 +1,16 @@
+{
+  "name": "legal-risk-analyzer",
+  "version": "1.0.0",
+  "description": "Intelligent Legal Contract & Vendor Risk Analyzer",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:ai": "cd ai-service && python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload",
+    "start": "cd backend && npm start",
+    "seed": "cd backend && npm run seed",
+    "db:migrate": "cd backend && npm run db:migrate",
+    "test:backend": "cd backend && npm test",
+    "test:ai": "cd ai-service && python -m pytest",
+    "test:all": "cd backend && npm test && cd ../ai-service && python -m pytest"
+  }
+}
+

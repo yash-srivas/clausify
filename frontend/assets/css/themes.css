@@ -1,0 +1,1957 @@
+/* ==========================================================================
+   Intelligent Legal Contract & Vendor Risk Analyzer - Multi-Theme System
+   Themes:
+   1. Claymorphism (Default / Baseline)
+   2. Material You (Google M3 Dynamic Tonal Elevation)
+   3. Neo-Brutalism (Bold Black Borders & Hard Pop Shadows)
+   4. Neumorphism (Soft Embossed Dual-Shadow Plastic)
+   5. Glassmorphism (Frosted Glass Acrylic & Ambient Mesh)
+   6. Monochrome (Minimalist Swiss Editorial)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   THEME SWITCHER DOCK (Floating Pill Widget)
+   -------------------------------------------------------------------------- */
+.theme-switcher-dock {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1080;
+  display: flex;
+  align-items: center;
+}
+
+.theme-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 100px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1E293B;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  outline: none;
+}
+
+.theme-trigger-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}
+
+.theme-popover-menu {
+  position: absolute;
+  bottom: 52px;
+  right: 0;
+  width: 280px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  animation: themeMenuPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-popover-menu.show {
+  display: flex;
+}
+
+@keyframes themeMenuPop {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.theme-option-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.theme-option-item:hover {
+  background: #F1F5F9;
+}
+
+.theme-option-item.active {
+  background: #EEF2FF;
+  border-color: #C7D2FE;
+}
+
+.theme-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.theme-option-info {
+  flex-grow: 1;
+}
+
+.theme-option-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #0F172A;
+  line-height: 1.2;
+}
+
+.theme-option-desc {
+  font-size: 0.7rem;
+  color: #64748B;
+}
+
+/* Base Transition for seamless live switching */
+body, .clay-card, .card-custom, .clay-card-flat, .navbar-custom, .btn, .form-control, .form-select, .score-circle, .badge, .clay-badge, .accordion-item, .accordion-button, .clay-table-container, .dropzone-area {
+  transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, color 0.22s ease;
+}
+
+/* Universal Navbar & Dropdown Stacking Rules */
+#navbarPlaceholder {
+  position: relative !important;
+  z-index: 1050 !important;
+}
+
+.navbar-custom {
+  position: relative !important;
+  z-index: 1050 !important;
+  overflow: visible !important;
+}
+
+.navbar-custom .container-fluid,
+.navbar-custom .navbar-collapse {
+  overflow: visible !important;
+}
+
+.navbar-custom .dropdown {
+  position: relative;
+  z-index: 1055;
+}
+
+.navbar-custom .dropdown-menu {
+  position: absolute !important;
+  z-index: 1060 !important;
+  margin-top: 8px !important;
+}
+
+/* Prevent floating dock from overlapping on pages with an active navbar */
+body:has(#navbarPlaceholder) .theme-switcher-dock {
+  display: none !important;
+}
+
+
+/* ==========================================================================
+   1. THEME: MATERIAL YOU (Google M3 Dynamic Tonal Elevation)
+   [data-theme="material-you"]
+   ========================================================================== */
+html[data-theme="material-you"] {
+  --m3-bg: #F7F2FA;
+  --m3-surface: #FEF7FF;
+  --m3-surface-container: #F3EDF7;
+  --m3-surface-container-high: #ECE6F0;
+  --m3-primary: #6750A4;
+  --m3-primary-container: #EADDFF;
+  --m3-on-primary-container: #21005D;
+  --m3-secondary-container: #E8DEF8;
+  --m3-high-container: #F9DEDC;
+  --m3-high-text: #B3261E;
+  --m3-med-container: #FFDDB8;
+  --m3-med-text: #8A5100;
+  --m3-low-container: #C4EED0;
+  --m3-low-text: #146C2E;
+  --m3-outline: #CAC4D0;
+}
+
+html[data-theme="material-you"] body {
+  background-color: var(--m3-bg) !important;
+  color: #1D1B20 !important;
+}
+
+/* Material You Cards & Containers */
+html[data-theme="material-you"] .clay-card,
+html[data-theme="material-you"] .card-custom,
+html[data-theme="material-you"] .clay-kpi-card,
+html[data-theme="material-you"] .clay-finding-card,
+html[data-theme="material-you"] .pdf-pane-card,
+html[data-theme="material-you"] .findings-pane-card,
+html[data-theme="material-you"] .clay-table-container,
+html[data-theme="material-you"] .demo-role-card,
+html[data-theme="material-you"] .modal-content,
+html[data-theme="material-you"] .clay-card-flat {
+  background: var(--m3-surface) !important;
+  border-radius: 24px !important;
+  border: 1px solid var(--m3-outline) !important;
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+html[data-theme="material-you"] .clay-card:hover,
+html[data-theme="material-you"] .clay-kpi-card:hover,
+html[data-theme="material-you"] .demo-role-card:hover,
+html[data-theme="material-you"] .clay-finding-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.08), 0 1px 3px 0 rgba(0, 0, 0, 0.14) !important;
+}
+
+html[data-theme="material-you"] .clay-finding-card.active-card {
+  border: 2px solid var(--m3-primary) !important;
+  box-shadow: 0 0 0 3px var(--m3-primary-container), 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Material You Navbar */
+html[data-theme="material-you"] .navbar-custom {
+  background: var(--m3-surface-container) !important;
+  border-radius: 100px !important;
+  border: 1px solid var(--m3-outline) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+
+html[data-theme="material-you"] .nav-link {
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+  color: #49454F !important;
+}
+
+html[data-theme="material-you"] .nav-link:hover {
+  background: var(--m3-surface-container-high) !important;
+  color: var(--m3-primary) !important;
+}
+
+html[data-theme="material-you"] .nav-link.active {
+  background: var(--m3-primary-container) !important;
+  color: var(--m3-on-primary-container) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="material-you"] .user-profile-pill {
+  background: var(--m3-surface) !important;
+  border: 1px solid var(--m3-outline) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="material-you"] .user-avatar-circle {
+  background: var(--m3-primary) !important;
+  color: #FFFFFF !important;
+}
+
+/* Material You Dropdown Menu */
+html[data-theme="material-you"] .navbar-custom .dropdown-menu {
+  background: var(--m3-surface-container) !important;
+  border-radius: 16px !important;
+  border: 1px solid var(--m3-outline) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+  padding: 8px !important;
+  backdrop-filter: none !important;
+}
+
+html[data-theme="material-you"] .navbar-custom .dropdown-item {
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+  color: #1D1B20 !important;
+  padding: 8px 14px !important;
+}
+
+html[data-theme="material-you"] .navbar-custom .dropdown-item:hover,
+html[data-theme="material-you"] .navbar-custom .dropdown-item.active {
+  background: var(--m3-primary-container) !important;
+  color: var(--m3-on-primary-container) !important;
+  font-weight: 700 !important;
+}
+
+/* Material You Buttons (Pill-shaped, flat elevation) */
+html[data-theme="material-you"] .btn-primary,
+html[data-theme="material-you"] .clay-btn-primary {
+  background: var(--m3-primary) !important;
+  color: #FFFFFF !important;
+  border-radius: 100px !important;
+  border: none !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
+}
+
+html[data-theme="material-you"] .btn-success,
+html[data-theme="material-you"] .clay-btn-success {
+  background: var(--m3-low-text) !important;
+  color: #FFFFFF !important;
+  border-radius: 100px !important;
+  border: none !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
+}
+
+html[data-theme="material-you"] .btn-danger,
+html[data-theme="material-you"] .clay-btn-danger {
+  background: var(--m3-high-text) !important;
+  color: #FFFFFF !important;
+  border-radius: 100px !important;
+  border: none !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
+}
+
+html[data-theme="material-you"] .btn-warning,
+html[data-theme="material-you"] .clay-btn-warning {
+  background: var(--m3-med-container) !important;
+  color: var(--m3-med-text) !important;
+  border-radius: 100px !important;
+  border: none !important;
+}
+
+html[data-theme="material-you"] .btn-outline-primary,
+html[data-theme="material-you"] .btn-outline-secondary,
+html[data-theme="material-you"] .btn-outline-success,
+html[data-theme="material-you"] .btn-outline-danger {
+  border-radius: 100px !important;
+  border: 1px solid var(--m3-outline) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Material You Form Controls & Inputs */
+html[data-theme="material-you"] .form-control,
+html[data-theme="material-you"] .form-select,
+html[data-theme="material-you"] input,
+html[data-theme="material-you"] textarea {
+  background-color: var(--m3-surface-container-high) !important;
+  border: 1px solid var(--m3-outline) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  color: #1D1B20 !important;
+}
+
+html[data-theme="material-you"] .form-control:focus,
+html[data-theme="material-you"] .form-select:focus,
+html[data-theme="material-you"] textarea:focus {
+  border-color: var(--m3-primary) !important;
+  box-shadow: 0 0 0 2px var(--m3-primary-container) !important;
+}
+
+html[data-theme="material-you"] .input-group {
+  background: var(--m3-surface-container-high) !important;
+  border-radius: 100px !important;
+  border: 1px solid var(--m3-outline) !important;
+  box-shadow: none !important;
+  padding: 2px !important;
+}
+
+/* Material You Filter Pills */
+html[data-theme="material-you"] .clay-filter-pills {
+  background: var(--m3-surface-container) !important;
+  border-radius: 100px !important;
+  border: 1px solid var(--m3-outline) !important;
+  box-shadow: none !important;
+  padding: 4px !important;
+}
+
+html[data-theme="material-you"] .clay-pill-btn {
+  border-radius: 100px !important;
+  color: #49454F !important;
+  font-weight: 600 !important;
+}
+
+html[data-theme="material-you"] .clay-pill-btn.active {
+  background: var(--m3-primary-container) !important;
+  color: var(--m3-on-primary-container) !important;
+  box-shadow: none !important;
+}
+
+/* Material You Tables */
+html[data-theme="material-you"] .clay-table thead th {
+  background: var(--m3-surface-container) !important;
+  color: #49454F !important;
+  border-bottom: 1px solid var(--m3-outline) !important;
+  font-weight: 700;
+}
+
+html[data-theme="material-you"] .clay-table tbody td {
+  border-bottom: 1px solid var(--m3-surface-container-high) !important;
+  color: #1D1B20 !important;
+}
+
+html[data-theme="material-you"] .clay-table tbody tr:hover td {
+  background-color: var(--m3-surface-container) !important;
+}
+
+/* Material You List Groups */
+html[data-theme="material-you"] #templatesListGroup .list-group-item,
+html[data-theme="material-you"] .template-item {
+  background: var(--m3-surface) !important;
+  border: 1px solid var(--m3-outline) !important;
+  border-radius: 16px !important;
+  margin-bottom: 6px;
+  color: #1D1B20 !important;
+}
+
+html[data-theme="material-you"] #templatesListGroup .list-group-item.active,
+html[data-theme="material-you"] .template-item.bg-white {
+  background: var(--m3-surface-container) !important;
+  border-color: var(--m3-primary) !important;
+  color: var(--m3-primary) !important;
+}
+
+/* Material You Accordions */
+html[data-theme="material-you"] .accordion-item {
+  background: var(--m3-surface) !important;
+  border-radius: 18px !important;
+  border: 1px solid var(--m3-outline) !important;
+  margin-bottom: 10px;
+  overflow: hidden;
+  box-shadow: none !important;
+}
+
+html[data-theme="material-you"] .accordion-button {
+  background: var(--m3-surface) !important;
+  color: #1D1B20 !important;
+  font-weight: 700;
+  box-shadow: none !important;
+}
+
+html[data-theme="material-you"] .accordion-button:not(.collapsed) {
+  background: var(--m3-surface-container) !important;
+  color: var(--m3-primary) !important;
+}
+
+/* Material You Badges & Status */
+html[data-theme="material-you"] .badge,
+html[data-theme="material-you"] .clay-badge {
+  border-radius: 100px !important;
+  box-shadow: none !important;
+  font-weight: 700;
+}
+
+html[data-theme="material-you"] .badge-risk-high,
+html[data-theme="material-you"] .clay-badge-escalated {
+  background: var(--m3-high-container) !important;
+  color: var(--m3-high-text) !important;
+}
+
+html[data-theme="material-you"] .badge-risk-medium,
+html[data-theme="material-you"] .clay-badge-in-review {
+  background: var(--m3-med-container) !important;
+  color: var(--m3-med-text) !important;
+}
+
+html[data-theme="material-you"] .badge-risk-low,
+html[data-theme="material-you"] .clay-badge-approved {
+  background: var(--m3-low-container) !important;
+  color: var(--m3-low-text) !important;
+}
+
+html[data-theme="material-you"] .clay-badge-rejected {
+  background: #E6E0E9 !important;
+  color: #49454F !important;
+}
+
+html[data-theme="material-you"] .clay-badge-processing {
+  background: var(--m3-secondary-container) !important;
+  color: #1D192B !important;
+}
+
+/* Material You Score Dials */
+html[data-theme="material-you"] .score-circle,
+html[data-theme="material-you"] .clay-score-dial {
+  border-radius: 20px !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="material-you"] .score-circle.score-high,
+html[data-theme="material-you"] .clay-score-dial.high {
+  background: var(--m3-high-container) !important;
+  color: var(--m3-high-text) !important;
+}
+
+html[data-theme="material-you"] .score-circle.score-medium,
+html[data-theme="material-you"] .clay-score-dial.medium {
+  background: var(--m3-med-container) !important;
+  color: var(--m3-med-text) !important;
+}
+
+html[data-theme="material-you"] .score-circle.score-low,
+html[data-theme="material-you"] .clay-score-dial.low {
+  background: var(--m3-low-container) !important;
+  color: var(--m3-low-text) !important;
+}
+
+/* Material You Quote & Callouts */
+html[data-theme="material-you"] .clay-quote-box {
+  background: var(--m3-surface-container) !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+  border-left: 4px solid var(--m3-primary) !important;
+}
+
+html[data-theme="material-you"] .clay-rewrite-box {
+  background: var(--m3-low-container) !important;
+  color: var(--m3-low-text) !important;
+  border-radius: 16px !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="material-you"] .clay-icon-sphere {
+  border-radius: 16px !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="material-you"] .clay-icon-sphere.primary {
+  background: var(--m3-primary-container) !important;
+  color: var(--m3-on-primary-container) !important;
+}
+
+html[data-theme="material-you"] .clay-icon-sphere.danger {
+  background: var(--m3-high-container) !important;
+  color: var(--m3-high-text) !important;
+}
+
+html[data-theme="material-you"] .clay-icon-sphere.warning {
+  background: var(--m3-med-container) !important;
+  color: var(--m3-med-text) !important;
+}
+
+html[data-theme="material-you"] .clay-icon-sphere.info {
+  background: var(--m3-secondary-container) !important;
+  color: #1D192B !important;
+}
+
+html[data-theme="material-you"] .dropzone-area {
+  background: var(--m3-surface-container) !important;
+  border-radius: 24px !important;
+  border: 2px dashed var(--m3-outline) !important;
+  box-shadow: none !important;
+}
+
+/* Material You Review Workspace */
+html[data-theme="material-you"] .pdf-scroll-area {
+  background: var(--m3-surface-container) !important;
+}
+
+html[data-theme="material-you"] .pdf-toolbar,
+html[data-theme="material-you"] .findings-panel-header,
+html[data-theme="material-you"] .findings-panel-footer {
+  background: var(--m3-surface) !important;
+  border-color: var(--m3-outline) !important;
+}
+
+html[data-theme="material-you"] .pdf-zoom-controls {
+  background: var(--m3-surface-container) !important;
+  border: 1px solid var(--m3-outline) !important;
+}
+
+html[data-theme="material-you"] .theme-trigger-btn {
+  background: var(--m3-surface) !important;
+  border: 1px solid var(--m3-outline) !important;
+  border-radius: 100px !important;
+  color: #1D1B20 !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
+}
+
+
+/* ==========================================================================
+   2. THEME: NEO-BRUTALISM (Bold Black Borders & Hard Pop Shadows)
+   [data-theme="neo-brutalism"]
+   ========================================================================== */
+html[data-theme="neo-brutalism"] {
+  --neo-bg: #FFFDF5;
+  --neo-surface: #FFFFFF;
+  --neo-border: 2.5px solid #000000;
+  --neo-shadow: 4px 4px 0px #000000;
+  --neo-shadow-lg: 6px 6px 0px #000000;
+  --neo-shadow-sm: 2px 2px 0px #000000;
+  --neo-primary: #8B5CF6;
+  --neo-yellow: #FFE600;
+  --neo-green: #00E599;
+  --neo-coral: #FF5757;
+  --neo-blue: #38BDF8;
+}
+
+html[data-theme="neo-brutalism"] body {
+  background-color: var(--neo-bg) !important;
+  color: #000000 !important;
+  font-weight: 500;
+}
+
+/* Neo-Brutalist Cards */
+html[data-theme="neo-brutalism"] .clay-card,
+html[data-theme="neo-brutalism"] .card-custom,
+html[data-theme="neo-brutalism"] .clay-kpi-card,
+html[data-theme="neo-brutalism"] .clay-finding-card,
+html[data-theme="neo-brutalism"] .pdf-pane-card,
+html[data-theme="neo-brutalism"] .findings-pane-card,
+html[data-theme="neo-brutalism"] .clay-table-container,
+html[data-theme="neo-brutalism"] .demo-role-card,
+html[data-theme="neo-brutalism"] .modal-content,
+html[data-theme="neo-brutalism"] .clay-card-flat {
+  background: var(--neo-surface) !important;
+  border-radius: 12px !important;
+  border: var(--neo-border) !important;
+  box-shadow: var(--neo-shadow-lg) !important;
+}
+
+html[data-theme="neo-brutalism"] .clay-card:hover,
+html[data-theme="neo-brutalism"] .clay-kpi-card:hover,
+html[data-theme="neo-brutalism"] .demo-role-card:hover,
+html[data-theme="neo-brutalism"] .clay-finding-card:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 7px 7px 0px #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .clay-finding-card.active-card {
+  border: 3px solid #000000 !important;
+  box-shadow: 6px 6px 0px #FFE600 !important;
+  background: #FFFDF5 !important;
+}
+
+/* Neo-Brutalist Navbar */
+html[data-theme="neo-brutalism"] .navbar-custom {
+  background: #FFFFFF !important;
+  border-radius: 14px !important;
+  border: var(--neo-border) !important;
+  box-shadow: var(--neo-shadow) !important;
+}
+
+html[data-theme="neo-brutalism"] .nav-link {
+  border-radius: 8px !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .nav-link.active {
+  background: var(--neo-yellow) !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .user-profile-pill {
+  background: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  border-radius: 8px !important;
+}
+
+html[data-theme="neo-brutalism"] .user-avatar-circle {
+  background: var(--neo-yellow) !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+}
+
+/* Neo-Brutalist Dropdown Menu */
+html[data-theme="neo-brutalism"] .navbar-custom .dropdown-menu {
+  background: #FFFFFF !important;
+  border-radius: 12px !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+  padding: 8px !important;
+  backdrop-filter: none !important;
+}
+
+html[data-theme="neo-brutalism"] .navbar-custom .dropdown-item {
+  border-radius: 8px !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+  padding: 8px 12px !important;
+  transition: none !important;
+}
+
+html[data-theme="neo-brutalism"] .navbar-custom .dropdown-item:hover,
+html[data-theme="neo-brutalism"] .navbar-custom .dropdown-item.active {
+  background: #FFE600 !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+}
+
+/* Neo-Brutalist Buttons */
+html[data-theme="neo-brutalism"] .btn-primary,
+html[data-theme="neo-brutalism"] .clay-btn-primary {
+  background: var(--neo-primary) !important;
+  color: #FFFFFF !important;
+  border-radius: 8px !important;
+  border: var(--neo-border) !important;
+  box-shadow: var(--neo-shadow-sm) !important;
+  font-weight: 800 !important;
+}
+
+html[data-theme="neo-brutalism"] .btn-primary:active,
+html[data-theme="neo-brutalism"] .clay-btn-primary:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 1px 1px 0px #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .btn-success,
+html[data-theme="neo-brutalism"] .clay-btn-success {
+  background: var(--neo-green) !important;
+  color: #000000 !important;
+  border-radius: 8px !important;
+  border: var(--neo-border) !important;
+  box-shadow: var(--neo-shadow-sm) !important;
+  font-weight: 800 !important;
+}
+
+html[data-theme="neo-brutalism"] .btn-danger,
+html[data-theme="neo-brutalism"] .clay-btn-danger {
+  background: var(--neo-coral) !important;
+  color: #FFFFFF !important;
+  border-radius: 8px !important;
+  border: var(--neo-border) !important;
+  box-shadow: var(--neo-shadow-sm) !important;
+  font-weight: 800 !important;
+}
+
+html[data-theme="neo-brutalism"] .btn-warning,
+html[data-theme="neo-brutalism"] .clay-btn-warning {
+  background: var(--neo-yellow) !important;
+  color: #000000 !important;
+  border-radius: 8px !important;
+  border: var(--neo-border) !important;
+  box-shadow: var(--neo-shadow-sm) !important;
+  font-weight: 800 !important;
+}
+
+html[data-theme="neo-brutalism"] .btn-outline-primary,
+html[data-theme="neo-brutalism"] .btn-outline-secondary,
+html[data-theme="neo-brutalism"] .btn-outline-success,
+html[data-theme="neo-brutalism"] .btn-outline-danger {
+  border-radius: 8px !important;
+  border: 2px solid #000000 !important;
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  font-weight: 800 !important;
+}
+
+/* Neo-Brutalist Form Controls & Inputs */
+html[data-theme="neo-brutalism"] .form-control,
+html[data-theme="neo-brutalism"] .form-select,
+html[data-theme="neo-brutalism"] input,
+html[data-theme="neo-brutalism"] textarea {
+  background-color: #FFFFFF !important;
+  border: var(--neo-border) !important;
+  border-radius: 8px !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  color: #000000 !important;
+  font-weight: 600 !important;
+}
+
+html[data-theme="neo-brutalism"] .form-control:focus,
+html[data-theme="neo-brutalism"] .form-select:focus,
+html[data-theme="neo-brutalism"] textarea:focus {
+  background-color: #FFFFFF !important;
+  border-color: #000000 !important;
+  box-shadow: 4px 4px 0px var(--neo-primary) !important;
+}
+
+html[data-theme="neo-brutalism"] .input-group {
+  background: #FFFFFF !important;
+  border: var(--neo-border) !important;
+  border-radius: 8px !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+}
+
+/* Neo-Brutalist Filter Pills */
+html[data-theme="neo-brutalism"] .clay-filter-pills {
+  background: #FFFFFF !important;
+  border: var(--neo-border) !important;
+  border-radius: 10px !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  padding: 4px !important;
+}
+
+html[data-theme="neo-brutalism"] .clay-pill-btn {
+  border-radius: 6px !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .clay-pill-btn.active {
+  background: var(--neo-yellow) !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+/* Neo-Brutalist Tables */
+html[data-theme="neo-brutalism"] .clay-table thead th {
+  background: #FFFBEB !important;
+  color: #000000 !important;
+  border-bottom: 2.5px solid #000000 !important;
+  font-weight: 800;
+}
+
+html[data-theme="neo-brutalism"] .clay-table tbody td {
+  border-bottom: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+html[data-theme="neo-brutalism"] .clay-table tbody tr:hover td {
+  background-color: #FEF9C3 !important;
+}
+
+/* Neo-Brutalist List Groups */
+html[data-theme="neo-brutalism"] #templatesListGroup .list-group-item,
+html[data-theme="neo-brutalism"] .template-item {
+  background: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  border-radius: 8px !important;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] #templatesListGroup .list-group-item.active,
+html[data-theme="neo-brutalism"] .template-item.bg-white {
+  background: var(--neo-yellow) !important;
+  color: #000000 !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+/* Neo-Brutalist Accordions */
+html[data-theme="neo-brutalism"] .accordion-item {
+  background: #FFFFFF !important;
+  border: var(--neo-border) !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  border-radius: 10px !important;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+html[data-theme="neo-brutalism"] .accordion-button {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  font-weight: 800;
+  border-bottom: 2px solid #000000;
+}
+
+html[data-theme="neo-brutalism"] .accordion-button:not(.collapsed) {
+  background: var(--neo-yellow) !important;
+  color: #000000 !important;
+}
+
+/* Neo-Brutalist Badges */
+html[data-theme="neo-brutalism"] .badge,
+html[data-theme="neo-brutalism"] .clay-badge {
+  border: 2px solid #000000 !important;
+  border-radius: 6px !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  font-weight: 800 !important;
+}
+
+html[data-theme="neo-brutalism"] .badge-risk-high,
+html[data-theme="neo-brutalism"] .clay-badge-escalated {
+  background: var(--neo-coral) !important;
+  color: #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"] .badge-risk-medium,
+html[data-theme="neo-brutalism"] .clay-badge-in-review {
+  background: var(--neo-yellow) !important;
+  color: #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .badge-risk-low,
+html[data-theme="neo-brutalism"] .clay-badge-approved {
+  background: var(--neo-green) !important;
+  color: #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .clay-badge-rejected {
+  background: #E2E8F0 !important;
+  color: #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .clay-badge-processing {
+  background: var(--neo-blue) !important;
+  color: #000000 !important;
+}
+
+/* Neo-Brutalist Score Circle */
+html[data-theme="neo-brutalism"] .score-circle,
+html[data-theme="neo-brutalism"] .clay-score-dial {
+  border: 3px solid #000000 !important;
+  border-radius: 12px !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .score-circle.score-high,
+html[data-theme="neo-brutalism"] .clay-score-dial.high {
+  background: var(--neo-coral) !important;
+  color: #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"] .score-circle.score-medium,
+html[data-theme="neo-brutalism"] .clay-score-dial.medium {
+  background: var(--neo-yellow) !important;
+  color: #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .score-circle.score-low,
+html[data-theme="neo-brutalism"] .clay-score-dial.low {
+  background: var(--neo-green) !important;
+  color: #000000 !important;
+}
+
+/* Neo-Brutalist Quote Boxes */
+html[data-theme="neo-brutalism"] .clay-quote-box {
+  background: #FFFFFF !important;
+  border: var(--neo-border) !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  border-radius: 8px !important;
+  border-left: 6px solid var(--neo-primary) !important;
+}
+
+html[data-theme="neo-brutalism"] .clay-rewrite-box {
+  background: #EDFDF5 !important;
+  border: var(--neo-border) !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  border-radius: 8px !important;
+}
+
+html[data-theme="neo-brutalism"] .clay-icon-sphere {
+  border: 2px solid #000000 !important;
+  border-radius: 10px !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .dropzone-area {
+  background: #FFFFFF !important;
+  border: 3px dashed #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  border-radius: 14px !important;
+}
+
+/* Neo-Brutalist Review Workspace */
+html[data-theme="neo-brutalism"] .pdf-scroll-area {
+  background: #F1F5F9 !important;
+  border-right: 2.5px solid #000000;
+}
+
+html[data-theme="neo-brutalism"] .pdf-toolbar,
+html[data-theme="neo-brutalism"] .findings-panel-header,
+html[data-theme="neo-brutalism"] .findings-panel-footer {
+  background: #FFFFFF !important;
+  border-color: #000000 !important;
+  border-width: 2.5px !important;
+}
+
+html[data-theme="neo-brutalism"] .pdf-zoom-controls {
+  background: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  border-radius: 8px !important;
+}
+
+html[data-theme="neo-brutalism"] .pdf-page-container {
+  border: 2px solid #000000 !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+  border-radius: 8px !important;
+}
+
+html[data-theme="neo-brutalism"] .pdf-highlight-high {
+  background-color: rgba(255, 87, 87, 0.45) !important;
+  outline: 2px solid #FF5757 !important;
+  border-bottom: 2px solid #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .pdf-highlight-medium {
+  background-color: rgba(255, 230, 0, 0.5) !important;
+  outline: 2px solid #FFE600 !important;
+  border-bottom: 2px solid #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .pdf-highlight-low {
+  background-color: rgba(0, 229, 153, 0.45) !important;
+  outline: 2px solid #00E599 !important;
+  border-bottom: 2px solid #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .theme-trigger-btn {
+  background: #FFFFFF !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  border-radius: 8px !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+}
+
+html[data-theme="neo-brutalism"] .theme-popover-menu {
+  background: #FFFFFF !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 6px 6px 0px #000000 !important;
+  border-radius: 12px !important;
+}
+
+
+/* ==========================================================================
+   3. THEME: NEUMORPHISM (Soft Extruded Monochromatic Dual-Shadow)
+   [data-theme="neumorphism"]
+   ========================================================================== */
+html[data-theme="neumorphism"] {
+  --neu-bg: #E0E5EC;
+  --neu-surface: #E0E5EC;
+  --neu-shadow-raised: 8px 8px 16px #b8b9be, -8px -8px 16px #ffffff;
+  --neu-shadow-inset: inset 4px 4px 8px #b8b9be, inset -4px -4px 8px #ffffff;
+  --neu-primary: #4D7CFE;
+}
+
+html[data-theme="neumorphism"] body {
+  background-color: var(--neu-bg) !important;
+  color: #31344B !important;
+}
+
+html[data-theme="neumorphism"] .clay-card,
+html[data-theme="neumorphism"] .card-custom,
+html[data-theme="neumorphism"] .clay-kpi-card,
+html[data-theme="neumorphism"] .clay-finding-card,
+html[data-theme="neumorphism"] .pdf-pane-card,
+html[data-theme="neumorphism"] .findings-pane-card,
+html[data-theme="neumorphism"] .clay-table-container,
+html[data-theme="neumorphism"] .demo-role-card,
+html[data-theme="neumorphism"] .modal-content,
+html[data-theme="neumorphism"] .clay-card-flat {
+  background: var(--neu-surface) !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: var(--neu-shadow-raised) !important;
+}
+
+html[data-theme="neumorphism"] .clay-finding-card.active-card {
+  box-shadow: 0 0 0 3px #4D7CFE, var(--neu-shadow-raised) !important;
+}
+
+html[data-theme="neumorphism"] .navbar-custom {
+  background: var(--neu-surface) !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 6px 6px 14px #b8b9be, -6px -6px 14px #ffffff !important;
+}
+
+html[data-theme="neumorphism"] .nav-link {
+  border-radius: 14px !important;
+  color: #64748B !important;
+  font-weight: 600;
+}
+
+html[data-theme="neumorphism"] .nav-link.active {
+  background: var(--neu-surface) !important;
+  color: var(--neu-primary) !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+}
+
+html[data-theme="neumorphism"] .user-profile-pill {
+  background: var(--neu-surface) !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  border: none !important;
+  border-radius: 100px !important;
+}
+
+html[data-theme="neumorphism"] .user-avatar-circle {
+  background: var(--neu-primary) !important;
+  color: #FFFFFF !important;
+}
+
+/* Neumorphic Dropdown Menu */
+html[data-theme="neumorphism"] .navbar-custom .dropdown-menu {
+  background: var(--neu-surface) !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 8px 8px 18px #b8b9be, -8px -8px 18px #ffffff !important;
+  padding: 8px !important;
+  backdrop-filter: none !important;
+}
+
+html[data-theme="neumorphism"] .navbar-custom .dropdown-item {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  color: #334155 !important;
+  padding: 8px 12px !important;
+}
+
+html[data-theme="neumorphism"] .navbar-custom .dropdown-item:hover,
+html[data-theme="neumorphism"] .navbar-custom .dropdown-item.active {
+  background: var(--neu-surface) !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  color: var(--neu-primary) !important;
+}
+
+html[data-theme="neumorphism"] .btn-primary,
+html[data-theme="neumorphism"] .clay-btn-primary {
+  background: var(--neu-surface) !important;
+  color: var(--neu-primary) !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 6px 6px 12px #b8b9be, -6px -6px 12px #ffffff !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="neumorphism"] .btn-primary:active,
+html[data-theme="neumorphism"] .clay-btn-primary:active {
+  box-shadow: var(--neu-shadow-inset) !important;
+}
+
+html[data-theme="neumorphism"] .btn-success,
+html[data-theme="neumorphism"] .clay-btn-success {
+  background: var(--neu-surface) !important;
+  color: #2E7D32 !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 6px 6px 12px #b8b9be, -6px -6px 12px #ffffff !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="neumorphism"] .btn-danger,
+html[data-theme="neumorphism"] .clay-btn-danger {
+  background: var(--neu-surface) !important;
+  color: #C62828 !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 6px 6px 12px #b8b9be, -6px -6px 12px #ffffff !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="neumorphism"] .btn-outline-primary,
+html[data-theme="neumorphism"] .btn-outline-secondary {
+  background: var(--neu-surface) !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 4px 4px 10px #b8b9be, -4px -4px 10px #ffffff !important;
+  color: #31344B !important;
+}
+
+html[data-theme="neumorphism"] .form-control,
+html[data-theme="neumorphism"] .form-select,
+html[data-theme="neumorphism"] input,
+html[data-theme="neumorphism"] textarea {
+  background: var(--neu-surface) !important;
+  border: none !important;
+  border-radius: 14px !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  color: #31344B !important;
+}
+
+html[data-theme="neumorphism"] .input-group {
+  background: var(--neu-surface) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  border: none !important;
+}
+
+html[data-theme="neumorphism"] .clay-filter-pills {
+  background: var(--neu-surface) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  padding: 5px !important;
+}
+
+html[data-theme="neumorphism"] .clay-pill-btn {
+  border-radius: 14px !important;
+  color: #64748B !important;
+}
+
+html[data-theme="neumorphism"] .clay-pill-btn.active {
+  background: var(--neu-surface) !important;
+  color: var(--neu-primary) !important;
+  box-shadow: 4px 4px 8px #b8b9be, -4px -4px 8px #ffffff !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="neumorphism"] .clay-table thead th {
+  background: #D8DFE8 !important;
+  color: #4B5563 !important;
+  border-bottom: 1px solid #CBD5E1 !important;
+  font-weight: 700;
+}
+
+html[data-theme="neumorphism"] .clay-table tbody td {
+  border-bottom: 1px solid #D1D5DB !important;
+  color: #31344B !important;
+}
+
+html[data-theme="neumorphism"] .clay-table tbody tr:hover td {
+  background-color: #D5DCE5 !important;
+}
+
+html[data-theme="neumorphism"] #templatesListGroup .list-group-item,
+html[data-theme="neumorphism"] .template-item {
+  background: var(--neu-surface) !important;
+  border-radius: 14px !important;
+  box-shadow: 4px 4px 10px #b8b9be, -4px -4px 10px #ffffff !important;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255,255,255,0.6) !important;
+  color: #31344B !important;
+}
+
+html[data-theme="neumorphism"] #templatesListGroup .list-group-item.active,
+html[data-theme="neumorphism"] .template-item.bg-white {
+  box-shadow: var(--neu-shadow-inset) !important;
+  color: var(--neu-primary) !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="neumorphism"] .accordion-item {
+  background: var(--neu-surface) !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 5px 5px 12px #b8b9be, -5px -5px 12px #ffffff !important;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+html[data-theme="neumorphism"] .accordion-button {
+  background: var(--neu-surface) !important;
+  color: #31344B !important;
+  font-weight: 700;
+}
+
+html[data-theme="neumorphism"] .accordion-button:not(.collapsed) {
+  background: var(--neu-surface) !important;
+  color: var(--neu-primary) !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+}
+
+html[data-theme="neumorphism"] .badge,
+html[data-theme="neumorphism"] .clay-badge {
+  background: var(--neu-surface) !important;
+  box-shadow: 2px 2px 5px #b8b9be, -2px -2px 5px #ffffff !important;
+  border-radius: 100px !important;
+  font-weight: 700;
+}
+
+html[data-theme="neumorphism"] .badge-risk-high,
+html[data-theme="neumorphism"] .clay-badge-escalated { color: #C62828 !important; }
+html[data-theme="neumorphism"] .badge-risk-medium,
+html[data-theme="neumorphism"] .clay-badge-in-review { color: #E65100 !important; }
+html[data-theme="neumorphism"] .badge-risk-low,
+html[data-theme="neumorphism"] .clay-badge-approved { color: #2E7D32 !important; }
+
+html[data-theme="neumorphism"] .score-circle,
+html[data-theme="neumorphism"] .clay-score-dial {
+  background: var(--neu-surface) !important;
+  box-shadow: 8px 8px 16px #b8b9be, -8px -8px 16px #ffffff !important;
+  border: 2px solid rgba(255, 255, 255, 0.6) !important;
+  border-radius: 50% !important;
+}
+
+html[data-theme="neumorphism"] .score-circle.score-high,
+html[data-theme="neumorphism"] .clay-score-dial.high { color: #D32F2F !important; }
+html[data-theme="neumorphism"] .score-circle.score-medium,
+html[data-theme="neumorphism"] .clay-score-dial.medium { color: #E65100 !important; }
+html[data-theme="neumorphism"] .score-circle.score-low,
+html[data-theme="neumorphism"] .clay-score-dial.low { color: #2E7D32 !important; }
+
+html[data-theme="neumorphism"] .clay-quote-box {
+  background: var(--neu-surface) !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  border-radius: 14px !important;
+  border-left: 5px solid var(--neu-primary) !important;
+}
+
+html[data-theme="neumorphism"] .clay-rewrite-box {
+  background: var(--neu-surface) !important;
+  box-shadow: 5px 5px 12px #b8b9be, -5px -5px 12px #ffffff !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(255,255,255,0.7) !important;
+}
+
+html[data-theme="neumorphism"] .clay-icon-sphere {
+  background: var(--neu-surface) !important;
+  box-shadow: 5px 5px 10px #b8b9be, -5px -5px 10px #ffffff !important;
+  border-radius: 16px !important;
+}
+
+html[data-theme="neumorphism"] .dropzone-area {
+  background: var(--neu-surface) !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  border: 2px dashed #9E9E9E !important;
+  border-radius: 20px !important;
+}
+
+html[data-theme="neumorphism"] .pdf-scroll-area {
+  background: #D8DFE8 !important;
+}
+
+html[data-theme="neumorphism"] .pdf-toolbar,
+html[data-theme="neumorphism"] .findings-panel-header,
+html[data-theme="neumorphism"] .findings-panel-footer {
+  background: var(--neu-surface) !important;
+  border-color: #CBD5E1 !important;
+}
+
+html[data-theme="neumorphism"] .pdf-zoom-controls {
+  background: var(--neu-surface) !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  border-radius: 100px !important;
+  border: none !important;
+}
+
+html[data-theme="neumorphism"] .pdf-page-container {
+  box-shadow: 6px 6px 14px #b8b9be, -6px -6px 14px #ffffff !important;
+  border-radius: 10px !important;
+}
+
+html[data-theme="neumorphism"] .theme-trigger-btn {
+  background: var(--neu-surface) !important;
+  box-shadow: 6px 6px 14px #b8b9be, -6px -6px 14px #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.7) !important;
+  border-radius: 100px !important;
+  color: #31344B !important;
+}
+
+html[data-theme="neumorphism"] .theme-popover-menu {
+  background: var(--neu-surface) !important;
+  box-shadow: 10px 10px 22px #b8b9be, -10px -10px 22px #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.7) !important;
+  border-radius: 18px !important;
+}
+
+
+/* ==========================================================================
+   4. THEME: GLASSMORPHISM (Frosted Glass Acrylic & Ambient Mesh)
+   [data-theme="glassmorphism"]
+   ========================================================================== */
+html[data-theme="glassmorphism"] {
+  --glass-bg: radial-gradient(at 0% 0%, #D5DEFF 0, transparent 55%), radial-gradient(at 100% 0%, #EDE9FE 0, transparent 50%), radial-gradient(at 50% 100%, #FAE8FF 0, transparent 55%), #EEF2F6;
+  --glass-surface: rgba(255, 255, 255, 0.7);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.8);
+  --glass-shadow: 0 10px 30px 0 rgba(31, 38, 135, 0.1);
+  --glass-blur: blur(16px);
+}
+
+html[data-theme="glassmorphism"] body {
+  background: var(--glass-bg) !important;
+  background-attachment: fixed !important;
+  color: #1E293B !important;
+}
+
+html[data-theme="glassmorphism"] .clay-card,
+html[data-theme="glassmorphism"] .card-custom,
+html[data-theme="glassmorphism"] .clay-kpi-card,
+html[data-theme="glassmorphism"] .clay-finding-card,
+html[data-theme="glassmorphism"] .pdf-pane-card,
+html[data-theme="glassmorphism"] .findings-pane-card,
+html[data-theme="glassmorphism"] .clay-table-container,
+html[data-theme="glassmorphism"] .demo-role-card,
+html[data-theme="glassmorphism"] .modal-content,
+html[data-theme="glassmorphism"] .clay-card-flat {
+  background: var(--glass-surface) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border-radius: 24px !important;
+  border: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+
+html[data-theme="glassmorphism"] .clay-finding-card.active-card {
+  border: 2px solid rgba(99, 102, 241, 0.9) !important;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.35) !important;
+}
+
+html[data-theme="glassmorphism"] .navbar-custom {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+}
+
+html[data-theme="glassmorphism"] .nav-link {
+  border-radius: 100px !important;
+  font-weight: 600;
+}
+
+html[data-theme="glassmorphism"] .nav-link.active {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.85), rgba(79, 70, 229, 0.95)) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3) !important;
+}
+
+html[data-theme="glassmorphism"] .user-profile-pill {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Glassmorphism Dropdown Menu */
+html[data-theme="glassmorphism"] .navbar-custom .dropdown-menu {
+  background: rgba(255, 255, 255, 0.97) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 16px 36px rgba(31, 38, 135, 0.16) !important;
+  padding: 8px !important;
+}
+
+html[data-theme="glassmorphism"] .navbar-custom .dropdown-item {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  color: #1E293B !important;
+  padding: 8px 12px !important;
+}
+
+html[data-theme="glassmorphism"] .navbar-custom .dropdown-item:hover,
+html[data-theme="glassmorphism"] .navbar-custom .dropdown-item.active {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: #4F46E5 !important;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15) !important;
+}
+
+html[data-theme="glassmorphism"] .btn-primary,
+html[data-theme="glassmorphism"] .clay-btn-primary {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(79, 70, 229, 0.95)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35) !important;
+}
+
+html[data-theme="glassmorphism"] .btn-success,
+html[data-theme="glassmorphism"] .clay-btn-success {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.95)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35) !important;
+}
+
+html[data-theme="glassmorphism"] .btn-danger,
+html[data-theme="glassmorphism"] .clay-btn-danger {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.95)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35) !important;
+}
+
+html[data-theme="glassmorphism"] .btn-outline-primary,
+html[data-theme="glassmorphism"] .btn-outline-secondary {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: 18px !important;
+}
+
+html[data-theme="glassmorphism"] .form-control,
+html[data-theme="glassmorphism"] .form-select,
+html[data-theme="glassmorphism"] input,
+html[data-theme="glassmorphism"] textarea {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+html[data-theme="glassmorphism"] .input-group {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+html[data-theme="glassmorphism"] .clay-filter-pills {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+html[data-theme="glassmorphism"] .clay-pill-btn {
+  border-radius: 16px !important;
+  font-weight: 600;
+}
+
+html[data-theme="glassmorphism"] .clay-pill-btn.active {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #4F46E5 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  font-weight: 700;
+}
+
+html[data-theme="glassmorphism"] .clay-table thead th {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(8px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+html[data-theme="glassmorphism"] .clay-table tbody td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4) !important;
+  background: transparent !important;
+}
+
+html[data-theme="glassmorphism"] .clay-table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+html[data-theme="glassmorphism"] #templatesListGroup .list-group-item,
+html[data-theme="glassmorphism"] .template-item {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: 16px !important;
+  margin-bottom: 8px;
+}
+
+html[data-theme="glassmorphism"] #templatesListGroup .list-group-item.active,
+html[data-theme="glassmorphism"] .template-item.bg-white {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: #6366F1 !important;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25) !important;
+}
+
+html[data-theme="glassmorphism"] .accordion-item {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(12px) !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+html[data-theme="glassmorphism"] .accordion-button {
+  background: transparent !important;
+  color: #1E293B !important;
+  font-weight: 700;
+}
+
+html[data-theme="glassmorphism"] .accordion-button:not(.collapsed) {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: #4F46E5 !important;
+}
+
+html[data-theme="glassmorphism"] .score-circle,
+html[data-theme="glassmorphism"] .clay-score-dial {
+  backdrop-filter: blur(14px) !important;
+  border: 2px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+html[data-theme="glassmorphism"] .clay-quote-box {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  border-left: 5px solid #6366F1 !important;
+}
+
+html[data-theme="glassmorphism"] .clay-rewrite-box {
+  background: rgba(240, 253, 244, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(187, 247, 208, 0.7) !important;
+}
+
+html[data-theme="glassmorphism"] .dropzone-area {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 2px dashed rgba(99, 102, 241, 0.5) !important;
+  border-radius: 24px !important;
+}
+
+html[data-theme="glassmorphism"] .pdf-scroll-area {
+  background: rgba(238, 242, 246, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+html[data-theme="glassmorphism"] .pdf-toolbar,
+html[data-theme="glassmorphism"] .findings-panel-header,
+html[data-theme="glassmorphism"] .findings-panel-footer {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+html[data-theme="glassmorphism"] .pdf-zoom-controls {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+html[data-theme="glassmorphism"] .pdf-page-container {
+  box-shadow: 0 12px 36px rgba(31, 38, 135, 0.15) !important;
+  border-radius: 12px !important;
+}
+
+html[data-theme="glassmorphism"] .theme-trigger-btn {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 100px !important;
+  color: #1E293B !important;
+}
+
+html[data-theme="glassmorphism"] .theme-popover-menu {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 20px !important;
+}
+
+
+/* ==========================================================================
+   5. THEME: MONOCHROME (Minimalist Swiss Editorial)
+   [data-theme="monochrome"]
+   ========================================================================== */
+html[data-theme="monochrome"] {
+  --mono-bg: #FAFAFA;
+  --mono-surface: #FFFFFF;
+  --mono-border: 1px solid #E4E4E7;
+  --mono-text: #09090B;
+  --mono-muted: #71717A;
+}
+
+html[data-theme="monochrome"] body {
+  background-color: var(--mono-bg) !important;
+  color: var(--mono-text) !important;
+}
+
+html[data-theme="monochrome"] .clay-card,
+html[data-theme="monochrome"] .card-custom,
+html[data-theme="monochrome"] .clay-kpi-card,
+html[data-theme="monochrome"] .clay-finding-card,
+html[data-theme="monochrome"] .pdf-pane-card,
+html[data-theme="monochrome"] .findings-pane-card,
+html[data-theme="monochrome"] .clay-table-container,
+html[data-theme="monochrome"] .demo-role-card,
+html[data-theme="monochrome"] .modal-content,
+html[data-theme="monochrome"] .clay-card-flat {
+  background: var(--mono-surface) !important;
+  border-radius: 12px !important;
+  border: var(--mono-border) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+html[data-theme="monochrome"] .clay-finding-card.active-card {
+  border: 2px solid #09090B !important;
+  box-shadow: 0 0 0 2px #E4E4E7 !important;
+}
+
+html[data-theme="monochrome"] .navbar-custom {
+  background: #FFFFFF !important;
+  border-radius: 12px !important;
+  border: var(--mono-border) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+html[data-theme="monochrome"] .nav-link {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  color: var(--mono-muted) !important;
+}
+
+html[data-theme="monochrome"] .nav-link.active {
+  background: #09090B !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .user-profile-pill {
+  background: #FAFAFA !important;
+  border: 1px solid #E4E4E7 !important;
+  border-radius: 8px !important;
+}
+
+html[data-theme="monochrome"] .user-avatar-circle {
+  background: #09090B !important;
+  color: #FFFFFF !important;
+}
+
+/* Monochrome Dropdown Menu */
+html[data-theme="monochrome"] .navbar-custom .dropdown-menu {
+  background: #FFFFFF !important;
+  border-radius: 10px !important;
+  border: 1px solid #18181B !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  padding: 6px !important;
+  backdrop-filter: none !important;
+}
+
+html[data-theme="monochrome"] .navbar-custom .dropdown-item {
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  color: #18181B !important;
+  padding: 7px 12px !important;
+}
+
+html[data-theme="monochrome"] .navbar-custom .dropdown-item:hover,
+html[data-theme="monochrome"] .navbar-custom .dropdown-item.active {
+  background: #09090B !important;
+  color: #FFFFFF !important;
+}
+
+html[data-theme="monochrome"] .btn-primary,
+html[data-theme="monochrome"] .clay-btn-primary {
+  background: #09090B !important;
+  color: #FFFFFF !important;
+  border-radius: 8px !important;
+  border: 1px solid #09090B !important;
+  box-shadow: none !important;
+  font-weight: 600 !important;
+}
+
+html[data-theme="monochrome"] .btn-primary:hover,
+html[data-theme="monochrome"] .clay-btn-primary:hover {
+  background: #27272A !important;
+}
+
+html[data-theme="monochrome"] .btn-success,
+html[data-theme="monochrome"] .clay-btn-success {
+  background: #27272A !important;
+  color: #FFFFFF !important;
+  border-radius: 8px !important;
+  border: 1px solid #27272A !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .btn-danger,
+html[data-theme="monochrome"] .clay-btn-danger {
+  background: #FFFFFF !important;
+  color: #09090B !important;
+  border: 1px solid #09090B !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .btn-outline-primary,
+html[data-theme="monochrome"] .btn-outline-secondary {
+  border-radius: 8px !important;
+  border: 1px solid #D4D4D8 !important;
+  background: #FFFFFF !important;
+  color: #09090B !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .form-control,
+html[data-theme="monochrome"] .form-select,
+html[data-theme="monochrome"] input,
+html[data-theme="monochrome"] textarea {
+  background-color: #FFFFFF !important;
+  border: 1px solid #D4D4D8 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  color: #09090B !important;
+}
+
+html[data-theme="monochrome"] .form-control:focus,
+html[data-theme="monochrome"] .form-select:focus,
+html[data-theme="monochrome"] textarea:focus {
+  border-color: #09090B !important;
+  box-shadow: 0 0 0 1px #09090B !important;
+}
+
+html[data-theme="monochrome"] .input-group {
+  background: #FFFFFF !important;
+  border: 1px solid #D4D4D8 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+html[data-theme="monochrome"] .clay-filter-pills {
+  background: #F4F4F5 !important;
+  border: 1px solid #E4E4E7 !important;
+  border-radius: 10px !important;
+  padding: 4px !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .clay-pill-btn {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  color: #71717A !important;
+}
+
+html[data-theme="monochrome"] .clay-pill-btn.active {
+  background: #09090B !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .clay-table thead th {
+  background: #FAFAFA !important;
+  color: #09090B !important;
+  border-bottom: 2px solid #E4E4E7 !important;
+  font-weight: 700;
+}
+
+html[data-theme="monochrome"] .clay-table tbody td {
+  border-bottom: 1px solid #E4E4E7 !important;
+  color: #09090B !important;
+}
+
+html[data-theme="monochrome"] .clay-table tbody tr:hover td {
+  background-color: #F4F4F5 !important;
+}
+
+html[data-theme="monochrome"] #templatesListGroup .list-group-item,
+html[data-theme="monochrome"] .template-item {
+  background: #FFFFFF !important;
+  border: 1px solid #E4E4E7 !important;
+  border-radius: 8px !important;
+  margin-bottom: 6px;
+  color: #09090B !important;
+}
+
+html[data-theme="monochrome"] #templatesListGroup .list-group-item.active,
+html[data-theme="monochrome"] .template-item.bg-white {
+  background: #F4F4F5 !important;
+  border: 2px solid #09090B !important;
+  color: #09090B !important;
+}
+
+html[data-theme="monochrome"] .accordion-item {
+  background: #FFFFFF !important;
+  border: 1px solid #E4E4E7 !important;
+  border-radius: 8px !important;
+  margin-bottom: 10px;
+  overflow: hidden;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .accordion-button {
+  background: #FFFFFF !important;
+  color: #09090B !important;
+  font-weight: 700;
+}
+
+html[data-theme="monochrome"] .accordion-button:not(.collapsed) {
+  background: #F4F4F5 !important;
+  color: #09090B !important;
+  border-bottom: 1px solid #E4E4E7 !important;
+}
+
+html[data-theme="monochrome"] .badge,
+html[data-theme="monochrome"] .clay-badge {
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  font-weight: 700;
+  border: 1px solid #E4E4E7 !important;
+  background: #F4F4F5 !important;
+  color: #09090B !important;
+}
+
+html[data-theme="monochrome"] .badge-risk-high,
+html[data-theme="monochrome"] .clay-badge-escalated {
+  background: #09090B !important;
+  color: #FFFFFF !important;
+  border-color: #09090B !important;
+}
+
+html[data-theme="monochrome"] .badge-risk-medium,
+html[data-theme="monochrome"] .clay-badge-in-review {
+  background: #71717A !important;
+  color: #FFFFFF !important;
+  border-color: #71717A !important;
+}
+
+html[data-theme="monochrome"] .badge-risk-low,
+html[data-theme="monochrome"] .clay-badge-approved {
+  background: #E4E4E7 !important;
+  color: #09090B !important;
+  border-color: #D4D4D8 !important;
+}
+
+html[data-theme="monochrome"] .score-circle,
+html[data-theme="monochrome"] .clay-score-dial {
+  border-radius: 50% !important;
+  background: #FFFFFF !important;
+  border: 2px solid #09090B !important;
+  color: #09090B !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .clay-icon-sphere {
+  border-radius: 8px !important;
+  background: #F4F4F5 !important;
+  color: #09090B !important;
+  box-shadow: none !important;
+  border: 1px solid #E4E4E7 !important;
+}
+
+html[data-theme="monochrome"] .clay-quote-box {
+  background: #F4F4F5 !important;
+  border: 1px solid #E4E4E7 !important;
+  border-left: 4px solid #09090B !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .clay-rewrite-box {
+  background: #FFFFFF !important;
+  border: 1px solid #09090B !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .dropzone-area {
+  background: #FFFFFF !important;
+  border: 1px dashed #A1A1AA !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .pdf-scroll-area {
+  background: #F4F4F5 !important;
+  border-right: 1px solid #E4E4E7;
+}
+
+html[data-theme="monochrome"] .pdf-toolbar,
+html[data-theme="monochrome"] .findings-panel-header,
+html[data-theme="monochrome"] .findings-panel-footer {
+  background: #FFFFFF !important;
+  border-color: #E4E4E7 !important;
+}
+
+html[data-theme="monochrome"] .pdf-zoom-controls {
+  background: #FAFAFA !important;
+  border: 1px solid #E4E4E7 !important;
+  border-radius: 6px !important;
+}
+
+html[data-theme="monochrome"] .pdf-page-container {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid #E4E4E7 !important;
+  border-radius: 4px !important;
+}
+
+html[data-theme="monochrome"] .pdf-highlight-high {
+  background-color: rgba(9, 9, 11, 0.15) !important;
+  border-bottom: 2px solid #09090B !important;
+  outline: 1px solid #09090B !important;
+}
+
+html[data-theme="monochrome"] .pdf-highlight-medium {
+  background-color: rgba(113, 113, 122, 0.2) !important;
+  border-bottom: 2px solid #71717A !important;
+}
+
+html[data-theme="monochrome"] .pdf-highlight-low {
+  background-color: rgba(161, 161, 170, 0.2) !important;
+  border-bottom: 2px solid #A1A1AA !important;
+}
+
+html[data-theme="monochrome"] .theme-trigger-btn {
+  background: #09090B !important;
+  color: #FFFFFF !important;
+  border: 1px solid #27272A !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+html[data-theme="monochrome"] .theme-popover-menu {
+  background: #FFFFFF !important;
+  border: 1px solid #E4E4E7 !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
+  border-radius: 12px !important;
+}

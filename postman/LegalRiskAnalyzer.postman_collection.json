@@ -1,0 +1,502 @@
+{
+  "info": {
+    "_postman_id": "a98d3e21-4d1a-4d3f-912f-981273981273",
+    "name": "Legal Risk Analyzer API",
+    "description": "Complete Postman collection for Intelligent Legal Contract & Vendor Risk Analyzer",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "contractId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "templateId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "findingId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login - Associate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.collectionVariables.set('token', res.token);",
+                  "    pm.test('Token saved', () => pm.expect(res.token).to.be.a('string'));",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"associate@demo.com\",\n  \"password\": \"Demo@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Login - Partner",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.collectionVariables.set('token', res.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"partner@demo.com\",\n  \"password\": \"Demo@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Login - Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.collectionVariables.set('token', res.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@demo.com\",\n  \"password\": \"Demo@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Get Current User (Me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api", "auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contracts",
+      "item": [
+        {
+          "name": "Upload Contract",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.contract && res.contract.id) {",
+                  "    pm.collectionVariables.set('contractId', res.contract.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "file", "type": "file", "src": "samples/contract_risky_1.pdf" },
+                { "key": "title", "value": "Vendor Master Services Agreement 2026", "type": "text" }
+              ]
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts", "host": ["{{baseUrl}}"], "path": ["api", "contracts"] }
+          }
+        },
+        {
+          "name": "List Contracts",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts", "host": ["{{baseUrl}}"], "path": ["api", "contracts"] }
+          }
+        },
+        {
+          "name": "Get Contract by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}"] }
+          }
+        },
+        {
+          "name": "Stream Contract PDF",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/file", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "file"] }
+          }
+        },
+        {
+          "name": "Get Contract Findings",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (Array.isArray(res) && res.length > 0) {",
+                  "    pm.collectionVariables.set('findingId', res[0].id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/findings", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "findings"] }
+          }
+        },
+        {
+          "name": "Submit Contract for Approval",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/submit", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "submit"] }
+          }
+        },
+        {
+          "name": "Reanalyze Contract",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/reanalyze", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "reanalyze"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Partner Approvals",
+      "item": [
+        {
+          "name": "Approve Contract",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note\": \"Reviewed deviations; vendor agreed to liability cap in addendum. Approved.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/approve", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "approve"] }
+          }
+        },
+        {
+          "name": "Reject Contract",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note\": \"Unacceptable unlimited liability terms and automatic multi-year renewal.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/reject", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "reject"] }
+          }
+        },
+        {
+          "name": "Request Changes",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note\": \"Please request vendor to replace section 8 with standard safe rewrite.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/request-changes", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "request-changes"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Findings",
+      "item": [
+        {
+          "name": "Update Finding Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"accepted\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/findings/{{findingId}}", "host": ["{{baseUrl}}"], "path": ["api", "findings", "{{findingId}}"] }
+          }
+        },
+        {
+          "name": "Add Finding Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"body\": \"Negotiating this clause with vendor counsel next Tuesday.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/findings/{{findingId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "findings", "{{findingId}}", "comments"] }
+          }
+        },
+        {
+          "name": "Get Finding Comments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/findings/{{findingId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "findings", "{{findingId}}", "comments"] }
+          }
+        },
+        {
+          "name": "Regenerate Rewrite",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tone\": \"firm\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/findings/{{findingId}}/rewrite", "host": ["{{baseUrl}}"], "path": ["api", "findings", "{{findingId}}", "rewrite"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Templates",
+      "item": [
+        {
+          "name": "List Templates",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (Array.isArray(res) && res.length > 0) {",
+                  "    pm.collectionVariables.set('templateId', res[0].id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/templates", "host": ["{{baseUrl}}"], "path": ["api", "templates"] }
+          }
+        },
+        {
+          "name": "Get Template by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/templates/{{templateId}}", "host": ["{{baseUrl}}"], "path": ["api", "templates", "{{templateId}}"] }
+          }
+        },
+        {
+          "name": "Get Template Versions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/templates/{{templateId}}/versions", "host": ["{{baseUrl}}"], "path": ["api", "templates", "{{templateId}}", "versions"] }
+          }
+        },
+        {
+          "name": "Create Template (Partner)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"SaaS Safe Vendor Baseline\",\n  \"description\": \"Corporate baseline standard template for cloud vendors\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/templates", "host": ["{{baseUrl}}"], "path": ["api", "templates"] }
+          }
+        },
+        {
+          "name": "Update Template Clauses (Partner)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clauses\": [\n    {\n      \"clause_type\": \"limitation_of_liability\",\n      \"title\": \"Mutual Liability Cap\",\n      \"text\": \"Neither party liability shall exceed the total fees paid in the twelve months preceding the claim.\"\n    }\n  ]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/templates/{{templateId}}", "host": ["{{baseUrl}}"], "path": ["api", "templates", "{{templateId}}"] }
+          }
+        },
+        {
+          "name": "Activate Template (Partner)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/templates/{{templateId}}/activate", "host": ["{{baseUrl}}"], "path": ["api", "templates", "{{templateId}}", "activate"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/users", "host": ["{{baseUrl}}"], "path": ["api", "admin", "users"] }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Robert Associate\",\n  \"email\": \"robert.assoc@demo.com\",\n  \"password\": \"Demo@123\",\n  \"role\": \"associate\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/admin/users", "host": ["{{baseUrl}}"], "path": ["api", "admin", "users"] }
+          }
+        },
+        {
+          "name": "Toggle User Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_active\": false\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/admin/users/{{userId}}/status", "host": ["{{baseUrl}}"], "path": ["api", "admin", "users", "{{userId}}", "status"] }
+          }
+        },
+        {
+          "name": "Reset User Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"NewPassword@2026\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/admin/users/{{userId}}/reset-password", "host": ["{{baseUrl}}"], "path": ["api", "admin", "users", "{{userId}}", "reset-password"] }
+          }
+        },
+        {
+          "name": "Get Analytics",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/analytics", "host": ["{{baseUrl}}"], "path": ["api", "admin", "analytics"] }
+          }
+        },
+        {
+          "name": "Get Audit Logs",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/audit-logs", "host": ["{{baseUrl}}"], "path": ["api", "admin", "audit-logs"] }
+          }
+        },
+        {
+          "name": "Get System Health",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/health", "host": ["{{baseUrl}}"], "path": ["api", "admin", "health"] }
+          }
+        }
+      ]
+    }
+  ]
+}
+

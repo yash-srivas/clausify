@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contract Review Workspace | Legal Risk Analyzer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/vendor/pdf_viewer.min.css">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/themes.css">
+  <script>
+    (function() {
+      const t = new URLSearchParams(window.location.search).get('theme') || localStorage.getItem('app_theme') || 'claymorphism';
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('app_theme', t);
+    })();
+  </script>
+  <script>
+    window.__logs = [];
+    ['log', 'warn', 'error'].forEach(type => {
+      const orig = console[type];
+      console[type] = function(...args) {
+        window.__logs.push('[' + type + '] ' + args.map(a => {
+          try { return typeof a === 'object' ? JSON.stringify(a) : String(a); } catch (e) { return String(a); }
+        }).join(' '));
+        const el = document.getElementById('debugLogs');
+        if (el) el.textContent = window.__logs.join('\n');
+        orig.apply(console, args);
+      };
+    });
+    window.addEventListener('error', e => {
+      window.__logs.push('[UNCAUGHT] ' + e.message + ' at ' + e.filename + ':' + e.lineno);
+      const el = document.getElementById('debugLogs');
+      if (el) el.textContent = window.__logs.join('\n');
+    });
+  </script>
+  <style>
+    .workspace-wrapper {
+      height: calc(100vh - 90px);
+      padding: 12px 20px 20px 20px;
+    }
+    .pdf-pane-card {
+      height: 100%;
+      background: var(--clay-surface);
+      border-radius: 28px;
+      box-shadow: var(--clay-shadow-card);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .pdf-scroll-area {
+      height: 100%;
+      overflow-y: auto;
+      background: #EBF0F7;
+      padding: 24px 16px;
+    }
+    .findings-pane-card {
+      height: 100%;
+      background: var(--clay-surface);
+      border-radius: 28px;
+      box-shadow: var(--clay-shadow-card);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .pdf-page-container {
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(100, 116, 139, 0.25), 0 2px 6px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="debugLogs" style="display:none;"></div>
+  <!-- Dynamic Floating Navbar -->
+  <div id="navbarPlaceholder"></div>
+
+  <!-- Workspace Container (Split Pane) -->
+  <div class="container-fluid workspace-wrapper">
+    <div class="row g-3 h-100">
+      
+      <!-- Left 58%: PDF Viewer Pane -->
+      <div class="col-12 col-lg-7 d-flex flex-column h-100">
+        <div class="pdf-pane-card">
+          <!-- PDF Toolbar -->
+          <div class="pdf-toolbar px-3 py-2 d-flex justify-content-between align-items-center" style="z-index: 20;">
+            <div class="d-flex align-items-center gap-2">
+              <a href="/associate/dashboard.html" class="btn btn-outline-secondary btn-sm px-2 py-1 rounded-pill" title="Back to Dashboard">
+                <i class="bi bi-arrow-left"></i>
+              </a>
+              <div>
+                <span id="docTitle" class="fw-bold text-dark text-truncate small d-inline-block align-middle" style="max-width: 280px;">Loading document...</span>
+                <span id="pageCountBadge" class="clay-badge clay-badge-processing ms-2">-- pages</span>
+              </div>
+            </div>
+
+            <div class="pdf-zoom-controls d-flex align-items-center gap-1 p-1 rounded-pill">
+              <button id="zoomOutBtn" class="btn btn-sm btn-link text-secondary p-1 px-2" title="Zoom Out">
+                <i class="bi bi-dash-lg"></i>
+              </button>
+              <span id="zoomLevel" class="small fw-bold text-dark px-1" style="min-width: 44px; text-align: center;">115%</span>
+              <button id="zoomInBtn" class="btn btn-sm btn-link text-secondary p-1 px-2" title="Zoom In">
+                <i class="bi bi-plus-lg"></i>
+              </button>
+              <button id="fitWidthBtn" class="btn btn-sm btn-link text-secondary p-1 px-2 border-start" title="Reset Zoom">
+                <i class="bi bi-arrows-angle-expand"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Scrollable PDF Canvas Container -->
+          <div class="pdf-scroll-area flex-grow-1" id="pdfScrollContainer">
+            <div id="pdfViewerContainer" class="d-flex flex-column align-items-center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right 42%: Findings & Risk Panel Pane -->
+      <div class="col-12 col-lg-5 d-flex flex-column h-100">
+        <div class="findings-pane-card" id="findingsPanelContainer">
+          <!-- Rendered by findingsPanel.js -->
+          <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+            <div class="spinner-border text-primary me-2" role="status"></div>
+            <span>Loading risk findings...</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/pdf.min.js"></script>
+  <script type="module" src="/assets/js/themeSwitcher.js"></script>
+  <script type="module" src="/assets/js/pages/associateReview.js"></script>
+</body>
+</html>
