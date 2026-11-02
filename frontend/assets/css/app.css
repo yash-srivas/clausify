@@ -571,7 +571,7 @@ body {
   transform: translateY(1px) scale(0.99);
 }
 
-/* Clay Tables */
+/* Seamless Clay & Bootstrap Tables (No harsh rectangular blocks) */
 .clay-table-container {
   background: var(--clay-surface);
   border-radius: 24px;
@@ -580,38 +580,58 @@ body {
   overflow: hidden;
 }
 
-.clay-table {
+.clay-table,
+.table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   margin-bottom: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  --bs-table-bg: transparent !important;
+  --bs-table-accent-bg: transparent !important;
+  --bs-table-color: inherit !important;
+  --bs-table-border-color: rgba(0, 0, 0, 0.06) !important;
 }
 
-.clay-table thead th {
-  background: #F8FAFC;
+.clay-table > :not(caption) > * > *,
+.table > :not(caption) > * > * {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.clay-table thead th,
+.table thead th {
+  background: transparent !important;
   color: var(--clay-text-secondary);
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
   padding: 14px 18px;
-  border-bottom: 2px solid #E2E8F0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-top: none !important;
 }
 
-.clay-table tbody td {
+.clay-table tbody td,
+.table tbody td {
   padding: 14px 18px;
-  border-bottom: 1px solid #EDF2F7;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-top: none !important;
   vertical-align: middle;
   font-size: 0.9rem;
+  background: transparent !important;
   transition: background-color 0.15s ease;
 }
 
-.clay-table tbody tr:hover td {
-  background-color: #F8FAFC;
+.clay-table tbody tr:hover td,
+.table tbody tr:hover td {
+  background-color: rgba(99, 102, 241, 0.035) !important;
 }
 
-.clay-table tbody tr:last-child td {
-  border-bottom: none;
+.clay-table tbody tr:last-child td,
+.table tbody tr:last-child td {
+  border-bottom: none !important;
 }
 
 /* Clay Status Badges */
@@ -1242,26 +1262,53 @@ html[data-mode="dark"] .template-item.bg-light {
   border-color: rgba(255, 255, 255, 0.06) !important;
 }
 
-/* Tables Dark */
+/* Tables Dark - Seamless Blending with Card Surface */
 html[data-mode="dark"] .clay-table-container {
   background: var(--clay-surface) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: var(--clay-shadow-card) !important;
 }
 
-html[data-mode="dark"] .clay-table thead th {
-  background: #0F172A !important;
-  color: #CBD5E1 !important;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.08) !important;
-}
-
-html[data-mode="dark"] .clay-table tbody td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+html[data-mode="dark"] .clay-table,
+html[data-mode="dark"] .table {
+  background: transparent !important;
+  background-color: transparent !important;
+  --bs-table-bg: transparent !important;
+  --bs-table-accent-bg: transparent !important;
+  --bs-table-border-color: rgba(255, 255, 255, 0.06) !important;
   color: #F8FAFC !important;
 }
 
-html[data-mode="dark"] .clay-table tbody tr:hover td {
-  background-color: rgba(255, 255, 255, 0.03) !important;
+html[data-mode="dark"] .clay-table > :not(caption) > * > *,
+html[data-mode="dark"] .table > :not(caption) > * > * {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-mode="dark"] .clay-table thead th,
+html[data-mode="dark"] .table thead th {
+  background: transparent !important;
+  color: #94A3B8 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-top: none !important;
+}
+
+html[data-mode="dark"] .clay-table tbody td,
+html[data-mode="dark"] .table tbody td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-top: none !important;
+  color: #F8FAFC !important;
+  background: transparent !important;
+}
+
+html[data-mode="dark"] .clay-table tbody tr:hover td,
+html[data-mode="dark"] .table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.035) !important;
+}
+
+html[data-mode="dark"] .clay-table tbody tr:last-child td,
+html[data-mode="dark"] .table tbody tr:last-child td {
+  border-bottom: none !important;
 }
 
 /* Findings Panel & Cards Dark */

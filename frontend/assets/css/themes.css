@@ -268,7 +268,7 @@ html[data-theme="material-you"] .clay-pill-btn.active {
 
 /* Material You Tables */
 html[data-theme="material-you"] .clay-table thead th {
-  background: var(--m3-surface-container) !important;
+  background: transparent !important;
   color: #49454F !important;
   border-bottom: 1px solid var(--m3-outline) !important;
   font-weight: 700;
@@ -682,7 +682,7 @@ html[data-theme="neo-brutalism"] .clay-pill-btn.active {
 
 /* Neo-Brutalist Tables */
 html[data-theme="neo-brutalism"] .clay-table thead th {
-  background: #FFFBEB !important;
+  background: transparent !important;
   color: #000000 !important;
   border-bottom: 2.5px solid #000000 !important;
   font-weight: 800;
@@ -1063,7 +1063,7 @@ html[data-theme="neumorphism"] .clay-pill-btn.active {
 }
 
 html[data-theme="neumorphism"] .clay-table thead th {
-  background: #D8DFE8 !important;
+  background: transparent !important;
   color: #4B5563 !important;
   border-bottom: 1px solid #CBD5E1 !important;
   font-weight: 700;
@@ -1370,8 +1370,7 @@ html[data-theme="glassmorphism"] .clay-pill-btn.active {
 }
 
 html[data-theme="glassmorphism"] .clay-table thead th {
-  background: rgba(255, 255, 255, 0.65) !important;
-  backdrop-filter: blur(8px) !important;
+  background: transparent !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.8) !important;
 }
 
@@ -1661,7 +1660,7 @@ html[data-theme="monochrome"] .clay-pill-btn.active {
 }
 
 html[data-theme="monochrome"] .clay-table thead th {
-  background: #FAFAFA !important;
+  background: transparent !important;
   color: #09090B !important;
   border-bottom: 2px solid #E4E4E7 !important;
   font-weight: 700;
@@ -1939,10 +1938,15 @@ html[data-theme="material-you"][data-mode="dark"] .form-select:focus {
   box-shadow: 0 0 0 2px var(--m3-primary) !important;
 }
 
+html[data-theme="material-you"][data-mode="dark"] .clay-table,
+html[data-theme="material-you"][data-mode="dark"] .clay-table thead th,
+html[data-theme="material-you"][data-mode="dark"] .clay-table tbody td {
+  background: transparent !important;
+}
+
 html[data-theme="material-you"][data-mode="dark"] .clay-table thead th {
-  background: var(--m3-surface-container) !important;
   color: #CAC4D0 !important;
-  border-bottom: 2px solid var(--m3-outline) !important;
+  border-bottom: 1px solid var(--m3-outline) !important;
 }
 
 html[data-theme="material-you"][data-mode="dark"] .clay-table tbody td {
@@ -2095,8 +2099,13 @@ html[data-theme="neo-brutalism"][data-mode="dark"] .form-select:focus {
   box-shadow: 4px 4px 0px #00F0FF !important;
 }
 
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-table,
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-table thead th,
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-table tbody td {
+  background: transparent !important;
+}
+
 html[data-theme="neo-brutalism"][data-mode="dark"] .clay-table thead th {
-  background: #121212 !important;
   color: #FFFFFF !important;
   border-bottom: 2.5px solid #FFFFFF !important;
 }
@@ -2225,14 +2234,19 @@ html[data-theme="neumorphism"][data-mode="dark"] .form-select:focus {
   box-shadow: inset 5px 5px 10px #0e1013, inset -5px -5px 10px #242932, 0 0 0 2px var(--neu-primary) !important;
 }
 
+html[data-theme="neumorphism"][data-mode="dark"] .clay-table,
+html[data-theme="neumorphism"][data-mode="dark"] .clay-table thead th,
+html[data-theme="neumorphism"][data-mode="dark"] .clay-table tbody td {
+  background: transparent !important;
+}
+
 html[data-theme="neumorphism"][data-mode="dark"] .clay-table thead th {
-  background: #14171c !important;
   color: #94A3B8 !important;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.05) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
 html[data-theme="neumorphism"][data-mode="dark"] .clay-table tbody td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
   color: #E2E8F0 !important;
 }
 
@@ -2360,10 +2374,15 @@ html[data-theme="glassmorphism"][data-mode="dark"] .form-select:focus {
   box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3) !important;
 }
 
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-table,
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-table thead th,
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-table tbody td {
+  background: transparent !important;
+}
+
 html[data-theme="glassmorphism"][data-mode="dark"] .clay-table thead th {
-  background: rgba(10, 13, 23, 0.8) !important;
   color: #94A3B8 !important;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 html[data-theme="glassmorphism"][data-mode="dark"] .clay-table tbody td {
@@ -2491,8 +2510,13 @@ html[data-theme="monochrome"][data-mode="dark"] .form-select:focus {
   box-shadow: 0 0 0 2px #FAFAFA !important;
 }
 
+html[data-theme="monochrome"][data-mode="dark"] .clay-table,
+html[data-theme="monochrome"][data-mode="dark"] .clay-table thead th,
+html[data-theme="monochrome"][data-mode="dark"] .clay-table tbody td {
+  background: transparent !important;
+}
+
 html[data-theme="monochrome"][data-mode="dark"] .clay-table thead th {
-  background: #09090B !important;
   color: #A1A1AA !important;
   border-bottom: 1px solid #27272A !important;
 }
