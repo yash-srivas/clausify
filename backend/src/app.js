@@ -73,9 +73,22 @@ app.use('/api/auth/login', authLimiter);
 // Audit middleware on API routes
 app.use('/api', auditMiddleware);
 
-// Serve Frontend statically
+// Serve Frontend statically with no-cache headers in development so browser immediately receives updates
 const frontendDir = path.join(__dirname, '../../frontend');
-app.use(express.static(frontendDir));
+app.use(
+  express.static(frontendDir, {
+    etag: false,
+    maxAge: 0,
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.html') || filePath.endsWith('.js') || filePath.endsWith('.css')) {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+        res.setHeader('Surrogate-Control', 'no-store');
+      }
+    },
+  })
+);
 
 // API Routes
 app.use('/api/auth', authRoutes);

@@ -10,113 +10,13 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   THEME SWITCHER DOCK (Floating Pill Widget)
+   THEME SWITCHER DOCK (Permanently Disabled & Hidden)
    -------------------------------------------------------------------------- */
-.theme-switcher-dock {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 1080;
-  display: flex;
-  align-items: center;
-}
-
-.theme-trigger-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 100px;
-  padding: 8px 16px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #1E293B;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  outline: none;
-}
-
-.theme-trigger-btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
-}
-
-.theme-popover-menu {
-  position: absolute;
-  bottom: 52px;
-  right: 0;
-  width: 280px;
-  background: #FFFFFF;
-  border-radius: 20px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 10px;
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-  animation: themeMenuPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.theme-popover-menu.show {
-  display: flex;
-}
-
-@keyframes themeMenuPop {
-  from { opacity: 0; transform: translateY(10px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.theme-option-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-  border-radius: 12px;
-  border: 1px solid transparent;
-  background: transparent;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  transition: all 0.15s ease;
-}
-
-.theme-option-item:hover {
-  background: #F1F5F9;
-}
-
-.theme-option-item.active {
-  background: #EEF2FF;
-  border-color: #C7D2FE;
-}
-
-.theme-swatch {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-}
-
-.theme-option-info {
-  flex-grow: 1;
-}
-
-.theme-option-name {
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: #0F172A;
-  line-height: 1.2;
-}
-
-.theme-option-desc {
-  font-size: 0.7rem;
-  color: #64748B;
+.theme-switcher-dock, #themeSwitcherDock, .theme-popover-menu {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
 }
 
 /* Base Transition for seamless live switching */
@@ -152,10 +52,7 @@ body, .clay-card, .card-custom, .clay-card-flat, .navbar-custom, .btn, .form-con
   margin-top: 8px !important;
 }
 
-/* Prevent floating dock from overlapping on pages with an active navbar */
-body:has(#navbarPlaceholder) .theme-switcher-dock {
-  display: none !important;
-}
+
 
 
 /* ==========================================================================
@@ -989,12 +886,7 @@ html[data-theme="neo-brutalism"] .theme-trigger-btn {
   color: #000000 !important;
 }
 
-html[data-theme="neo-brutalism"] .theme-popover-menu {
-  background: #FFFFFF !important;
-  border: 2.5px solid #000000 !important;
-  box-shadow: 6px 6px 0px #000000 !important;
-  border-radius: 12px !important;
-}
+
 
 
 /* ==========================================================================
@@ -1312,12 +1204,7 @@ html[data-theme="neumorphism"] .theme-trigger-btn {
   color: #31344B !important;
 }
 
-html[data-theme="neumorphism"] .theme-popover-menu {
-  background: var(--neu-surface) !important;
-  box-shadow: 10px 10px 22px #b8b9be, -10px -10px 22px #ffffff !important;
-  border: 1px solid rgba(255,255,255,0.7) !important;
-  border-radius: 18px !important;
-}
+
 
 
 /* ==========================================================================
@@ -1592,12 +1479,7 @@ html[data-theme="glassmorphism"] .theme-trigger-btn {
   color: #1E293B !important;
 }
 
-html[data-theme="glassmorphism"] .theme-popover-menu {
-  background: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.9) !important;
-  border-radius: 20px !important;
-}
+
 
 
 /* ==========================================================================
@@ -1941,10 +1823,7 @@ html[data-theme="monochrome"] .pdf-highlight-low {
   border-bottom: 2px solid #A1A1AA !important;
 }
 
-/* Hide any legacy floating dock permanently */
-.theme-switcher-dock {
-  display: none !important;
-}
+
 
 /* ==========================================================================
    MULTI-THEME DARK MODE SPECIFICATIONS (ALL 5 THEMES)
@@ -2640,4 +2519,190 @@ html[data-theme="monochrome"][data-mode="dark"] .clay-quote-box {
   background: #121215 !important;
   border-left: 3px solid #FAFAFA !important;
   color: #FAFAFA !important;
+}
+
+/* ==========================================================================
+   THEME-SPECIFIC DARK MODE DROPZONE, BUTTON & DROPDOWN ENHANCEMENTS
+   ========================================================================== */
+
+/* Universal Dark Dropdown Item Styling Across All Themes */
+html[data-mode="dark"] .dropdown-menu {
+  background: #1E293B !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6) !important;
+}
+
+html[data-mode="dark"] .dropdown-menu .dropdown-item,
+html[data-mode="dark"] .navbar-custom .dropdown-item {
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .dropdown-menu .dropdown-item:hover,
+html[data-mode="dark"] .dropdown-menu .dropdown-item:focus,
+html[data-mode="dark"] .navbar-custom .dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+}
+
+html[data-mode="dark"] .dropdown-menu .dropdown-item.text-danger,
+html[data-mode="dark"] #logoutBtn,
+html[data-mode="dark"] .user-menu-dropdown #logoutBtn {
+  color: #F87171 !important;
+}
+
+html[data-mode="dark"] .dropdown-menu .dropdown-item.text-danger:hover,
+html[data-mode="dark"] #logoutBtn:hover,
+html[data-mode="dark"] .user-menu-dropdown #logoutBtn:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #FCA5A5 !important;
+}
+
+/* 1. Material You Dark Refinements */
+html[data-theme="material-you"][data-mode="dark"] .dropzone-area {
+  background: var(--m3-surface-container) !important;
+  border: 2px dashed var(--m3-outline) !important;
+}
+html[data-theme="material-you"][data-mode="dark"] .dropzone-icon-circle {
+  background: var(--m3-surface-container-high) !important;
+  color: var(--m3-primary) !important;
+}
+html[data-theme="material-you"][data-mode="dark"] .dropzone-area .btn-outline-primary {
+  background: var(--m3-surface-container-high) !important;
+  color: var(--m3-primary) !important;
+  border: 1px solid var(--m3-outline) !important;
+}
+
+/* 2. Neo-Brutalism Dark Refinements */
+html[data-theme="neo-brutalism"][data-mode="dark"] .dropzone-area {
+  background: #18181B !important;
+  border: 2.5px dashed #FFE600 !important;
+  box-shadow: 4px 4px 0px #FFE600 !important;
+}
+html[data-theme="neo-brutalism"][data-mode="dark"] .dropzone-icon-circle {
+  background: #27272A !important;
+  border: 2px solid #FFFFFF !important;
+  box-shadow: 2px 2px 0px #FFE600 !important;
+}
+html[data-theme="neo-brutalism"][data-mode="dark"] .dropzone-area .btn-outline-primary {
+  background: #FFE600 !important;
+  color: #000000 !important;
+  border: 2px solid #FFFFFF !important;
+  box-shadow: 3px 3px 0px #FFFFFF !important;
+  font-weight: 800 !important;
+}
+html[data-theme="neo-brutalism"][data-mode="dark"] .dropdown-menu {
+  background: #18181B !important;
+  border: 2.5px solid #FFFFFF !important;
+  box-shadow: 6px 6px 0px #FFE600 !important;
+}
+html[data-theme="neo-brutalism"][data-mode="dark"] .dropdown-item,
+html[data-theme="neo-brutalism"][data-mode="dark"] .navbar-custom .dropdown-item {
+  color: #FFFFFF !important;
+}
+html[data-theme="neo-brutalism"][data-mode="dark"] .dropdown-item:hover,
+html[data-theme="neo-brutalism"][data-mode="dark"] .navbar-custom .dropdown-item:hover {
+  background: #FFE600 !important;
+  color: #000000 !important;
+}
+html[data-theme="neo-brutalism"][data-mode="dark"] #logoutBtn {
+  color: #FF5757 !important;
+}
+html[data-theme="neo-brutalism"][data-mode="dark"] #logoutBtn:hover {
+  background: #FF5757 !important;
+  color: #FFFFFF !important;
+}
+
+/* 3. Neumorphism Dark Refinements */
+html[data-theme="neumorphism"][data-mode="dark"] .dropzone-area {
+  background: #161D2A !important;
+  border: 2px dashed rgba(255, 255, 255, 0.15) !important;
+  box-shadow: inset 4px 4px 10px #0c1017, inset -4px -4px 10px #202a3d !important;
+}
+html[data-theme="neumorphism"][data-mode="dark"] .dropzone-icon-circle {
+  background: #1B2433 !important;
+  box-shadow: 4px 4px 10px #0c1017, -4px -4px 10px #243043 !important;
+}
+html[data-theme="neumorphism"][data-mode="dark"] .dropzone-area .btn-outline-primary {
+  background: #1E2838 !important;
+  color: #93C5FD !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 4px 4px 10px #0c1017, -4px -4px 10px #243043 !important;
+}
+html[data-theme="neumorphism"][data-mode="dark"] .dropdown-menu {
+  background: #181F2C !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 8px 8px 20px #0c1017, -8px -8px 20px #243043 !important;
+}
+html[data-theme="neumorphism"][data-mode="dark"] .dropdown-item,
+html[data-theme="neumorphism"][data-mode="dark"] .navbar-custom .dropdown-item {
+  color: #E2E8F0 !important;
+}
+html[data-theme="neumorphism"][data-mode="dark"] .dropdown-item:hover,
+html[data-theme="neumorphism"][data-mode="dark"] .navbar-custom .dropdown-item:hover {
+  background: #202A3C !important;
+  color: #FFFFFF !important;
+}
+
+/* 4. Glassmorphism Dark Refinements */
+html[data-theme="glassmorphism"][data-mode="dark"] .dropzone-area {
+  background: rgba(15, 23, 42, 0.6) !important;
+  border: 2px dashed rgba(129, 140, 248, 0.45) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+html[data-theme="glassmorphism"][data-mode="dark"] .dropzone-icon-circle {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #A5B4FC !important;
+}
+html[data-theme="glassmorphism"][data-mode="dark"] .dropzone-area .btn-outline-primary {
+  background: rgba(129, 140, 248, 0.16) !important;
+  color: #C7D2FE !important;
+  border: 1px solid rgba(129, 140, 248, 0.35) !important;
+}
+html[data-theme="glassmorphism"][data-mode="dark"] .dropdown-menu {
+  background: rgba(15, 23, 42, 0.92) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65) !important;
+}
+html[data-theme="glassmorphism"][data-mode="dark"] .dropdown-item,
+html[data-theme="glassmorphism"][data-mode="dark"] .navbar-custom .dropdown-item {
+  color: #F1F5F9 !important;
+}
+html[data-theme="glassmorphism"][data-mode="dark"] .dropdown-item:hover,
+html[data-theme="glassmorphism"][data-mode="dark"] .navbar-custom .dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  color: #FFFFFF !important;
+}
+
+/* 5. Monochrome Dark Refinements */
+html[data-theme="monochrome"][data-mode="dark"] .dropzone-area {
+  background: #121215 !important;
+  border: 1px dashed #3F3F46 !important;
+}
+html[data-theme="monochrome"][data-mode="dark"] .dropzone-icon-circle {
+  background: #18181B !important;
+  border: 1px solid #3F3F46 !important;
+  color: #FAFAFA !important;
+}
+html[data-theme="monochrome"][data-mode="dark"] .dropzone-area .btn-outline-primary {
+  background: #27272A !important;
+  color: #F4F4F5 !important;
+  border: 1px solid #52525B !important;
+}
+html[data-theme="monochrome"][data-mode="dark"] .dropdown-menu {
+  background: #18181B !important;
+  border: 1px solid #3F3F46 !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75) !important;
+}
+html[data-theme="monochrome"][data-mode="dark"] .dropdown-item,
+html[data-theme="monochrome"][data-mode="dark"] .navbar-custom .dropdown-item {
+  color: #F4F4F5 !important;
+}
+html[data-theme="monochrome"][data-mode="dark"] .dropdown-item:hover,
+html[data-theme="monochrome"][data-mode="dark"] .navbar-custom .dropdown-item:hover {
+  background: #27272A !important;
+  color: #FFFFFF !important;
 }

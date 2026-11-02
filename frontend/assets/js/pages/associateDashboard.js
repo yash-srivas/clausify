@@ -234,9 +234,9 @@ function renderContractsTable() {
           band = 'MEDIUM RISK';
         }
         riskHtml = `
-          <div class="d-flex align-items-center gap-2">
+          <div class="d-flex align-items-center gap-2 text-nowrap">
             <span class="badge ${badgeClass} px-3 py-1 fs-6">${c.overall_risk_score}</span>
-            <span class="small fw-bold text-muted">${band}</span>
+            <span class="small fw-bold text-secondary text-nowrap">${band}</span>
           </div>
         `;
       }

@@ -126,8 +126,7 @@ export function toggleMode() {
 
 export function initThemeSwitcher() {
   // Clean up any residual floating dock widget from past revisions
-  const dock = document.getElementById('themeSwitcherDock');
-  if (dock) dock.remove();
+  document.querySelectorAll('.theme-switcher-dock, #themeSwitcherDock, .theme-popover-menu').forEach((el) => el.remove());
 
   // Apply current theme and mode
   const initialTheme = getCurrentTheme();

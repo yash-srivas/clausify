@@ -240,8 +240,7 @@ export function renderNavbar(activeKey = '') {
   navPlaceholder.innerHTML = navbarHtml;
 
   // Clean up any residual floating dock widget from past revisions
-  const dock = document.getElementById('themeSwitcherDock');
-  if (dock) dock.remove();
+  document.querySelectorAll('.theme-switcher-dock, #themeSwitcherDock, .theme-popover-menu').forEach((el) => el.remove());
 
   // Mode Toggle Handlers
   const navModeBtn = document.getElementById('navModeToggleBtn');
@@ -298,6 +297,17 @@ export function renderNavbar(activeKey = '') {
       e.preventDefault();
       logout();
     });
+  }
+
+  // Diagnostic or verification auto-open
+  if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('opendropdown') === 'true') {
+    setTimeout(() => {
+      const btn = document.getElementById('userProfileDropdownBtn');
+      if (btn && window.bootstrap) {
+        const dd = new window.bootstrap.Dropdown(btn);
+        dd.show();
+      }
+    }, 300);
   }
 
 

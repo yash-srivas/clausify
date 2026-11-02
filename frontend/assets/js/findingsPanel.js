@@ -201,7 +201,7 @@ export class FindingsPanel {
                 <i class="bi bi-shield-exclamation text-danger"></i>
                 <span>WHY THIS IS RISKY:</span>
               </div>
-              <p class="small text-muted mb-0">${escapeHtml(finding.reason || '')}</p>
+              <p class="small text-secondary mb-0 fw-medium">${escapeHtml(finding.reason || '')}</p>
             </div>
 
             <!-- Safer Rewrite Box -->
