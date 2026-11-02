@@ -11,9 +11,13 @@
   <link rel="stylesheet" href="/assets/css/themes.css">
   <script>
     (function() {
-      const t = new URLSearchParams(window.location.search).get('theme') || localStorage.getItem('app_theme') || 'claymorphism';
+      var t = new URLSearchParams(window.location.search).get('theme') || localStorage.getItem('app_theme') || 'claymorphism';
+      var m = new URLSearchParams(window.location.search).get('mode') || localStorage.getItem('app_mode') || 'light';
       document.documentElement.setAttribute('data-theme', t);
+      document.documentElement.setAttribute('data-mode', m);
+      document.documentElement.setAttribute('data-bs-theme', m);
       localStorage.setItem('app_theme', t);
+      localStorage.setItem('app_mode', m);
     })();
   </script>
   <script>
@@ -55,6 +59,9 @@
       overflow-y: auto;
       background: #EBF0F7;
       padding: 24px 16px;
+    }
+    html[data-mode="dark"] .pdf-scroll-area {
+      background: #090D16 !important;
     }
     .findings-pane-card {
       height: 100%;

@@ -10,9 +10,13 @@
   <link rel="stylesheet" href="/assets/css/themes.css">
   <script>
     (function() {
-      const t = new URLSearchParams(window.location.search).get('theme') || localStorage.getItem('app_theme') || 'claymorphism';
+      var t = new URLSearchParams(window.location.search).get('theme') || localStorage.getItem('app_theme') || 'claymorphism';
+      var m = new URLSearchParams(window.location.search).get('mode') || localStorage.getItem('app_mode') || 'light';
       document.documentElement.setAttribute('data-theme', t);
+      document.documentElement.setAttribute('data-mode', m);
+      document.documentElement.setAttribute('data-bs-theme', m);
       localStorage.setItem('app_theme', t);
+      localStorage.setItem('app_mode', m);
     })();
   </script>
 </head>
@@ -121,9 +125,30 @@
           </form>
         </div>
 
-        <p class="text-center text-muted small mt-4 mb-0">
+        <p class="text-center text-muted small mt-4 mb-2">
           Intelligent Legal Contract & Vendor Risk Analyzer &bull; 2026
         </p>
+
+        <!-- Discreet Appearance Controls (Hidden & subtle, no floating overlays) -->
+        <div class="d-flex align-items-center justify-content-center gap-3 text-muted small">
+          <button id="loginModeBtn" class="btn btn-sm btn-link text-muted text-decoration-none p-0 d-inline-flex align-items-center gap-1" type="button" style="font-size: 0.8rem;">
+            <i class="bi bi-moon-stars" id="loginModeIcon"></i> <span id="loginModeLabel">Dark Mode</span>
+          </button>
+          <span>&bull;</span>
+          <div class="dropup d-inline-block">
+            <button class="btn btn-sm btn-link text-muted text-decoration-none p-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="loginThemeMenuBtn" style="font-size: 0.8rem;">
+              Theme: <span id="loginCurrentThemeName">Claymorphism</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-center shadow rounded-3 p-1" style="font-size: 0.8rem; min-width: 160px;">
+              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('claymorphism')">Claymorphism</button></li>
+              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('material-you')">Material You</button></li>
+              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('neo-brutalism')">Neo-Brutalism</button></li>
+              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('neumorphism')">Neumorphism</button></li>
+              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('glassmorphism')">Glassmorphism</button></li>
+              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('monochrome')">Monochrome</button></li>
+            </ul>
+          </div>
+        </div>
 
       </div>
     </div>

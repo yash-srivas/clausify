@@ -71,6 +71,58 @@
     inset -3px -3px 6px rgba(255, 255, 255, 0.85);
 }
 
+/* Claymorphism Dark Mode Palette & Dual Inverted Shadows */
+html[data-mode="dark"] {
+  --clay-bg: #0B1120;
+  --clay-surface: #1E293B;
+  --clay-surface-alt: #172033;
+  --clay-inset: #0F172A;
+  
+  --clay-text-primary: #F8FAFC;
+  --clay-text-secondary: #94A3B8;
+  --clay-text-muted: #64748B;
+
+  /* Accent Clay Colors (Soft luminous dark tones) */
+  --clay-primary: #818CF8;
+  --clay-primary-dark: #6366F1;
+  --clay-primary-light: #A5B4FC;
+
+  --clay-high: #F87171;
+  --clay-high-gradient: linear-gradient(135deg, #EF4444, #DC2626);
+  --clay-high-bg: rgba(239, 68, 68, 0.18);
+
+  --clay-medium: #FBBF24;
+  --clay-medium-gradient: linear-gradient(135deg, #F59E0B, #D97706);
+  --clay-medium-bg: rgba(245, 158, 11, 0.18);
+
+  --clay-low: #34D399;
+  --clay-low-gradient: linear-gradient(135deg, #10B981, #059669);
+  --clay-low-bg: rgba(16, 185, 129, 0.18);
+
+  /* Tactile Dark Clay Shadows (Dual depth with soft specular bevel) */
+  --clay-shadow-card: 
+    14px 14px 28px rgba(0, 0, 0, 0.65), 
+    -6px -6px 20px rgba(255, 255, 255, 0.035), 
+    inset 1px 1px 2px rgba(255, 255, 255, 0.08), 
+    inset -1px -1px 2px rgba(0, 0, 0, 0.5);
+
+  --clay-shadow-card-sm: 
+    8px 8px 18px rgba(0, 0, 0, 0.55), 
+    -4px -4px 12px rgba(255, 255, 255, 0.03), 
+    inset 1px 1px 2px rgba(255, 255, 255, 0.07), 
+    inset -1px -1px 2px rgba(0, 0, 0, 0.4);
+
+  --clay-shadow-btn-primary: 
+    6px 6px 14px rgba(0, 0, 0, 0.5), 
+    -2px -2px 8px rgba(255, 255, 255, 0.06), 
+    inset 1px 1px 2px rgba(255, 255, 255, 0.25), 
+    inset -1px -1px 2px rgba(0, 0, 0, 0.4);
+
+  --clay-shadow-inset: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+    inset -2px -2px 6px rgba(255, 255, 255, 0.03);
+}
+
 /* Base resets */
 * {
   box-sizing: border-box;
@@ -754,4 +806,382 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
+}
+
+/* ==========================================================================
+   Global Navbar Mode & User Menu Styling (Both Light & Dark)
+   ========================================================================== */
+.btn-nav-mode {
+  width: 36px;
+  height: 36px;
+  border-radius: 50% !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  color: var(--clay-text-primary) !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  box-shadow: 2px 2px 6px rgba(166, 180, 200, 0.3), -1px -1px 4px rgba(255, 255, 255, 0.8) !important;
+}
+
+.btn-nav-mode:hover {
+  transform: scale(1.08);
+  background: #FFFFFF !important;
+  color: var(--clay-primary) !important;
+}
+
+.user-profile-pill {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 4px 4px 10px rgba(166, 180, 200, 0.3), -2px -2px 6px rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.user-profile-pill:hover {
+  background: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.user-menu-dropdown {
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background: #FFFFFF !important;
+  animation: dropdownFadeIn 0.15s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Dark Mode Component Overrides (Claymorphism Default + Global Surfaces)
+   ========================================================================== */
+html[data-mode="dark"] body {
+  background-color: var(--clay-bg);
+  color: var(--clay-text-primary);
+}
+
+html[data-mode="dark"] .text-dark {
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .text-secondary {
+  color: #94A3B8 !important;
+}
+
+html[data-mode="dark"] .text-muted {
+  color: #64748B !important;
+}
+
+html[data-mode="dark"] .bg-white {
+  background-color: var(--clay-surface) !important;
+}
+
+html[data-mode="dark"] .bg-light {
+  background-color: var(--clay-surface-alt) !important;
+}
+
+html[data-mode="dark"] .border {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-mode="dark"] .border-bottom {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-mode="dark"] .border-top {
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Navbar Dark */
+html[data-mode="dark"] .navbar-custom {
+  background: rgba(30, 41, 59, 0.88) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-mode="dark"] .navbar-brand {
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .nav-link {
+  color: #94A3B8 !important;
+}
+
+html[data-mode="dark"] .nav-link:hover {
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .nav-link.active {
+  background: rgba(129, 140, 248, 0.18) !important;
+  color: #818CF8 !important;
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-mode="dark"] .btn-nav-mode {
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #F8FAFC !important;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4), -1px -1px 3px rgba(255, 255, 255, 0.03) !important;
+}
+
+html[data-mode="dark"] .btn-nav-mode:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  color: #FBBF24 !important;
+}
+
+html[data-mode="dark"] .user-profile-pill {
+  background: #0F172A;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4), -1px -1px 3px rgba(255, 255, 255, 0.03);
+}
+
+html[data-mode="dark"] .user-profile-pill:hover {
+  background: #172033;
+}
+
+html[data-mode="dark"] .user-profile-pill .user-name-text {
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .user-menu-dropdown {
+  background: #1E293B !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6) !important;
+}
+
+html[data-mode="dark"] .user-menu-dropdown .user-menu-name {
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .user-menu-dropdown .user-menu-email {
+  color: #94A3B8 !important;
+}
+
+html[data-mode="dark"] .user-menu-dropdown select {
+  background-color: #0F172A !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .user-menu-dropdown .dropdown-divider {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-mode="dark"] .dropdown-menu {
+  background: #1E293B !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6) !important;
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .dropdown-item {
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .dropdown-item:hover,
+html[data-mode="dark"] .dropdown-item:focus {
+  background: #2D3D52 !important;
+  color: #818CF8 !important;
+}
+
+/* Clay Cards Dark */
+html[data-mode="dark"] .clay-card,
+html[data-mode="dark"] .card-custom,
+html[data-mode="dark"] .clay-kpi-card,
+html[data-mode="dark"] .clay-card-flat {
+  background: var(--clay-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  box-shadow: var(--clay-shadow-card) !important;
+}
+
+html[data-mode="dark"] .clay-card:hover,
+html[data-mode="dark"] .clay-kpi-card:hover {
+  box-shadow: 16px 16px 32px rgba(0, 0, 0, 0.75), -6px -6px 20px rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Form Controls & Inputs Dark */
+html[data-mode="dark"] .form-control,
+html[data-mode="dark"] .form-select,
+html[data-mode="dark"] input[type="text"],
+html[data-mode="dark"] input[type="password"],
+html[data-mode="dark"] input[type="email"],
+html[data-mode="dark"] textarea {
+  background-color: var(--clay-inset) !important;
+  color: #F8FAFC !important;
+  box-shadow: var(--clay-shadow-inset) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-mode="dark"] .form-control:focus,
+html[data-mode="dark"] .form-select:focus,
+html[data-mode="dark"] textarea:focus {
+  background-color: #172033 !important;
+  border-color: var(--clay-primary) !important;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25) !important;
+}
+
+html[data-mode="dark"] .form-control::placeholder {
+  color: #64748B !important;
+}
+
+html[data-mode="dark"] .input-group {
+  background: var(--clay-inset);
+  box-shadow: var(--clay-shadow-inset);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+html[data-mode="dark"] .input-group-text {
+  background: transparent !important;
+  color: #94A3B8 !important;
+}
+
+/* Buttons Outline Dark */
+html[data-mode="dark"] .btn-outline-secondary {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #94A3B8 !important;
+}
+
+html[data-mode="dark"] .btn-outline-secondary:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #F8FAFC !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Tables Dark */
+html[data-mode="dark"] .clay-table-container {
+  background: var(--clay-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: var(--clay-shadow-card) !important;
+}
+
+html[data-mode="dark"] .clay-table thead th {
+  background: #0F172A !important;
+  color: #94A3B8 !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-mode="dark"] .clay-table tbody td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .clay-table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Findings Panel & Cards Dark */
+html[data-mode="dark"] .clay-finding-card {
+  background: #1E293B !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: var(--clay-shadow-card-sm) !important;
+}
+
+html[data-mode="dark"] .clay-finding-card:hover {
+  box-shadow: 10px 10px 22px rgba(0, 0, 0, 0.6), -4px -4px 12px rgba(255, 255, 255, 0.03) !important;
+}
+
+html[data-mode="dark"] .clay-finding-card.active-card {
+  border: 2px solid var(--clay-primary) !important;
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.25), var(--clay-shadow-card) !important;
+}
+
+html[data-mode="dark"] .clay-quote-box {
+  background: #0F172A !important;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -1px -1px 3px rgba(255, 255, 255, 0.03) !important;
+  color: #E2E8F0 !important;
+}
+
+html[data-mode="dark"] .clay-rewrite-box {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border: 1px solid rgba(52, 211, 153, 0.3) !important;
+  box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.05) !important;
+  color: #D1FAE5 !important;
+}
+
+/* Filter Pills Dark */
+html[data-mode="dark"] .filter-pill-container {
+  background: #0F172A !important;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -1px -1px 3px rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+html[data-mode="dark"] .clay-pill-btn {
+  color: #94A3B8 !important;
+}
+
+html[data-mode="dark"] .clay-pill-btn:hover {
+  color: #F8FAFC !important;
+}
+
+html[data-mode="dark"] .clay-pill-btn.active {
+  background: #1E293B !important;
+  color: var(--clay-primary) !important;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4), -1px -1px 4px rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Demo Role Cards Dark (Login) */
+html[data-mode="dark"] .demo-role-card {
+  background: #0F172A !important;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5), -2px -2px 8px rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+html[data-mode="dark"] .demo-role-card:hover {
+  background: #172033 !important;
+  transform: translateY(-2px);
+}
+
+/* PDF Viewer Dark Workbench */
+html[data-mode="dark"] .pdf-pane-card,
+html[data-mode="dark"] .findings-pane-card {
+  background: var(--clay-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-mode="dark"] .pdf-scroll-area {
+  background: #090D16 !important;
+}
+
+html[data-mode="dark"] .pdf-toolbar {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-mode="dark"] .pdf-zoom-controls {
+  background: #0F172A !important;
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-mode="dark"] .clay-toolbar {
+  background: rgba(30, 41, 59, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Modals Dark */
+html[data-mode="dark"] .modal-content {
+  background: #1E293B !important;
+  color: #F8FAFC !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7) !important;
+}
+
+html[data-mode="dark"] .modal-header,
+html[data-mode="dark"] .modal-footer {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-mode="dark"] .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Dark Scrollbars */
+html[data-mode="dark"] ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+html[data-mode="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }

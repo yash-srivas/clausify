@@ -96,4 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     await performLogin(email, password);
   });
+
+  // Mode Toggle in Login Footer
+  const loginModeBtn = document.getElementById('loginModeBtn');
+  if (loginModeBtn) {
+    loginModeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.toggleMode) {
+        window.toggleMode();
+      }
+    });
+  }
 });

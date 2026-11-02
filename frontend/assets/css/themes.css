@@ -1941,17 +1941,703 @@ html[data-theme="monochrome"] .pdf-highlight-low {
   border-bottom: 2px solid #A1A1AA !important;
 }
 
-html[data-theme="monochrome"] .theme-trigger-btn {
-  background: #09090B !important;
-  color: #FFFFFF !important;
-  border: 1px solid #27272A !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+/* Hide any legacy floating dock permanently */
+.theme-switcher-dock {
+  display: none !important;
 }
 
-html[data-theme="monochrome"] .theme-popover-menu {
-  background: #FFFFFF !important;
-  border: 1px solid #E4E4E7 !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
-  border-radius: 12px !important;
+/* ==========================================================================
+   MULTI-THEME DARK MODE SPECIFICATIONS (ALL 5 THEMES)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. MATERIAL YOU DARK (Google M3 Dark Tokens & Surface Containers)
+   -------------------------------------------------------------------------- */
+html[data-theme="material-you"][data-mode="dark"] {
+  --m3-bg: #141218;
+  --m3-surface: #1D1B20;
+  --m3-surface-container: #211F26;
+  --m3-surface-container-high: #2B2930;
+  --m3-primary: #D0BCFF;
+  --m3-primary-container: #4F378B;
+  --m3-on-primary-container: #EADDFF;
+  --m3-secondary-container: #4A4458;
+  --m3-high-container: #8C1D18;
+  --m3-high-text: #F2B8B5;
+  --m3-med-container: #603B00;
+  --m3-med-text: #FFDCC1;
+  --m3-low-container: #005227;
+  --m3-low-text: #85D996;
+  --m3-outline: #49454F;
+}
+
+html[data-theme="material-you"][data-mode="dark"] body {
+  background-color: var(--m3-bg) !important;
+  color: #E6E0E9 !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .text-dark {
+  color: #E6E0E9 !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .text-secondary,
+html[data-theme="material-you"][data-mode="dark"] .text-muted {
+  color: #CAC4D0 !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .clay-card,
+html[data-theme="material-you"][data-mode="dark"] .card-custom,
+html[data-theme="material-you"][data-mode="dark"] .clay-kpi-card,
+html[data-theme="material-you"][data-mode="dark"] .clay-finding-card,
+html[data-theme="material-you"][data-mode="dark"] .pdf-pane-card,
+html[data-theme="material-you"][data-mode="dark"] .findings-pane-card,
+html[data-theme="material-you"][data-mode="dark"] .clay-table-container,
+html[data-theme="material-you"][data-mode="dark"] .demo-role-card,
+html[data-theme="material-you"][data-mode="dark"] .modal-content,
+html[data-theme="material-you"][data-mode="dark"] .clay-card-flat {
+  background: var(--m3-surface) !important;
+  border: 1px solid var(--m3-outline) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .navbar-custom {
+  background: var(--m3-surface-container) !important;
+  border: 1px solid var(--m3-outline) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .navbar-brand {
+  color: #E6E0E9 !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .nav-link {
+  color: #CAC4D0 !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .nav-link:hover {
+  background: var(--m3-surface-container-high) !important;
+  color: var(--m3-primary) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .nav-link.active {
+  background: var(--m3-primary-container) !important;
+  color: var(--m3-on-primary-container) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .btn-nav-mode {
+  background: var(--m3-surface-container-high) !important;
+  border: 1px solid var(--m3-outline) !important;
+  color: var(--m3-primary) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .user-profile-pill {
+  background: var(--m3-surface-container) !important;
+  border: 1px solid var(--m3-outline) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .user-profile-pill:hover {
+  background: var(--m3-surface-container-high) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .user-menu-dropdown {
+  background: var(--m3-surface-container-high) !important;
+  border: 1px solid var(--m3-outline) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .form-control,
+html[data-theme="material-you"][data-mode="dark"] .form-select,
+html[data-theme="material-you"][data-mode="dark"] input,
+html[data-theme="material-you"][data-mode="dark"] textarea {
+  background-color: var(--m3-surface-container-high) !important;
+  color: #E6E0E9 !important;
+  border: 1px solid var(--m3-outline) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .form-control:focus,
+html[data-theme="material-you"][data-mode="dark"] .form-select:focus {
+  border-color: var(--m3-primary) !important;
+  box-shadow: 0 0 0 2px var(--m3-primary) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .clay-table thead th {
+  background: var(--m3-surface-container) !important;
+  color: #CAC4D0 !important;
+  border-bottom: 2px solid var(--m3-outline) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .clay-table tbody td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: #E6E0E9 !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .clay-table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .pdf-scroll-area {
+  background: #141218 !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .pdf-toolbar {
+  background: var(--m3-surface-container) !important;
+  border-bottom: 1px solid var(--m3-outline) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .clay-quote-box {
+  background: var(--m3-surface-container) !important;
+  color: #E6E0E9 !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .demo-role-card {
+  background: var(--m3-surface-container) !important;
+  border: 1px solid var(--m3-outline) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .demo-role-card:hover {
+  background: var(--m3-surface-container-high) !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. NEO-BRUTALISM DARK (High Contrast Crisp White Borders & Electric Glow)
+   -------------------------------------------------------------------------- */
+html[data-theme="neo-brutalism"][data-mode="dark"] {
+  --neo-bg: #121212;
+  --neo-surface: #1E1E1E;
+  --neo-border: 2.5px solid #FFFFFF;
+  --neo-shadow: 4px 4px 0px #FFE600;
+  --neo-shadow-lg: 6px 6px 0px #FFE600;
+  --neo-shadow-sm: 2px 2px 0px #FFE600;
+  --neo-primary: #FFE600;
+  --neo-yellow: #FFE600;
+  --neo-green: #00E599;
+  --neo-coral: #FF5757;
+  --neo-blue: #00F0FF;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] body {
+  background-color: var(--neo-bg) !important;
+  color: #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .text-dark {
+  color: #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .text-secondary,
+html[data-theme="neo-brutalism"][data-mode="dark"] .text-muted {
+  color: #CCCCCC !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-card,
+html[data-theme="neo-brutalism"][data-mode="dark"] .card-custom,
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-kpi-card,
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-finding-card,
+html[data-theme="neo-brutalism"][data-mode="dark"] .pdf-pane-card,
+html[data-theme="neo-brutalism"][data-mode="dark"] .findings-pane-card,
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-table-container,
+html[data-theme="neo-brutalism"][data-mode="dark"] .demo-role-card,
+html[data-theme="neo-brutalism"][data-mode="dark"] .modal-content,
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-card-flat {
+  background: var(--neo-surface) !important;
+  border: var(--neo-border) !important;
+  box-shadow: var(--neo-shadow-lg) !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-card:hover,
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-kpi-card:hover,
+html[data-theme="neo-brutalism"][data-mode="dark"] .demo-role-card:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 8px 8px 0px #FFE600 !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .navbar-custom {
+  background: #1E1E1E !important;
+  border: var(--neo-border) !important;
+  box-shadow: var(--neo-shadow) !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .navbar-brand {
+  color: #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .nav-link {
+  color: #FFFFFF !important;
+  border: 1.5px solid transparent !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .nav-link:hover {
+  background: #2D2D2D !important;
+  color: #FFE600 !important;
+  border: 1.5px solid #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .nav-link.active {
+  background: #FFE600 !important;
+  color: #000000 !important;
+  border: 2px solid #FFFFFF !important;
+  box-shadow: 2px 2px 0px #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .btn-nav-mode {
+  background: #1E1E1E !important;
+  border: 2px solid #FFFFFF !important;
+  color: #FFE600 !important;
+  box-shadow: 2px 2px 0px #FFE600 !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .user-profile-pill {
+  background: #1E1E1E !important;
+  border: 2px solid #FFFFFF !important;
+  box-shadow: 3px 3px 0px #FFE600 !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .user-menu-dropdown {
+  background: #1E1E1E !important;
+  border: 2.5px solid #FFFFFF !important;
+  box-shadow: 6px 6px 0px #FFE600 !important;
+  color: #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .form-control,
+html[data-theme="neo-brutalism"][data-mode="dark"] .form-select,
+html[data-theme="neo-brutalism"][data-mode="dark"] input,
+html[data-theme="neo-brutalism"][data-mode="dark"] textarea {
+  background: #121212 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF !important;
+  box-shadow: 3px 3px 0px #FFE600 !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .form-control:focus,
+html[data-theme="neo-brutalism"][data-mode="dark"] .form-select:focus {
+  background: #1A1A1A !important;
+  border-color: #00F0FF !important;
+  box-shadow: 4px 4px 0px #00F0FF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-table thead th {
+  background: #121212 !important;
+  color: #FFFFFF !important;
+  border-bottom: 2.5px solid #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-table tbody td {
+  border-bottom: 1.5px solid #2E2E2E !important;
+  color: #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-table tbody tr:hover td {
+  background-color: #262626 !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .pdf-scroll-area {
+  background: #121212 !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .pdf-toolbar {
+  background: #1E1E1E !important;
+  border-bottom: 2.5px solid #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-quote-box {
+  background: #121212 !important;
+  border: 2px solid #FFFFFF !important;
+  box-shadow: 3px 3px 0px #FFE600 !important;
+  color: #FFFFFF !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. NEUMORPHISM DARK (Obsidian Soft Embossed Dual-Shadow Plastic)
+   -------------------------------------------------------------------------- */
+html[data-theme="neumorphism"][data-mode="dark"] {
+  --neu-bg: #181B20;
+  --neu-surface: #181B20;
+  --neu-shadow-raised: 8px 8px 18px #101216, -8px -8px 18px #22262e;
+  --neu-shadow-inset: inset 4px 4px 8px #101216, inset -4px -4px 8px #22262e;
+  --neu-primary: #60A5FA;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] body {
+  background-color: var(--neu-bg) !important;
+  color: #E2E8F0 !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .text-dark {
+  color: #E2E8F0 !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .text-secondary,
+html[data-theme="neumorphism"][data-mode="dark"] .text-muted {
+  color: #94A3B8 !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .clay-card,
+html[data-theme="neumorphism"][data-mode="dark"] .card-custom,
+html[data-theme="neumorphism"][data-mode="dark"] .clay-kpi-card,
+html[data-theme="neumorphism"][data-mode="dark"] .clay-finding-card,
+html[data-theme="neumorphism"][data-mode="dark"] .pdf-pane-card,
+html[data-theme="neumorphism"][data-mode="dark"] .findings-pane-card,
+html[data-theme="neumorphism"][data-mode="dark"] .clay-table-container,
+html[data-theme="neumorphism"][data-mode="dark"] .demo-role-card,
+html[data-theme="neumorphism"][data-mode="dark"] .modal-content,
+html[data-theme="neumorphism"][data-mode="dark"] .clay-card-flat {
+  background: var(--neu-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  box-shadow: var(--neu-shadow-raised) !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .navbar-custom {
+  background: var(--neu-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  box-shadow: 6px 6px 14px #101216, -6px -6px 14px #22262e !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .navbar-brand {
+  color: #E2E8F0 !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .nav-link {
+  color: #94A3B8 !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .nav-link:hover {
+  color: var(--neu-primary) !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .nav-link.active {
+  background: var(--neu-surface) !important;
+  color: var(--neu-primary) !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .btn-nav-mode {
+  background: var(--neu-surface) !important;
+  box-shadow: 3px 3px 6px #101216, -3px -3px 6px #22262e !important;
+  color: var(--neu-primary) !important;
+  border: none !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .user-profile-pill {
+  background: var(--neu-surface) !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  border: none !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .user-menu-dropdown {
+  background: var(--neu-surface) !important;
+  box-shadow: 10px 10px 24px #101216, -6px -6px 18px #22262e !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: #E2E8F0 !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .form-control,
+html[data-theme="neumorphism"][data-mode="dark"] .form-select,
+html[data-theme="neumorphism"][data-mode="dark"] input,
+html[data-theme="neumorphism"][data-mode="dark"] textarea {
+  background: var(--neu-surface) !important;
+  color: #E2E8F0 !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  border: none !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .form-control:focus,
+html[data-theme="neumorphism"][data-mode="dark"] .form-select:focus {
+  box-shadow: inset 5px 5px 10px #0e1013, inset -5px -5px 10px #242932, 0 0 0 2px var(--neu-primary) !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .clay-table thead th {
+  background: #14171c !important;
+  color: #94A3B8 !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .clay-table tbody td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+  color: #E2E8F0 !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .clay-table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .pdf-scroll-area {
+  background: #101216 !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .pdf-toolbar {
+  background: var(--neu-surface) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .clay-quote-box {
+  background: var(--neu-surface) !important;
+  box-shadow: var(--neu-shadow-inset) !important;
+  color: #E2E8F0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. GLASSMORPHISM DARK (Cosmic Dark Mesh & Smoky Frosted Acrylic)
+   -------------------------------------------------------------------------- */
+html[data-theme="glassmorphism"][data-mode="dark"] {
+  --glass-bg: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.25) 0, transparent 55%), radial-gradient(at 100% 0%, rgba(217, 70, 239, 0.2) 0, transparent 50%), radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.22) 0, transparent 55%), #0A0D17;
+  --glass-surface: rgba(18, 24, 38, 0.72);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 16px 36px 0 rgba(0, 0, 0, 0.55);
+  --glass-blur: blur(20px);
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] body {
+  background: var(--glass-bg) !important;
+  background-attachment: fixed !important;
+  color: #F8FAFC !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .text-dark {
+  color: #F8FAFC !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .text-secondary,
+html[data-theme="glassmorphism"][data-mode="dark"] .text-muted {
+  color: #94A3B8 !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-card,
+html[data-theme="glassmorphism"][data-mode="dark"] .card-custom,
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-kpi-card,
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-finding-card,
+html[data-theme="glassmorphism"][data-mode="dark"] .pdf-pane-card,
+html[data-theme="glassmorphism"][data-mode="dark"] .findings-pane-card,
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-table-container,
+html[data-theme="glassmorphism"][data-mode="dark"] .demo-role-card,
+html[data-theme="glassmorphism"][data-mode="dark"] .modal-content,
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-card-flat {
+  background: var(--glass-surface) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .navbar-custom {
+  background: rgba(18, 24, 38, 0.78) !important;
+  backdrop-filter: blur(24px) !important;
+  border: var(--glass-border) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .navbar-brand {
+  color: #F8FAFC !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .nav-link {
+  color: #94A3B8 !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .nav-link:hover {
+  color: #F8FAFC !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .nav-link.active {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(129, 140, 248, 0.9)) !important;
+  color: #FFFFFF !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .btn-nav-mode {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #F8FAFC !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .user-profile-pill {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .user-menu-dropdown {
+  background: rgba(18, 24, 38, 0.92) !important;
+  backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
+  color: #F8FAFC !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .form-control,
+html[data-theme="glassmorphism"][data-mode="dark"] .form-select,
+html[data-theme="glassmorphism"][data-mode="dark"] input,
+html[data-theme="glassmorphism"][data-mode="dark"] textarea {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #F8FAFC !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .form-control:focus,
+html[data-theme="glassmorphism"][data-mode="dark"] .form-select:focus {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(129, 140, 248, 0.8) !important;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3) !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-table thead th {
+  background: rgba(10, 13, 23, 0.8) !important;
+  color: #94A3B8 !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-table tbody td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  color: #F8FAFC !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .pdf-scroll-area {
+  background: #07090F !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .pdf-toolbar {
+  background: rgba(18, 24, 38, 0.85) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-quote-box {
+  background: rgba(10, 13, 23, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #F8FAFC !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. MONOCHROME DARK (Swiss Editorial Pitch Black & Hairline Borders)
+   -------------------------------------------------------------------------- */
+html[data-theme="monochrome"][data-mode="dark"] {
+  --mono-bg: #09090B;
+  --mono-surface: #121215;
+  --mono-border: 1px solid #27272A;
+  --mono-text: #FAFAFA;
+  --mono-muted: #A1A1AA;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] body {
+  background-color: var(--mono-bg) !important;
+  color: var(--mono-text) !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .text-dark {
+  color: #FAFAFA !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .text-secondary,
+html[data-theme="monochrome"][data-mode="dark"] .text-muted {
+  color: #A1A1AA !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .clay-card,
+html[data-theme="monochrome"][data-mode="dark"] .card-custom,
+html[data-theme="monochrome"][data-mode="dark"] .clay-kpi-card,
+html[data-theme="monochrome"][data-mode="dark"] .clay-finding-card,
+html[data-theme="monochrome"][data-mode="dark"] .pdf-pane-card,
+html[data-theme="monochrome"][data-mode="dark"] .findings-pane-card,
+html[data-theme="monochrome"][data-mode="dark"] .clay-table-container,
+html[data-theme="monochrome"][data-mode="dark"] .demo-role-card,
+html[data-theme="monochrome"][data-mode="dark"] .modal-content,
+html[data-theme="monochrome"][data-mode="dark"] .clay-card-flat {
+  background: var(--mono-surface) !important;
+  border: var(--mono-border) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .navbar-custom {
+  background: #09090B !important;
+  border: var(--mono-border) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .navbar-brand {
+  color: #FAFAFA !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .nav-link {
+  color: #A1A1AA !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .nav-link:hover {
+  color: #FAFAFA !important;
+  background: #18181B !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .nav-link.active {
+  background: #FAFAFA !important;
+  color: #09090B !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .btn-nav-mode {
+  background: #121215 !important;
+  border: 1px solid #27272A !important;
+  color: #FAFAFA !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .user-profile-pill {
+  background: #121215 !important;
+  border: 1px solid #27272A !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .user-profile-pill:hover {
+  background: #18181B !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .user-menu-dropdown {
+  background: #121215 !important;
+  border: 1px solid #27272A !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8) !important;
+  color: #FAFAFA !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .form-control,
+html[data-theme="monochrome"][data-mode="dark"] .form-select,
+html[data-theme="monochrome"][data-mode="dark"] input,
+html[data-theme="monochrome"][data-mode="dark"] textarea {
+  background: #09090B !important;
+  color: #FAFAFA !important;
+  border: 1px solid #27272A !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .form-control:focus,
+html[data-theme="monochrome"][data-mode="dark"] .form-select:focus {
+  border-color: #FAFAFA !important;
+  box-shadow: 0 0 0 2px #FAFAFA !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .clay-table thead th {
+  background: #09090B !important;
+  color: #A1A1AA !important;
+  border-bottom: 1px solid #27272A !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .clay-table tbody td {
+  border-bottom: 1px solid #1F1F23 !important;
+  color: #FAFAFA !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .clay-table tbody tr:hover td {
+  background-color: #18181B !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .pdf-scroll-area {
+  background: #09090B !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .pdf-toolbar {
+  background: #121215 !important;
+  border-bottom: 1px solid #27272A !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .clay-quote-box {
+  background: #121215 !important;
+  border-left: 3px solid #FAFAFA !important;
+  color: #FAFAFA !important;
 }

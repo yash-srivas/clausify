@@ -26,6 +26,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  window.addEventListener('modechanged', () => {
+    if (cachedAnalyticsData) {
+      renderCharts(cachedAnalyticsData);
+    }
+  });
+
   await loadAnalytics();
 });
 
@@ -75,89 +81,96 @@ function updateKPIs(data) {
 
 function getThemeChartPalette() {
   const theme = document.documentElement.getAttribute('data-theme') || 'claymorphism';
+  const isDark = document.documentElement.getAttribute('data-mode') === 'dark';
+
   if (theme === 'monochrome') {
     return {
-      line: '#09090B',
-      lineBg: 'rgba(9, 9, 11, 0.08)',
-      status: ['#09090B', '#3F3F46', '#71717A', '#A1A1AA', '#D4D4D8'],
-      high: '#09090B',
-      med: '#71717A',
-      low: '#A1A1AA',
-      tokenIn: '#27272A',
-      tokenOut: '#71717A',
-      grid: '#E4E4E7',
-      text: '#09090B',
+      line: isDark ? '#FAFAFA' : '#09090B',
+      lineBg: isDark ? 'rgba(250, 250, 250, 0.08)' : 'rgba(9, 9, 11, 0.08)',
+      status: isDark
+        ? ['#FAFAFA', '#D4D4D8', '#A1A1AA', '#71717A', '#3F3F46']
+        : ['#09090B', '#3F3F46', '#71717A', '#A1A1AA', '#D4D4D8'],
+      high: isDark ? '#FAFAFA' : '#09090B',
+      med: isDark ? '#D4D4D8' : '#71717A',
+      low: isDark ? '#71717A' : '#A1A1AA',
+      tokenIn: isDark ? '#FAFAFA' : '#27272A',
+      tokenOut: isDark ? '#A1A1AA' : '#71717A',
+      grid: isDark ? 'rgba(255, 255, 255, 0.08)' : '#E4E4E7',
+      text: isDark ? '#FAFAFA' : '#09090B',
     };
   }
   if (theme === 'neo-brutalism') {
     return {
-      line: '#8B5CF6',
-      lineBg: 'rgba(255, 230, 0, 0.4)',
+      line: isDark ? '#FFE600' : '#8B5CF6',
+      lineBg: isDark ? 'rgba(255, 230, 0, 0.25)' : 'rgba(255, 230, 0, 0.4)',
       status: ['#FF5757', '#00E599', '#FFE600', '#38BDF8', '#8B5CF6'],
       high: '#FF5757',
       med: '#FFE600',
       low: '#00E599',
-      tokenIn: '#38BDF8',
-      tokenOut: '#8B5CF6',
-      grid: '#CBD5E1',
-      text: '#000000',
+      tokenIn: isDark ? '#00F0FF' : '#38BDF8',
+      tokenOut: isDark ? '#FFE600' : '#8B5CF6',
+      grid: isDark ? 'rgba(255, 255, 255, 0.15)' : '#CBD5E1',
+      text: isDark ? '#FFFFFF' : '#000000',
     };
   }
   if (theme === 'material-you') {
     return {
-      line: '#6750A4',
-      lineBg: 'rgba(234, 221, 255, 0.45)',
-      status: ['#B3261E', '#146C2E', '#8A5100', '#49454F', '#21005D'],
-      high: '#B3261E',
-      med: '#8A5100',
-      low: '#146C2E',
-      tokenIn: '#6750A4',
-      tokenOut: '#7D5260',
-      grid: '#E7E0EC',
-      text: '#1D1B20',
+      line: isDark ? '#D0BCFF' : '#6750A4',
+      lineBg: isDark ? 'rgba(208, 188, 255, 0.2)' : 'rgba(234, 221, 255, 0.45)',
+      status: isDark
+        ? ['#F2B8B5', '#85D996', '#FFDCC1', '#CAC4D0', '#D0BCFF']
+        : ['#B3261E', '#146C2E', '#8A5100', '#49454F', '#21005D'],
+      high: isDark ? '#F2B8B5' : '#B3261E',
+      med: isDark ? '#FFDCC1' : '#8A5100',
+      low: isDark ? '#85D996' : '#146C2E',
+      tokenIn: isDark ? '#D0BCFF' : '#6750A4',
+      tokenOut: isDark ? '#CCC2DC' : '#7D5260',
+      grid: isDark ? 'rgba(255, 255, 255, 0.08)' : '#E7E0EC',
+      text: isDark ? '#E6E0E9' : '#1D1B20',
     };
   }
   if (theme === 'neumorphism') {
     return {
-      line: '#4D7CFE',
-      lineBg: 'rgba(77, 124, 254, 0.12)',
-      status: ['#D32F2F', '#2E7D32', '#E65100', '#757575', '#31344B'],
-      high: '#D32F2F',
-      med: '#E65100',
-      low: '#2E7D32',
-      tokenIn: '#4D7CFE',
-      tokenOut: '#9C27B0',
-      grid: '#D1D5DB',
-      text: '#31344B',
+      line: isDark ? '#60A5FA' : '#4D7CFE',
+      lineBg: isDark ? 'rgba(96, 165, 250, 0.15)' : 'rgba(77, 124, 254, 0.12)',
+      status: ['#EF4444', '#10B981', '#F59E0B', '#94A3B8', '#60A5FA'],
+      high: '#EF4444',
+      med: '#F59E0B',
+      low: '#10B981',
+      tokenIn: isDark ? '#60A5FA' : '#4D7CFE',
+      tokenOut: isDark ? '#C084FC' : '#9C27B0',
+      grid: isDark ? 'rgba(255, 255, 255, 0.06)' : '#D1D5DB',
+      text: isDark ? '#E2E8F0' : '#31344B',
     };
   }
   if (theme === 'glassmorphism') {
     return {
-      line: '#818CF8',
-      lineBg: 'rgba(129, 140, 248, 0.25)',
-      status: ['rgba(239, 68, 68, 0.85)', 'rgba(16, 185, 129, 0.85)', 'rgba(245, 158, 11, 0.85)', 'rgba(100, 116, 139, 0.85)', 'rgba(99, 102, 241, 0.85)'],
+      line: isDark ? '#A5B4FC' : '#818CF8',
+      lineBg: isDark ? 'rgba(165, 180, 252, 0.2)' : 'rgba(129, 140, 248, 0.25)',
+      status: ['rgba(239, 68, 68, 0.85)', 'rgba(16, 185, 129, 0.85)', 'rgba(245, 158, 11, 0.85)', 'rgba(148, 163, 184, 0.85)', 'rgba(129, 140, 248, 0.85)'],
       high: 'rgba(239, 68, 68, 0.85)',
       med: 'rgba(245, 158, 11, 0.85)',
       low: 'rgba(16, 185, 129, 0.85)',
-      tokenIn: 'rgba(56, 189, 248, 0.85)',
-      tokenOut: 'rgba(168, 85, 247, 0.85)',
-      grid: 'rgba(203, 213, 225, 0.5)',
-      text: '#1E293B',
+      tokenIn: isDark ? 'rgba(56, 189, 248, 0.9)' : 'rgba(56, 189, 248, 0.85)',
+      tokenOut: isDark ? 'rgba(192, 132, 252, 0.9)' : 'rgba(168, 85, 247, 0.85)',
+      grid: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(203, 213, 225, 0.5)',
+      text: isDark ? '#F8FAFC' : '#1E293B',
     };
   }
   // Default Claymorphism
   return {
-    line: '#6366F1',
-    lineBg: 'rgba(99, 102, 241, 0.15)',
-    status: ['#EF4444', '#10B981', '#F59E0B', '#64748B', '#1E293B'],
+    line: isDark ? '#818CF8' : '#6366F1',
+    lineBg: isDark ? 'rgba(129, 140, 248, 0.2)' : 'rgba(99, 102, 241, 0.15)',
+    status: ['#EF4444', '#10B981', '#F59E0B', '#94A3B8', '#818CF8'],
     high: '#EF4444',
     med: '#F59E0B',
     low: '#10B981',
-    tokenIn: '#3B82F6',
-    tokenOut: '#8B5CF6',
-    grid: '#E2E8F0',
-    text: '#1E293B',
+    tokenIn: isDark ? '#60A5FA' : '#3B82F6',
+    tokenOut: isDark ? '#A78BFA' : '#8B5CF6',
+    grid: isDark ? 'rgba(255, 255, 255, 0.08)' : '#E2E8F0',
+    text: isDark ? '#F8FAFC' : '#1E293B',
   };
+}
 }
 
 function renderCharts(data) {

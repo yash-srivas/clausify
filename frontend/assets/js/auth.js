@@ -153,6 +153,12 @@ export function renderNavbar(activeKey = '') {
       : 'badge-risk-low';
 
   const initial = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+  const curMode = (typeof document !== 'undefined' && document.documentElement.getAttribute('data-mode')) ||
+    (typeof localStorage !== 'undefined' && localStorage.getItem('app_mode')) || 'light';
+  const isDark = curMode === 'dark';
+  const modeIconClass = isDark ? 'bi-sun' : 'bi-moon-stars';
+  const modeBtnTitle = isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+  const modeMenuLabel = isDark ? 'Light Mode' : 'Dark Mode';
 
   const navbarHtml = `
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
@@ -169,36 +175,62 @@ export function renderNavbar(activeKey = '') {
             ${linksHtml}
           </ul>
           <div class="d-flex align-items-center gap-2">
-            <!-- Theme Dropdown -->
+            <!-- Subtle 1-Click Dark/Light Mode Icon Toggle -->
+            <button id="navModeToggleBtn" class="btn btn-sm btn-nav-mode rounded-circle d-flex align-items-center justify-content-center" type="button" title="${modeBtnTitle}" aria-label="Toggle light or dark mode">
+              <i class="bi ${modeIconClass}" id="navModeIcon"></i>
+            </button>
+
+            <!-- User Profile & Discreet Settings Dropdown -->
             <div class="dropdown">
-              <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-1 dropdown-toggle d-flex align-items-center gap-1" type="button" id="navThemeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-palette"></i>
-                <span class="d-none d-sm-inline" id="navThemeCurrent">Theme</span>
+              <button class="user-profile-pill d-flex align-items-center border-0 px-3 py-1 rounded-pill" id="userProfileDropdownBtn" data-bs-toggle="dropdown" aria-expanded="false" type="button">
+                <div class="user-avatar-circle rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2" style="width: 28px; height: 28px; font-size: 0.8rem;">
+                  ${initial}
+                </div>
+                <span class="user-name-text fw-semibold small me-2 d-none d-md-inline">
+                  ${user.name}
+                </span>
+                <span class="badge ${roleBadgeClass} text-uppercase px-2 py-0" style="font-size: 0.65rem;">
+                  ${user.role}
+                </span>
+                <i class="bi bi-chevron-down ms-2 small text-muted" style="font-size: 0.75rem;"></i>
               </button>
-              <ul class="dropdown-menu dropdown-menu-end shadow-sm rounded-4 p-2" aria-labelledby="navThemeDropdown" style="min-width: 200px;">
-                <li><button class="dropdown-item rounded-3 py-2 nav-theme-opt" data-theme="claymorphism">Claymorphism</button></li>
-                <li><button class="dropdown-item rounded-3 py-2 nav-theme-opt" data-theme="material-you">Material You</button></li>
-                <li><button class="dropdown-item rounded-3 py-2 nav-theme-opt" data-theme="neo-brutalism">Neo-Brutalism</button></li>
-                <li><button class="dropdown-item rounded-3 py-2 nav-theme-opt" data-theme="neumorphism">Neumorphism</button></li>
-                <li><button class="dropdown-item rounded-3 py-2 nav-theme-opt" data-theme="glassmorphism">Glassmorphism</button></li>
-                <li><button class="dropdown-item rounded-3 py-2 nav-theme-opt" data-theme="monochrome">Monochrome</button></li>
+
+              <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 p-2 user-menu-dropdown" aria-labelledby="userProfileDropdownBtn" style="min-width: 240px;">
+                <!-- User Details -->
+                <li class="px-3 py-2 border-bottom mb-2">
+                  <div class="fw-bold text-dark user-menu-name">${user.name}</div>
+                  <div class="small text-secondary user-menu-email">${user.email || user.name.toLowerCase().replace(/\s+/g, '') + '@demo.com'}</div>
+                  <div class="mt-1"><span class="badge ${roleBadgeClass} text-uppercase" style="font-size: 0.65rem;">${user.role} Workspace</span></div>
+                </li>
+
+                <!-- Discreet Theme & Appearance Selection -->
+                <li class="px-3 py-1">
+                  <div class="d-flex align-items-center justify-content-between mb-2">
+                    <span class="small fw-semibold text-muted text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Theme Style</span>
+                    <button class="btn btn-xs btn-link text-decoration-none p-0 small text-primary" id="menuModeToggleBtn" type="button" style="font-size: 0.75rem;">
+                      <span id="menuModeText">${modeMenuLabel}</span>
+                    </button>
+                  </div>
+                  <select id="userThemeSelect" class="form-select form-select-sm rounded-3 mb-2" style="font-size: 0.82rem;">
+                    <option value="claymorphism">Claymorphism</option>
+                    <option value="material-you">Material You</option>
+                    <option value="neo-brutalism">Neo-Brutalism</option>
+                    <option value="neumorphism">Neumorphism</option>
+                    <option value="glassmorphism">Glassmorphism</option>
+                    <option value="monochrome">Monochrome</option>
+                  </select>
+                </li>
+
+                <li><hr class="dropdown-divider my-1"></li>
+
+                <!-- Sign Out -->
+                <li>
+                  <button id="logoutBtn" class="dropdown-item rounded-3 py-2 text-danger d-flex align-items-center">
+                    <i class="bi bi-box-arrow-right me-2"></i>Sign Out
+                  </button>
+                </li>
               </ul>
             </div>
-
-            <div class="user-profile-pill d-flex align-items-center px-3 py-1 rounded-pill">
-              <div class="user-avatar-circle rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2" style="width: 28px; height: 28px; font-size: 0.8rem;">
-                ${initial}
-              </div>
-              <span class="user-name-text fw-semibold small me-2 d-none d-md-inline">
-                ${user.name}
-              </span>
-              <span class="badge ${roleBadgeClass} text-uppercase px-2 py-1" style="font-size: 0.68rem;">
-                ${user.role}
-              </span>
-            </div>
-            <button id="logoutBtn" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-1">
-              <i class="bi bi-box-arrow-right me-1"></i>Sign Out
-            </button>
           </div>
         </div>
       </div>
@@ -207,10 +239,59 @@ export function renderNavbar(activeKey = '') {
 
   navPlaceholder.innerHTML = navbarHtml;
 
-  // Remove redundant floating dock if present to ensure clean layout with zero input overlap
+  // Clean up any residual floating dock widget from past revisions
   const dock = document.getElementById('themeSwitcherDock');
   if (dock) dock.remove();
 
+  // Mode Toggle Handlers
+  const navModeBtn = document.getElementById('navModeToggleBtn');
+  if (navModeBtn) {
+    navModeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.toggleMode) {
+        window.toggleMode();
+      } else {
+        const next = document.documentElement.getAttribute('data-mode') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-mode', next);
+        document.documentElement.setAttribute('data-bs-theme', next);
+        localStorage.setItem('app_mode', next);
+      }
+    });
+  }
+
+  const menuModeBtn = document.getElementById('menuModeToggleBtn');
+  if (menuModeBtn) {
+    menuModeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.toggleMode) {
+        window.toggleMode();
+      } else {
+        const next = document.documentElement.getAttribute('data-mode') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-mode', next);
+        document.documentElement.setAttribute('data-bs-theme', next);
+        localStorage.setItem('app_mode', next);
+      }
+    });
+  }
+
+  // Theme Select Handler
+  const userThemeSelect = document.getElementById('userThemeSelect');
+  const curTheme = (typeof document !== 'undefined' && document.documentElement.getAttribute('data-theme')) ||
+    (typeof localStorage !== 'undefined' && localStorage.getItem('app_theme')) || 'claymorphism';
+  if (userThemeSelect) {
+    userThemeSelect.value = curTheme;
+    userThemeSelect.addEventListener('change', (e) => {
+      const selected = e.target.value;
+      if (window.applyTheme) {
+        window.applyTheme(selected);
+      } else {
+        document.documentElement.setAttribute('data-theme', selected);
+        localStorage.setItem('app_theme', selected);
+      }
+    });
+  }
+
+  // Logout Handler
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', (e) => {
@@ -219,48 +300,7 @@ export function renderNavbar(activeKey = '') {
     });
   }
 
-  // Nav Theme Dropdown Listeners
-  document.querySelectorAll('.nav-theme-opt').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const themeId = btn.getAttribute('data-theme');
-      if (window.applyTheme) {
-        window.applyTheme(themeId);
-      } else {
-        document.documentElement.setAttribute('data-theme', themeId);
-        localStorage.setItem('app_theme', themeId);
-      }
-    });
-  });
 
-  // Sync nav theme label with active theme
-  const curTheme = document.documentElement.getAttribute('data-theme') || localStorage.getItem('app_theme') || 'claymorphism';
-  const navCur = document.getElementById('navThemeCurrent');
-  if (navCur) {
-    const names = {
-      'claymorphism': 'Claymorphism',
-      'material-you': 'Material You',
-      'neo-brutalism': 'Neo-Brutalism',
-      'neumorphism': 'Neumorphism',
-      'glassmorphism': 'Glassmorphism',
-      'monochrome': 'Monochrome',
-    };
-    if (names[curTheme]) navCur.innerText = names[curTheme];
-  }
-
-  document.querySelectorAll('.nav-theme-opt').forEach((btn) => {
-    btn.classList.toggle('active', btn.getAttribute('data-theme') === curTheme);
-  });
-
-  // Auto-open dropdown if requested via query parameter (for verification / screenshots)
-  if (new URLSearchParams(window.location.search).get('openTheme') === '1') {
-    setTimeout(() => {
-      const ddBtn = document.getElementById('navThemeDropdown');
-      if (ddBtn && typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
-        bootstrap.Dropdown.getOrCreateInstance(ddBtn).show();
-      }
-    }, 500);
-  }
 }
 
 export default {
