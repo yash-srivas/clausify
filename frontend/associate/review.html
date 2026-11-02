@@ -20,25 +20,6 @@
       localStorage.setItem('app_mode', m);
     })();
   </script>
-  <script>
-    window.__logs = [];
-    ['log', 'warn', 'error'].forEach(type => {
-      const orig = console[type];
-      console[type] = function(...args) {
-        window.__logs.push('[' + type + '] ' + args.map(a => {
-          try { return typeof a === 'object' ? JSON.stringify(a) : String(a); } catch (e) { return String(a); }
-        }).join(' '));
-        const el = document.getElementById('debugLogs');
-        if (el) el.textContent = window.__logs.join('\n');
-        orig.apply(console, args);
-      };
-    });
-    window.addEventListener('error', e => {
-      window.__logs.push('[UNCAUGHT] ' + e.message + ' at ' + e.filename + ':' + e.lineno);
-      const el = document.getElementById('debugLogs');
-      if (el) el.textContent = window.__logs.join('\n');
-    });
-  </script>
   <style>
     .workspace-wrapper {
       height: calc(100vh - 90px);
@@ -81,7 +62,6 @@
   </style>
 </head>
 <body>
-  <div id="debugLogs" style="display:none;"></div>
   <!-- Dynamic Floating Navbar -->
   <div id="navbarPlaceholder"></div>
 

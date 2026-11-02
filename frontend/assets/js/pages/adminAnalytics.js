@@ -171,7 +171,6 @@ function getThemeChartPalette() {
     text: isDark ? '#F8FAFC' : '#1E293B',
   };
 }
-}
 
 function renderCharts(data) {
   if (!window.Chart) return;

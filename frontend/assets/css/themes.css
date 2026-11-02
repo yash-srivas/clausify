@@ -1972,6 +1972,16 @@ html[data-theme="material-you"][data-mode="dark"] .clay-quote-box {
   color: #E6E0E9 !important;
 }
 
+html[data-theme="material-you"][data-mode="dark"] .clay-rewrite-box {
+  background: var(--m3-surface-container) !important;
+  color: #85D996 !important;
+  border: 1px solid rgba(133, 217, 150, 0.3) !important;
+}
+
+html[data-theme="material-you"][data-mode="dark"] .clay-rewrite-box .rewrite-text {
+  color: #85D996 !important;
+}
+
 html[data-theme="material-you"][data-mode="dark"] .demo-role-card {
   background: var(--m3-surface-container) !important;
   border: 1px solid var(--m3-outline) !important;
@@ -2135,6 +2145,17 @@ html[data-theme="neo-brutalism"][data-mode="dark"] .clay-quote-box {
   color: #FFFFFF !important;
 }
 
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-rewrite-box {
+  background: #18181B !important;
+  border: 2px solid #00E599 !important;
+  box-shadow: 3px 3px 0px #00E599 !important;
+  color: #FFFFFF !important;
+}
+
+html[data-theme="neo-brutalism"][data-mode="dark"] .clay-rewrite-box .rewrite-text {
+  color: #FFFFFF !important;
+}
+
 /* --------------------------------------------------------------------------
    3. NEUMORPHISM DARK (Obsidian Soft Embossed Dual-Shadow Plastic)
    -------------------------------------------------------------------------- */
@@ -2267,6 +2288,17 @@ html[data-theme="neumorphism"][data-mode="dark"] .clay-quote-box {
   background: var(--neu-surface) !important;
   box-shadow: var(--neu-shadow-inset) !important;
   color: #E2E8F0 !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .clay-rewrite-box {
+  background: var(--neu-surface) !important;
+  box-shadow: inset 3px 3px 6px #101216, inset -3px -3px 6px #22262e !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  color: #E2E8F0 !important;
+}
+
+html[data-theme="neumorphism"][data-mode="dark"] .clay-rewrite-box .rewrite-text {
+  color: #A7F3D0 !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -2409,6 +2441,17 @@ html[data-theme="glassmorphism"][data-mode="dark"] .clay-quote-box {
   color: #F8FAFC !important;
 }
 
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-rewrite-box {
+  background: rgba(6, 78, 59, 0.28) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(52, 211, 153, 0.35) !important;
+  color: #A7F3D0 !important;
+}
+
+html[data-theme="glassmorphism"][data-mode="dark"] .clay-rewrite-box .rewrite-text {
+  color: #ECFDF5 !important;
+}
+
 /* --------------------------------------------------------------------------
    5. MONOCHROME DARK (Swiss Editorial Pitch Black & Hairline Borders)
    -------------------------------------------------------------------------- */
@@ -2542,6 +2585,16 @@ html[data-theme="monochrome"][data-mode="dark"] .pdf-toolbar {
 html[data-theme="monochrome"][data-mode="dark"] .clay-quote-box {
   background: #121215 !important;
   border-left: 3px solid #FAFAFA !important;
+  color: #FAFAFA !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .clay-rewrite-box {
+  background: #18181B !important;
+  border: 1px solid #3F3F46 !important;
+  color: #FAFAFA !important;
+}
+
+html[data-theme="monochrome"][data-mode="dark"] .clay-rewrite-box .rewrite-text {
   color: #FAFAFA !important;
 }
 
