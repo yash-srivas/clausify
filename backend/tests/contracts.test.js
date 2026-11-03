@@ -36,6 +36,7 @@ describe('Contracts, Findings, Templates & Workflow API Flow', () => {
       await db.query('DELETE FROM template_clauses WHERE template_id = $1', [createdTemplateId]);
       await db.query('DELETE FROM templates WHERE id = $1', [createdTemplateId]);
     }
+    await db.pool.end();
   });
 
   test('POST /api/contracts rejects non-PDF file upload with 400', async () => {

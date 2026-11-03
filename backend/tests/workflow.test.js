@@ -17,6 +17,7 @@ describe('Contract State Machine & Workflow Transitions', () => {
     if (testContractId) {
       await db.query('DELETE FROM contracts WHERE id = $1', [testContractId]);
     }
+    await db.pool.end();
   });
 
   test('canTransition logic strictly enforces legal transitions', () => {

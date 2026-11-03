@@ -100,5 +100,9 @@ describe('Auth Endpoints & Credentials', () => {
     expect(res.status).toBe(401);
     expect(res.body.error.code).toBe('INVALID_TOKEN');
   });
+
+  afterAll(async () => {
+    await db.pool.end();
+  });
 });
 

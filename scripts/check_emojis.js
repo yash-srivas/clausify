@@ -35,3 +35,4 @@ for (const f of files) {
   });
 }
 console.log(`Scan completed. Total emojis found: ${found}`);
+

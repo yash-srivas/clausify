@@ -30,6 +30,7 @@ describe('RBAC & Admin User Management', () => {
     if (createdUserId) {
       await db.query('DELETE FROM users WHERE id = $1', [createdUserId]);
     }
+    await db.pool.end();
   });
 
   test('Associate cannot access GET /api/admin/users (403 Forbidden)', async () => {
