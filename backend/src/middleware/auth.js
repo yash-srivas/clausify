@@ -4,8 +4,15 @@ const db = require('../config/db');
 
 async function auth(req, res, next) {
   try {
+    let token = null;
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
+    } else if (req.query && req.query.token) {
+      token = req.query.token;
+    }
+
+    if (!token) {
       return res.status(401).json({
         error: {
           code: 'UNAUTHORIZED',
@@ -13,8 +20,6 @@ async function auth(req, res, next) {
         },
       });
     }
-
-    const token = authHeader.split(' ')[1];
     let decoded;
     try {
       decoded = jwt.verify(token, config.jwtSecret);
@@ -37,7 +42,7 @@ async function auth(req, res, next) {
 
     // Verify user exists and is active in database
     const result = await db.query(
-      'SELECT id, name, email, role, is_active FROM users WHERE id = $1',
+      'SELECT id, name, email, role, is_active, organization_id FROM users WHERE id = $1',
       [decoded.sub]
     );
 
@@ -61,6 +66,7 @@ async function auth(req, res, next) {
     }
 
     req.user = user;
+    req.orgId = user.organization_id;
     next();
   } catch (err) {
     next(err);

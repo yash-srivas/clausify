@@ -4,14 +4,17 @@ const aiClient = require('../services/aiClient');
 // GET /api/templates
 async function getTemplates(req, res, next) {
   try {
+    const orgId = req.user?.organization_id || null;
     const result = await db.query(
       `SELECT t.*, u.name AS creator_name,
               COUNT(tc.id) AS clause_count
        FROM templates t
        LEFT JOIN users u ON t.created_by = u.id
        LEFT JOIN template_clauses tc ON t.id = tc.template_id
+       WHERE (t.organization_id = $1 OR t.organization_id IS NULL)
        GROUP BY t.id, u.name
-       ORDER BY t.created_at DESC`
+       ORDER BY t.created_at DESC`,
+      [orgId]
     );
 
     return res.status(200).json({
@@ -26,12 +29,13 @@ async function getTemplates(req, res, next) {
 async function getTemplateById(req, res, next) {
   const { id } = req.params;
   try {
+    const orgId = req.user?.organization_id || null;
     const tplRes = await db.query(
       `SELECT t.*, u.name AS creator_name
        FROM templates t
        LEFT JOIN users u ON t.created_by = u.id
-       WHERE t.id = $1`,
-      [id]
+       WHERE t.id = $1 AND (t.organization_id = $2 OR t.organization_id IS NULL)`,
+      [id, orgId]
     );
 
     if (tplRes.rows.length === 0) {
@@ -61,15 +65,16 @@ async function getTemplateById(req, res, next) {
 async function createTemplate(req, res, next) {
   const { name, description, clauses = [] } = req.body;
   const client = await db.getClient();
+  const orgId = req.user?.organization_id || null;
 
   try {
     await client.query('BEGIN');
 
     const tplRes = await client.query(
-      `INSERT INTO templates (name, description, version, status, created_by, created_at, updated_at)
-       VALUES ($1, $2, 1, 'draft', $3, NOW(), NOW())
+      `INSERT INTO templates (organization_id, name, description, version, status, created_by, created_at, updated_at)
+       VALUES ($1, $2, $3, 1, 'draft', $4, NOW(), NOW())
        RETURNING *`,
-      [name.trim(), description || null, req.user.id]
+      [orgId, name.trim(), description || null, req.user.id]
     );
 
     const template = tplRes.rows[0];
@@ -123,6 +128,14 @@ async function updateTemplate(req, res, next) {
     }
 
     const currentTpl = currentTplRes.rows[0];
+
+    // Protect global templates and other organization templates from modification
+    if (req.user.organization_id && currentTpl.organization_id !== req.user.organization_id) {
+      await client.query('ROLLBACK');
+      return res.status(403).json({
+        error: { code: 'FORBIDDEN', message: 'Global benchmark templates and other organization templates cannot be modified' },
+      });
+    }
     const currentClausesRes = await client.query(
       'SELECT id, clause_type, title, text, is_required, version FROM template_clauses WHERE template_id = $1',
       [id]
@@ -191,12 +204,34 @@ async function updateTemplate(req, res, next) {
 async function activateTemplate(req, res, next) {
   const { id } = req.params;
   const client = await db.getClient();
+  const orgId = req.user?.organization_id || null;
 
   try {
     await client.query('BEGIN');
 
-    // Archive current active templates
-    await client.query("UPDATE templates SET status = 'archived' WHERE status = 'active'");
+    // Verify template existence and organization
+    const checkRes = await client.query('SELECT * FROM templates WHERE id = $1', [id]);
+    if (checkRes.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({
+        error: { code: 'TEMPLATE_NOT_FOUND', message: 'Template not found' },
+      });
+    }
+
+    const targetTpl = checkRes.rows[0];
+    if (orgId && targetTpl.organization_id && targetTpl.organization_id !== orgId) {
+      await client.query('ROLLBACK');
+      return res.status(403).json({
+        error: { code: 'FORBIDDEN', message: 'Cannot activate another organization template' },
+      });
+    }
+
+    // Archive current active templates within this tenant scope
+    if (orgId) {
+      await client.query("UPDATE templates SET status = 'archived' WHERE status = 'active' AND organization_id = $1", [orgId]);
+    } else {
+      await client.query("UPDATE templates SET status = 'archived' WHERE status = 'active' AND organization_id IS NULL");
+    }
 
     // Set target template active
     const result = await client.query(

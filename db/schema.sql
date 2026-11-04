@@ -5,9 +5,21 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 CREATE EXTENSION IF NOT EXISTS vector;
 
+-- 0. Organizations (Multi-Tenancy)
+CREATE TABLE IF NOT EXISTS organizations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    slug VARCHAR(100) UNIQUE NOT NULL,
+    plan VARCHAR(50) NOT NULL DEFAULT 'standard',
+    max_contracts_per_month INT DEFAULT 500,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 -- 1. Users
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -20,6 +32,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- 2. Templates
 CREATE TABLE IF NOT EXISTS templates (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     version INT NOT NULL DEFAULT 1,
@@ -56,6 +69,7 @@ CREATE TABLE IF NOT EXISTS template_versions (
 -- 5. Contracts
 CREATE TABLE IF NOT EXISTS contracts (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
     original_filename VARCHAR(255) NOT NULL,
     file_path VARCHAR(500) NOT NULL,
@@ -67,6 +81,7 @@ CREATE TABLE IF NOT EXISTS contracts (
     ),
     failure_reason TEXT,
     overall_risk_score INT,
+    file_hash VARCHAR(64),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     analyzed_at TIMESTAMPTZ
@@ -123,6 +138,7 @@ CREATE TABLE IF NOT EXISTS approvals (
 -- 10. Audit Logs
 CREATE TABLE IF NOT EXISTS audit_logs (
     id BIGSERIAL PRIMARY KEY,
+    organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
     user_id UUID REFERENCES users(id) ON DELETE SET NULL,
     action VARCHAR(255) NOT NULL,
     entity VARCHAR(100) NOT NULL,
@@ -164,5 +180,10 @@ CREATE INDEX IF NOT EXISTS idx_findings_contract_id ON findings(contract_id);
 CREATE INDEX IF NOT EXISTS idx_findings_status ON findings(status);
 CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at);
 CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON audit_logs(user_id);
-CREATE INDEX IF NOT EXISTS idx_api_usage_created_at ON api_usage(created_at);
+-- Multi-Tenancy Composite Indexes
+CREATE INDEX IF NOT EXISTS idx_contracts_org_id ON contracts(organization_id, id);
+CREATE INDEX IF NOT EXISTS idx_users_org_id ON users(organization_id, id);
+CREATE INDEX IF NOT EXISTS idx_templates_org_id ON templates(organization_id, id);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_org_id ON audit_logs(organization_id, created_at);
+
 

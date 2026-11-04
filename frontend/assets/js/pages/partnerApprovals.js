@@ -256,6 +256,35 @@ function setupDecisionButtons() {
       showToast('Failed to request changes: ' + err.message, 'danger');
     }
   });
+
+  const exportBtn = document.getElementById('partnerExportReportBtn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', async () => {
+      if (!activeContractForDecision) return;
+      exportBtn.disabled = true;
+      try {
+        const token = localStorage.getItem('auth_token');
+        const res = await fetch(`/api/contracts/${activeContractForDecision.id}/report/pdf`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error('Failed to generate report');
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Clausify-Executive-Report-${activeContractForDecision.id.slice(0, 8)}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        showToast('Executive Risk Report PDF downloaded.', 'success');
+      } catch (err) {
+        showToast('Failed to export report: ' + err.message, 'danger');
+      } finally {
+        exportBtn.disabled = false;
+      }
+    });
+  }
 }
 
 function formatClauseTitle(type) {

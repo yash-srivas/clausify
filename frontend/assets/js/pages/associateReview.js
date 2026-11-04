@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   setupZoomControls();
+  setupReportExport(contractId);
 
   try {
     console.log('[Review] 1. Fetching contract metadata & findings...');
@@ -130,5 +131,43 @@ function setupZoomControls() {
     currentScale = 1.15;
     updateZoomLabel();
     if (pdfViewer) await pdfViewer.setZoom(currentScale);
+  });
+}
+
+function setupReportExport(contractId) {
+  const exportBtn = document.getElementById('exportReportBtn');
+  if (!exportBtn) return;
+
+  exportBtn.addEventListener('click', async () => {
+    exportBtn.disabled = true;
+    exportBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Exporting...';
+
+    try {
+      const token = localStorage.getItem('auth_token');
+      const res = await fetch(`/api/contracts/${contractId}/report/pdf`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.ok) {
+        throw new Error(`Export failed with HTTP ${res.status}`);
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Clausify-Executive-Report-${contractId.slice(0, 8)}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      showToast('Executive Risk Report PDF downloaded successfully!', 'success');
+    } catch (err) {
+      showToast('Failed to export executive report: ' + err.message, 'danger');
+    } finally {
+      exportBtn.disabled = false;
+      exportBtn.innerHTML = '<i class="bi bi-file-earmark-pdf"></i> <span class="d-none d-md-inline" style="font-size: 0.75rem;">Export Report</span>';
+    }
   });
 }

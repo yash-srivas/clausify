@@ -10,7 +10,7 @@ async function login(req, res, next) {
 
   try {
     const result = await db.query(
-      'SELECT id, name, email, password_hash, role, is_active FROM users WHERE email = $1',
+      'SELECT id, name, email, password_hash, role, is_active, organization_id FROM users WHERE email = $1',
       [email.toLowerCase().trim()]
     );
 
@@ -76,17 +76,18 @@ async function login(req, res, next) {
 
     // Issue JWT
     const token = jwt.sign(
-      { sub: user.id, role: user.role, email: user.email },
+      { sub: user.id, role: user.role, email: user.email, org_id: user.organization_id },
       config.jwtSecret,
       { expiresIn: config.jwtExpiresIn }
     );
 
     await recordAuditLog({
       userId: user.id,
+      organizationId: user.organization_id,
       action: 'AUTH_LOGIN_SUCCESS',
       entity: 'auth',
       entityId: user.id,
-      metadata: { email: user.email, role: user.role },
+      metadata: { email: user.email, role: user.role, org_id: user.organization_id },
       ip: clientIp,
     });
 
@@ -94,6 +95,7 @@ async function login(req, res, next) {
       token,
       user: {
         id: user.id,
+        organization_id: user.organization_id,
         name: user.name,
         email: user.email,
         role: user.role,
@@ -109,6 +111,7 @@ async function getMe(req, res, next) {
     return res.status(200).json({
       user: {
         id: req.user.id,
+        organization_id: req.user.organization_id,
         name: req.user.name,
         email: req.user.email,
         role: req.user.role,

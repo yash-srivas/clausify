@@ -10,8 +10,14 @@ async function getUsers(req, res, next) {
     const offset = (page - 1) * limit;
     const { role, is_active } = req.query;
 
-    let queryText = 'SELECT id, name, email, role, is_active, created_at, last_login_at FROM users WHERE 1=1';
+    let queryText = 'SELECT id, organization_id, name, email, role, is_active, created_at, last_login_at FROM users WHERE 1=1';
     const params = [];
+
+    // Tenant isolation: scope to admin's organization
+    if (req.user.organization_id) {
+      params.push(req.user.organization_id);
+      queryText += ` AND organization_id = $${params.length}`;
+    }
 
     if (role) {
       params.push(role);
@@ -63,11 +69,12 @@ async function createUser(req, res, next) {
     }
 
     const passwordHash = bcrypt.hashSync(password, 12);
+    const orgId = req.user.organization_id || null;
     const result = await db.query(
-      `INSERT INTO users (name, email, password_hash, role, is_active)
-       VALUES ($1, $2, $3, $4, true)
-       RETURNING id, name, email, role, is_active, created_at`,
-      [name.trim(), email.toLowerCase().trim(), passwordHash, role]
+      `INSERT INTO users (organization_id, name, email, password_hash, role, is_active)
+       VALUES ($1, $2, $3, $4, $5, true)
+       RETURNING id, organization_id, name, email, role, is_active, created_at`,
+      [orgId, name.trim(), email.toLowerCase().trim(), passwordHash, role]
     );
 
     res.locals.entityId = result.rows[0].id;
@@ -85,8 +92,8 @@ async function updateUser(req, res, next) {
   const { name, email, role } = req.body;
 
   try {
-    const existing = await db.query('SELECT id FROM users WHERE id = $1', [id]);
-    if (existing.rows.length === 0) {
+    const existing = await db.query('SELECT id, organization_id FROM users WHERE id = $1', [id]);
+    if (existing.rows.length === 0 || (req.user.organization_id && existing.rows[0].organization_id !== req.user.organization_id)) {
       return res.status(404).json({
         error: {
           code: 'USER_NOT_FOUND',
@@ -117,7 +124,7 @@ async function updateUser(req, res, next) {
            email = COALESCE($2, email),
            role = COALESCE($3, role)
        WHERE id = $4
-       RETURNING id, name, email, role, is_active, created_at, last_login_at`,
+       RETURNING id, organization_id, name, email, role, is_active, created_at, last_login_at`,
       [name ? name.trim() : null, email ? email.toLowerCase().trim() : null, role || null, id]
     );
 
@@ -136,15 +143,8 @@ async function setUserStatus(req, res, next) {
   const { is_active } = req.body;
 
   try {
-    const result = await db.query(
-      `UPDATE users
-       SET is_active = $1
-       WHERE id = $2
-       RETURNING id, name, email, role, is_active`,
-      [Boolean(is_active), id]
-    );
-
-    if (result.rows.length === 0) {
+    const existing = await db.query('SELECT id, organization_id FROM users WHERE id = $1', [id]);
+    if (existing.rows.length === 0 || (req.user.organization_id && existing.rows[0].organization_id !== req.user.organization_id)) {
       return res.status(404).json({
         error: {
           code: 'USER_NOT_FOUND',
@@ -152,6 +152,14 @@ async function setUserStatus(req, res, next) {
         },
       });
     }
+
+    const result = await db.query(
+      `UPDATE users
+       SET is_active = $1
+       WHERE id = $2
+       RETURNING id, organization_id, name, email, role, is_active`,
+      [Boolean(is_active), id]
+    );
 
     res.locals.entityId = id;
     return res.status(200).json({
@@ -168,13 +176,8 @@ async function resetPassword(req, res, next) {
   const { password } = req.body;
 
   try {
-    const passwordHash = bcrypt.hashSync(password, 12);
-    const result = await db.query(
-      'UPDATE users SET password_hash = $1 WHERE id = $2 RETURNING id, email',
-      [passwordHash, id]
-    );
-
-    if (result.rows.length === 0) {
+    const existing = await db.query('SELECT id, organization_id FROM users WHERE id = $1', [id]);
+    if (existing.rows.length === 0 || (req.user.organization_id && existing.rows[0].organization_id !== req.user.organization_id)) {
       return res.status(404).json({
         error: {
           code: 'USER_NOT_FOUND',
@@ -182,6 +185,12 @@ async function resetPassword(req, res, next) {
         },
       });
     }
+
+    const passwordHash = bcrypt.hashSync(password, 12);
+    const result = await db.query(
+      'UPDATE users SET password_hash = $1 WHERE id = $2 RETURNING id, email',
+      [passwordHash, id]
+    );
 
     res.locals.entityId = id;
     return res.status(200).json({
@@ -199,21 +208,29 @@ async function resetPassword(req, res, next) {
 // GET /api/admin/analytics (KPIs + Chart.js aggregates)
 async function getAnalytics(req, res, next) {
   try {
+    const orgId = req.user.organization_id;
+    const orgFilter = orgId ? 'AND organization_id = $1' : '';
+    const orgWhere = orgId ? 'WHERE organization_id = $1' : '';
+    const params = orgId ? [orgId] : [];
+
     // 1. Processed count
     const processedRes = await db.query(
-      "SELECT count(*) FROM contracts WHERE status IN ('analyzed', 'in_review', 'escalated', 'approved', 'rejected')"
+      `SELECT count(*) FROM contracts WHERE status IN ('analyzed', 'in_review', 'escalated', 'approved', 'rejected') ${orgFilter}`,
+      params
     );
     const contractsProcessed = parseInt(processedRes.rows[0].count, 10);
 
     // 2. Average risk score
     const avgScoreRes = await db.query(
-      'SELECT round(avg(overall_risk_score)::numeric, 1) FROM contracts WHERE overall_risk_score IS NOT NULL'
+      `SELECT round(avg(overall_risk_score)::numeric, 1) FROM contracts WHERE overall_risk_score IS NOT NULL ${orgFilter}`,
+      params
     );
     const avgRiskScore = parseFloat(avgScoreRes.rows[0].round) || 0;
 
     // 3. Status breakdown
     const statusRes = await db.query(
-      'SELECT status, count(*) AS count FROM contracts GROUP BY status'
+      `SELECT status, count(*) AS count FROM contracts ${orgWhere} GROUP BY status`,
+      params
     );
     const statusBreakdown = statusRes.rows.reduce((acc, row) => {
       acc[row.status] = parseInt(row.count, 10);
@@ -222,15 +239,18 @@ async function getAnalytics(req, res, next) {
 
     // 4. Top flagged clause types
     const clauseRes = await db.query(
-      `SELECT clause_type,
+      `SELECT f.clause_type,
               count(*) AS flag_count,
-              count(CASE WHEN risk_level = 'HIGH' THEN 1 END) AS high_count,
-              count(CASE WHEN risk_level = 'MEDIUM' THEN 1 END) AS medium_count,
-              count(CASE WHEN risk_level = 'LOW' THEN 1 END) AS low_count
-       FROM findings
-       GROUP BY clause_type
+              count(CASE WHEN f.risk_level = 'HIGH' THEN 1 END) AS high_count,
+              count(CASE WHEN f.risk_level = 'MEDIUM' THEN 1 END) AS medium_count,
+              count(CASE WHEN f.risk_level = 'LOW' THEN 1 END) AS low_count
+       FROM findings f
+       JOIN contracts c ON f.contract_id = c.id
+       ${orgId ? 'WHERE c.organization_id = $1' : ''}
+       GROUP BY f.clause_type
        ORDER BY count(*) DESC
-       LIMIT 6`
+       LIMIT 6`,
+      params
     );
 
     // 5. API token usage
@@ -247,9 +267,11 @@ async function getAnalytics(req, res, next) {
     const perDayRes = await db.query(
       `SELECT to_char(created_at, 'YYYY-MM-DD') AS day, count(*) AS count
        FROM contracts
+       ${orgWhere}
        GROUP BY to_char(created_at, 'YYYY-MM-DD')
        ORDER BY day ASC
-       LIMIT 14`
+       LIMIT 14`,
+      params
     );
 
     return res.status(200).json({
@@ -280,6 +302,12 @@ async function getAuditLogs(req, res, next) {
       WHERE 1=1
     `;
     const params = [];
+
+    // Tenant isolation: scope to admin's organization
+    if (req.user.organization_id) {
+      params.push(req.user.organization_id);
+      queryText += ` AND a.organization_id = $${params.length}`;
+    }
 
     if (user_id) {
       params.push(user_id);

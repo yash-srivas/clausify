@@ -1,15 +1,21 @@
 -- Seed Data for Intelligent Legal Contract & Vendor Risk Analyzer
 
+-- 0. Insert Default Organization
+INSERT INTO organizations (id, name, slug)
+VALUES ('00000000-0000-0000-0000-000000000001', 'Default Legal Firm', 'default-firm')
+ON CONFLICT (id) DO NOTHING;
+
 -- 1. Insert Users (Password: Demo@123)
 -- bcrypt hash cost 12: $2a$12$aec5oWgNpn42HizCXCfd0ul.0UtBQ6xMQlMNHdi7OFEzP6wXz59VW
-INSERT INTO users (id, name, email, password_hash, role, is_active, created_at)
+INSERT INTO users (id, organization_id, name, email, password_hash, role, is_active, created_at)
 VALUES
-  ('11111111-1111-1111-1111-111111111111', 'Alex Associate', 'associate@demo.com', '$2a$12$aec5oWgNpn42HizCXCfd0ul.0UtBQ6xMQlMNHdi7OFEzP6wXz59VW', 'associate', true, NOW()),
-  ('22222222-2222-2222-2222-222222222222', 'Patricia Partner', 'partner@demo.com', '$2a$12$aec5oWgNpn42HizCXCfd0ul.0UtBQ6xMQlMNHdi7OFEzP6wXz59VW', 'partner', true, NOW()),
-  ('33333333-3333-3333-3333-333333333333', 'Arthur Admin', 'admin@demo.com', '$2a$12$aec5oWgNpn42HizCXCfd0ul.0UtBQ6xMQlMNHdi7OFEzP6wXz59VW', 'admin', true, NOW())
+  ('11111111-1111-1111-1111-111111111111', '00000000-0000-0000-0000-000000000001', 'Alex Associate', 'associate@demo.com', '$2a$12$aec5oWgNpn42HizCXCfd0ul.0UtBQ6xMQlMNHdi7OFEzP6wXz59VW', 'associate', true, NOW()),
+  ('22222222-2222-2222-2222-222222222222', '00000000-0000-0000-0000-000000000001', 'Patricia Partner', 'partner@demo.com', '$2a$12$aec5oWgNpn42HizCXCfd0ul.0UtBQ6xMQlMNHdi7OFEzP6wXz59VW', 'partner', true, NOW()),
+  ('33333333-3333-3333-3333-333333333333', '00000000-0000-0000-0000-000000000001', 'Arthur Admin', 'admin@demo.com', '$2a$12$aec5oWgNpn42HizCXCfd0ul.0UtBQ6xMQlMNHdi7OFEzP6wXz59VW', 'admin', true, NOW())
 ON CONFLICT (email) DO UPDATE 
 SET password_hash = EXCLUDED.password_hash,
     role = EXCLUDED.role,
+    organization_id = EXCLUDED.organization_id,
     is_active = true;
 
 -- 2. Insert Active Template

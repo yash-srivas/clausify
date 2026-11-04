@@ -10,11 +10,18 @@ const router = express.Router();
 
 router.use(auth);
 
-// POST /api/contracts (Upload & Analyze)
+// POST /api/contracts (Upload & Analyze single contract)
 router.post(
   '/',
   upload.single('file'),
   contractsController.uploadContract
+);
+
+// POST /api/contracts/batch (Batch Ingestion of multiple contracts, up to 10 files)
+router.post(
+  '/batch',
+  upload.array('files', 10),
+  contractsController.uploadBatchContracts
 );
 
 // GET /api/contracts
@@ -87,6 +94,30 @@ router.post(
   [param('id').isUUID().withMessage('Valid contract UUID is required')],
   validate,
   contractsController.requestChanges
+);
+
+// GET /api/contracts/:id/report (JSON executive report)
+router.get(
+  '/:id/report',
+  [param('id').isUUID().withMessage('Valid contract UUID is required')],
+  validate,
+  contractsController.getContractReport
+);
+
+// GET /api/contracts/:id/report/pdf (Downloadable PDF executive report)
+router.get(
+  '/:id/report/pdf',
+  [param('id').isUUID().withMessage('Valid contract UUID is required')],
+  validate,
+  contractsController.exportContractPdfReport
+);
+
+// GET /api/contracts/:id/progress (Server-Sent Events for real-time analysis pipeline progress)
+router.get(
+  '/:id/progress',
+  [param('id').isUUID().withMessage('Valid contract UUID is required')],
+  validate,
+  contractsController.streamContractProgress
 );
 
 module.exports = router;

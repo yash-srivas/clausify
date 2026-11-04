@@ -139,9 +139,14 @@
         </div>
         
         <div class="modal-footer d-flex flex-wrap justify-content-between align-items-center pt-2">
-          <a id="openFullReviewBtn" href="#" class="btn btn-outline-primary btn-sm" target="_blank">
-            <i class="bi bi-box-arrow-up-right me-1"></i>Open Full PDF Workspace
-          </a>
+          <div class="d-flex align-items-center gap-2">
+            <a id="openFullReviewBtn" href="#" class="btn btn-outline-primary btn-sm" target="_blank">
+              <i class="bi bi-box-arrow-up-right me-1"></i>Open Workspace
+            </a>
+            <button type="button" id="partnerExportReportBtn" class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-file-earmark-pdf me-1"></i>Download Report
+            </button>
+          </div>
           <div class="d-flex gap-2">
             <button type="button" id="approveBtn" class="btn btn-success fw-bold px-3">
               <i class="bi bi-check2-circle me-1"></i>Approve Contract

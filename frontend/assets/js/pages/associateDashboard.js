@@ -10,7 +10,8 @@ let contractsList = [];
 let activeFilter = 'all';
 let searchQuery = '';
 let pollInterval = null;
-let selectedFile = null;
+let selectedFiles = [];
+const activeEventSources = new Map();
 
 document.addEventListener('DOMContentLoaded', async () => {
   const user = requireAuth(['associate', 'partner', 'admin']);
@@ -25,8 +26,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadTemplates();
   await loadContracts();
 
-  // Polling loop
-  startPolling();
+  // Safety fallback polling (low frequency 15s instead of aggressive 3s polling)
+  startSafetyPolling();
 });
 
 function setupUploadZone() {
@@ -40,8 +41,8 @@ function setupUploadZone() {
   browseBtn.addEventListener('click', () => fileInput.click());
 
   fileInput.addEventListener('change', (e) => {
-    if (e.target.files && e.target.files[0]) {
-      handleFileSelected(e.target.files[0]);
+    if (e.target.files && e.target.files.length > 0) {
+      handleFilesSelected(Array.from(e.target.files));
     }
   });
 
@@ -60,26 +61,43 @@ function setupUploadZone() {
   });
 
   dropzone.addEventListener('drop', (e) => {
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFileSelected(e.dataTransfer.files[0]);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleFilesSelected(Array.from(e.dataTransfer.files));
     }
   });
 
-  function handleFileSelected(file) {
-    if (!file.name.toLowerCase().endsWith('.pdf') && file.type !== 'application/pdf') {
-      showToast('Please select a valid PDF file.', 'danger');
+  function handleFilesSelected(files) {
+    const validPdfs = files.filter(
+      (f) => f.name.toLowerCase().endsWith('.pdf') || f.type === 'application/pdf'
+    );
+
+    if (validPdfs.length === 0) {
+      showToast('Please select valid PDF file(s).', 'danger');
       return;
     }
-    selectedFile = file;
-    selectedFileName.textContent = `Selected: ${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`;
+
+    if (validPdfs.length > 10) {
+      showToast('Maximum 10 contracts can be uploaded in one batch.', 'warning');
+      selectedFiles = validPdfs.slice(0, 10);
+    } else {
+      selectedFiles = validPdfs;
+    }
+
+    if (selectedFiles.length === 1) {
+      const f = selectedFiles[0];
+      selectedFileName.textContent = `Selected: ${f.name} (${(f.size / (1024 * 1024)).toFixed(2)} MB)`;
+    } else {
+      selectedFileName.textContent = `Selected: ${selectedFiles.length} contracts for batch analysis`;
+    }
+
     selectedFileName.classList.remove('d-none');
     startUploadBtn.disabled = false;
   }
 
   uploadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!selectedFile) {
-      showToast('Please select a PDF file first.', 'warning');
+    if (!selectedFiles || selectedFiles.length === 0) {
+      showToast('Please select at least one PDF file first.', 'warning');
       return;
     }
 
@@ -90,33 +108,47 @@ function setupUploadZone() {
       return;
     }
 
-    const titleInput = document.getElementById('contractTitleInput');
-    const title = titleInput.value.trim() || selectedFile.name.replace(/\.[^/.]+$/, '');
-
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('title', title);
-    formData.append('template_id', templateId);
-
     const uploadSpinner = document.getElementById('uploadSpinner');
     const uploadBtnText = document.getElementById('uploadBtnText');
     const statusMsg = document.getElementById('uploadStatusMessage');
 
     startUploadBtn.disabled = true;
     uploadSpinner.classList.remove('d-none');
-    uploadBtnText.textContent = 'Uploading & Ingesting...';
-    statusMsg.innerHTML = '<span class="text-primary"><i class="bi bi-gear-wide-connected me-1 spin-icon"></i> Extracting text and initiating AI risk analysis...</span>';
+    uploadBtnText.textContent = selectedFiles.length > 1 ? 'Uploading Batch...' : 'Uploading & Ingesting...';
+    statusMsg.innerHTML = '<span class="text-primary"><i class="bi bi-gear-wide-connected me-1 spin-icon"></i> Initiating document analysis pipeline...</span>';
 
     try {
-      const response = await api.upload('/contracts', formData);
-      showToast('Contract uploaded and analysis initiated successfully!', 'success');
+      if (selectedFiles.length === 1) {
+        // Single upload
+        const titleInput = document.getElementById('contractTitleInput');
+        const title = titleInput.value.trim() || selectedFiles[0].name.replace(/\.[^/.]+$/, '');
+
+        const formData = new FormData();
+        formData.append('file', selectedFiles[0]);
+        formData.append('title', title);
+        formData.append('template_id', templateId);
+
+        await api.upload('/contracts', formData);
+        showToast('Contract uploaded and analysis initiated successfully!', 'success');
+      } else {
+        // Batch upload
+        const formData = new FormData();
+        selectedFiles.forEach((file) => {
+          formData.append('files', file);
+        });
+        formData.append('template_id', templateId);
+
+        const batchRes = await api.upload('/contracts/batch', formData);
+        showToast(`Batch queued: ${batchRes.succeeded} documents queued, ${batchRes.failed} skipped.`, 'info');
+      }
 
       // Reset form
-      selectedFile = null;
+      selectedFiles = [];
       fileInput.value = '';
-      titleInput.value = '';
+      const titleInput = document.getElementById('contractTitleInput');
+      if (titleInput) titleInput.value = '';
       selectedFileName.classList.add('d-none');
-      statusMsg.innerHTML = '<span class="text-success"><i class="bi bi-check-circle me-1"></i> Analysis in progress. See table below.</span>';
+      statusMsg.innerHTML = '<span class="text-success"><i class="bi bi-check-circle me-1"></i> Analysis in progress. Live updates streaming below.</span>';
       uploadSpinner.classList.add('d-none');
       uploadBtnText.textContent = 'Upload & Run AI Risk Analysis';
 
@@ -163,9 +195,81 @@ async function loadContracts() {
     const res = await api.get('/contracts');
     contractsList = Array.isArray(res) ? res : (res.contracts || []);
     renderContractsTable();
+    syncProgressStreams();
   } catch (err) {
     showToast('Failed to fetch contracts: ' + err.message, 'danger');
   }
+}
+
+function syncProgressStreams() {
+  const inFlightContracts = contractsList.filter(
+    (c) => c.status === 'uploaded' || c.status === 'processing'
+  );
+
+  const inFlightIds = new Set(inFlightContracts.map((c) => c.id));
+
+  // Close completed streams
+  for (const [id, es] of activeEventSources.entries()) {
+    if (!inFlightIds.has(id)) {
+      es.close();
+      activeEventSources.delete(id);
+    }
+  }
+
+  // Subscribe to newly in-flight contracts
+  inFlightContracts.forEach((c) => trackContractProgress(c.id));
+}
+
+function trackContractProgress(contractId) {
+  if (activeEventSources.has(contractId)) return;
+
+  const token = api.getToken();
+  if (!token) return;
+
+  const es = new EventSource(`/api/contracts/${contractId}/progress?token=${encodeURIComponent(token)}`);
+  activeEventSources.set(contractId, es);
+
+  es.addEventListener('progress', (e) => {
+    try {
+      const data = JSON.parse(e.data);
+      updateRowProgress(data);
+
+      if (data.stage === 'COMPLETED' || data.stage === 'FAILED') {
+        es.close();
+        activeEventSources.delete(contractId);
+
+        if (data.stage === 'COMPLETED') {
+          showToast(`Analysis completed (Risk Score: ${data.details?.overall_risk_score ?? data.overall_risk_score ?? 'Evaluated'})`, 'success');
+        } else {
+          showToast(`Analysis failed: ${data.message}`, 'danger');
+        }
+        loadContracts();
+      }
+    } catch (err) {
+      console.error('[SSE Progress Parse Error]', err);
+    }
+  });
+
+  es.onerror = () => {
+    es.close();
+    activeEventSources.delete(contractId);
+  };
+}
+
+function updateRowProgress(data) {
+  const cell = document.getElementById(`status-cell-${data.contractId}`);
+  if (!cell) return;
+  if (data.stage === 'COMPLETED' || data.stage === 'FAILED') return;
+
+  cell.innerHTML = `
+    <div class="d-flex flex-column gap-1">
+      <span class="clay-badge clay-badge-processing">
+        <span class="spinner-border spinner-border-sm" style="width: 0.75rem; height: 0.75rem;" role="status"></span>
+        ${data.stage} (${data.progress}%)
+      </span>
+      <span class="text-muted text-truncate" style="font-size: 0.72rem; max-width: 150px;" title="${data.message || ''}">${data.message || ''}</span>
+    </div>
+  `;
 }
 
 function setupFilterTabs() {
@@ -276,7 +380,7 @@ function renderContractsTable() {
       const dateStr = c.created_at ? new Date(c.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' }) : '--';
 
       return `
-        <tr>
+        <tr data-contract-id="${c.id}">
           <td>
             <div class="fw-bold text-dark fs-6 mb-1">${c.title || c.original_filename}</div>
             <div class="text-muted small text-truncate d-flex align-items-center gap-1" style="max-width: 280px;">
@@ -289,7 +393,7 @@ function renderContractsTable() {
               <i class="bi bi-bookmark-check text-primary me-1"></i>${c.template_name || 'Standard Safe Template'}
             </span>
           </td>
-          <td>${statusBadge}</td>
+          <td id="status-cell-${c.id}">${statusBadge}</td>
           <td>${riskHtml}</td>
           <td><span class="badge bg-light text-secondary border px-2 py-1">${c.page_count || 1} pgs</span></td>
           <td class="small text-muted fw-medium">${dateStr}</td>
@@ -328,12 +432,13 @@ function renderContractsTable() {
   });
 }
 
-function startPolling() {
+function startSafetyPolling() {
   if (pollInterval) clearInterval(pollInterval);
+  // Low-frequency safety poll (15s) in case SSE is blocked by an aggressive client proxy
   pollInterval = setInterval(async () => {
     const hasProcessing = contractsList.some((c) => c.status === 'uploaded' || c.status === 'processing');
-    if (hasProcessing) {
+    if (hasProcessing && activeEventSources.size === 0) {
       await loadContracts();
     }
-  }, 3000);
+  }, 15000);
 }

@@ -17,13 +17,13 @@ function sanitizeMetadata(data) {
   return sanitized;
 }
 
-async function recordAuditLog({ userId, action, entity, entityId, metadata, ip }) {
+async function recordAuditLog({ userId, organizationId, action, entity, entityId, metadata, ip }) {
   try {
     const cleanMeta = sanitizeMetadata(metadata);
     await db.query(
-      `INSERT INTO audit_logs (user_id, action, entity, entity_id, metadata, ip, created_at)
-       VALUES ($1, $2, $3, $4, $5, $6, NOW())`,
-      [userId || null, action, entity, entityId ? String(entityId) : null, cleanMeta ? JSON.stringify(cleanMeta) : null, ip || null]
+      `INSERT INTO audit_logs (organization_id, user_id, action, entity, entity_id, metadata, ip, created_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+      [organizationId || null, userId || null, action, entity, entityId ? String(entityId) : null, cleanMeta ? JSON.stringify(cleanMeta) : null, ip || null]
     );
   } catch (err) {
     console.error('[Audit Logger Error]', err);
@@ -58,6 +58,7 @@ function auditMiddleware(req, res, next) {
 
     recordAuditLog({
       userId: req.user?.id || null,
+      organizationId: req.user?.organization_id || req.orgId || null,
       action,
       entity,
       entityId,
