@@ -103,14 +103,14 @@ export function renderNavbar(activeKey = '') {
     (typeof localStorage !== 'undefined' && localStorage.getItem('app_theme')) || 'claymorphism';
 
   const themeNames = {
-    'claymorphism': 'Enterprise Modern',
+    'claymorphism': 'Claymorphism',
     'material-you': 'Material You',
-    'neo-brutalism': 'High Contrast',
-    'neumorphism': 'Neumorphic',
+    'neo-brutalism': 'Neo-Brutalism',
+    'neumorphism': 'Neumorphism',
     'glassmorphism': 'Glassmorphism',
     'monochrome': 'Monochrome'
   };
-  const curThemeLabel = themeNames[curTheme] || 'Enterprise Modern';
+  const curThemeLabel = themeNames[curTheme] || 'Claymorphism';
 
   let navbarContentHtml = '';
 
@@ -219,12 +219,12 @@ export function renderNavbar(activeKey = '') {
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-3 p-2" aria-labelledby="navThemeDropdownBtn" style="min-width: 220px;">
               <li><h6 class="dropdown-header small text-uppercase fw-bold text-muted px-3 py-1" style="font-size: 0.65rem;">Theme Preset</h6></li>
-              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'claymorphism' ? 'active' : ''}" data-theme="claymorphism"><i class="bi bi-droplet-half me-2"></i>Enterprise Modern</button></li>
+              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'claymorphism' ? 'active' : ''}" data-theme="claymorphism"><i class="bi bi-droplet-half me-2"></i>Claymorphism</button></li>
               <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'material-you' ? 'active' : ''}" data-theme="material-you"><i class="bi bi-palette2 me-2"></i>Material You</button></li>
-              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'neo-brutalism' ? 'active' : ''}" data-theme="neo-brutalism"><i class="bi bi-square-fill me-2"></i>High Contrast</button></li>
-              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'neumorphism' ? 'active' : ''}" data-theme="neumorphism"><i class="bi bi-circle-half me-2"></i>Neumorphic</button></li>
+              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'neo-brutalism' ? 'active' : ''}" data-theme="neo-brutalism"><i class="bi bi-square-fill me-2"></i>Neo-Brutalism</button></li>
+              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'neumorphism' ? 'active' : ''}" data-theme="neumorphism"><i class="bi bi-circle-half me-2"></i>Neumorphism</button></li>
               <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'glassmorphism' ? 'active' : ''}" data-theme="glassmorphism"><i class="bi bi-gem me-2"></i>Glassmorphism</button></li>
-              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'monochrome' ? 'active' : ''}" data-theme="monochrome"><i class="bi bi-circle-fill me-2"></i>Editorial Monochrome</button></li>
+              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'monochrome' ? 'active' : ''}" data-theme="monochrome"><i class="bi bi-circle-fill me-2"></i>Monochrome</button></li>
             </ul>
           </div>
 
@@ -276,12 +276,12 @@ export function renderNavbar(activeKey = '') {
                   </button>
                 </div>
                 <select id="userThemeSelect" class="form-select form-select-sm rounded-2 mb-2" style="font-size: 0.8rem;">
-                  <option value="claymorphism">Enterprise Modern (Default)</option>
+                  <option value="claymorphism">Claymorphism (Default)</option>
                   <option value="material-you">Material You</option>
-                  <option value="neo-brutalism">High Contrast</option>
-                  <option value="neumorphism">Neumorphic</option>
+                  <option value="neo-brutalism">Neo-Brutalism</option>
+                  <option value="neumorphism">Neumorphism</option>
                   <option value="glassmorphism">Glassmorphism</option>
-                  <option value="monochrome">Editorial Monochrome</option>
+                  <option value="monochrome">Monochrome</option>
                 </select>
               </li>
 
@@ -337,12 +337,12 @@ export function renderNavbar(activeKey = '') {
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-3 p-2" aria-labelledby="guestThemeDropdownBtn" style="min-width: 220px;">
               <li><h6 class="dropdown-header small text-uppercase fw-bold text-muted px-3 py-1" style="font-size: 0.65rem;">Theme Preset</h6></li>
-              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'claymorphism' ? 'active' : ''}" data-theme="claymorphism"><i class="bi bi-droplet-half me-2"></i>Enterprise Modern</button></li>
+              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'claymorphism' ? 'active' : ''}" data-theme="claymorphism"><i class="bi bi-droplet-half me-2"></i>Claymorphism</button></li>
               <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'material-you' ? 'active' : ''}" data-theme="material-you"><i class="bi bi-palette2 me-2"></i>Material You</button></li>
-              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'neo-brutalism' ? 'active' : ''}" data-theme="neo-brutalism"><i class="bi bi-square-fill me-2"></i>High Contrast</button></li>
-              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'neumorphism' ? 'active' : ''}" data-theme="neumorphism"><i class="bi bi-circle-half me-2"></i>Neumorphic</button></li>
+              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'neo-brutalism' ? 'active' : ''}" data-theme="neo-brutalism"><i class="bi bi-square-fill me-2"></i>Neo-Brutalism</button></li>
+              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'neumorphism' ? 'active' : ''}" data-theme="neumorphism"><i class="bi bi-circle-half me-2"></i>Neumorphism</button></li>
               <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'glassmorphism' ? 'active' : ''}" data-theme="glassmorphism"><i class="bi bi-gem me-2"></i>Glassmorphism</button></li>
-              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'monochrome' ? 'active' : ''}" data-theme="monochrome"><i class="bi bi-circle-fill me-2"></i>Editorial Monochrome</button></li>
+              <li><button class="dropdown-item rounded-2 py-1.5 small nav-theme-opt ${curTheme === 'monochrome' ? 'active' : ''}" data-theme="monochrome"><i class="bi bi-circle-fill me-2"></i>Monochrome</button></li>
             </ul>
           </div>
 
@@ -428,7 +428,7 @@ export function renderNavbar(activeKey = '') {
     });
   }
 
-  // Guest Theme Option Buttons
+  // Theme Option Buttons
   document.querySelectorAll('.nav-theme-opt').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -439,6 +439,13 @@ export function renderNavbar(activeKey = '') {
         } else {
           document.documentElement.setAttribute('data-theme', selected);
           localStorage.setItem('app_theme', selected);
+          const tName = themeNames[selected] || selected;
+          document.querySelectorAll('.nav-theme-current-label, #guestThemeLabel').forEach((el) => {
+            el.innerText = tName;
+          });
+          document.querySelectorAll('.nav-theme-opt').forEach((opt) => {
+            opt.classList.toggle('active', opt.getAttribute('data-theme') === selected);
+          });
         }
       }
     });

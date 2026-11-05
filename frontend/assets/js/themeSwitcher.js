@@ -47,6 +47,19 @@ export function applyTheme(themeId) {
   document.documentElement.setAttribute('data-theme', themeId);
   localStorage.setItem('app_theme', themeId);
 
+  // Sync URL search params if present so page reloads persist user's manual selection
+  if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.has('theme')) {
+        url.searchParams.set('theme', themeId);
+        window.history.replaceState({}, '', url.toString());
+      }
+    } catch (e) {
+      // Ignore URL parsing errors in non-standard environments
+    }
+  }
+
   // Sync select dropdown in user profile menu if present
   const userSelect = document.getElementById('userThemeSelect');
   if (userSelect && userSelect.value !== themeId) {
@@ -82,6 +95,19 @@ export function applyMode(mode) {
   document.documentElement.setAttribute('data-mode', normalized);
   document.documentElement.setAttribute('data-bs-theme', normalized);
   localStorage.setItem('app_mode', normalized);
+
+  // Sync URL search params if present so page reloads persist user's manual selection
+  if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.has('mode')) {
+        url.searchParams.set('mode', normalized);
+        window.history.replaceState({}, '', url.toString());
+      }
+    } catch (e) {
+      // Ignore URL parsing errors in non-standard environments
+    }
+  }
 
   // Update navbar mode toggle icon
   const navModeIcon = document.getElementById('navModeIcon');
