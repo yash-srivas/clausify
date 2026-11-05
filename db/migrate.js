@@ -1,7 +1,18 @@
 const fs = require('fs');
 const path = require('path');
-const { Pool } = require(path.join(__dirname, '../backend/node_modules/pg'));
-require(path.join(__dirname, '../backend/node_modules/dotenv')).config({ path: path.join(__dirname, '../backend/.env') });
+
+let Pool, dotenv;
+try {
+  Pool = require('pg').Pool;
+} catch {
+  Pool = require(path.join(__dirname, '../backend/node_modules/pg')).Pool;
+}
+try {
+  dotenv = require('dotenv');
+} catch {
+  dotenv = require(path.join(__dirname, '../backend/node_modules/dotenv'));
+}
+dotenv.config({ path: path.join(__dirname, '../backend/.env') });
 
 const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/legal_risk_analyzer';
 const pool = new Pool({ connectionString });

@@ -3,7 +3,7 @@
  */
 
 import { api } from '../api.js';
-import { requireAuth, renderNavbar } from '../auth.js';
+import { requireAuth, renderNavbar, getToken } from '../auth.js';
 import { showToast } from '../toast.js';
 import { PdfViewer } from '../pdfViewer.js';
 import { FindingsPanel } from '../findingsPanel.js';
@@ -143,7 +143,7 @@ function setupReportExport(contractId) {
     exportBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Exporting...';
 
     try {
-      const token = localStorage.getItem('auth_token');
+      const token = getToken() || localStorage.getItem('token');
       const res = await fetch(`/api/contracts/${contractId}/report/pdf`, {
         headers: { Authorization: `Bearer ${token}` },
       });

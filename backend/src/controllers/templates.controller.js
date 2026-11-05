@@ -129,11 +129,11 @@ async function updateTemplate(req, res, next) {
 
     const currentTpl = currentTplRes.rows[0];
 
-    // Protect global templates and other organization templates from modification
-    if (req.user.organization_id && currentTpl.organization_id !== req.user.organization_id) {
+    // Protect other organization templates from modification
+    if (currentTpl.organization_id && req.user.organization_id && currentTpl.organization_id !== req.user.organization_id) {
       await client.query('ROLLBACK');
       return res.status(403).json({
-        error: { code: 'FORBIDDEN', message: 'Global benchmark templates and other organization templates cannot be modified' },
+        error: { code: 'FORBIDDEN', message: 'Templates belonging to another organization cannot be modified' },
       });
     }
     const currentClausesRes = await client.query(

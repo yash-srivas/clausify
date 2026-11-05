@@ -1,8 +1,23 @@
 const fs = require('fs');
 const path = require('path');
-const { Pool } = require(path.join(__dirname, '../backend/node_modules/pg'));
-const bcrypt = require(path.join(__dirname, '../backend/node_modules/bcryptjs'));
-require(path.join(__dirname, '../backend/node_modules/dotenv')).config({ path: path.join(__dirname, '../backend/.env') });
+
+let Pool, bcrypt, dotenv;
+try {
+  Pool = require('pg').Pool;
+} catch {
+  Pool = require(path.join(__dirname, '../backend/node_modules/pg')).Pool;
+}
+try {
+  bcrypt = require('bcryptjs');
+} catch {
+  bcrypt = require(path.join(__dirname, '../backend/node_modules/bcryptjs'));
+}
+try {
+  dotenv = require('dotenv');
+} catch {
+  dotenv = require(path.join(__dirname, '../backend/node_modules/dotenv'));
+}
+dotenv.config({ path: path.join(__dirname, '../backend/.env') });
 
 const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/legal_risk_analyzer';
 const pool = new Pool({ connectionString });
@@ -46,26 +61,38 @@ async function seed() {
   try {
     await client.query('BEGIN');
 
+    // 0. Seed default organization
+    const defaultOrgId = '00000000-0000-0000-0000-000000000001';
+    await client.query(
+      `INSERT INTO organizations (id, name, slug)
+       VALUES ($1, 'Default Legal Firm', 'default-firm')
+       ON CONFLICT (id) DO NOTHING`,
+      [defaultOrgId]
+    );
+
     // 1. Seed users
     const passwordHash = bcrypt.hashSync('Demo@123', 12);
     const users = [
-      { id: '11111111-1111-1111-1111-111111111111', name: 'Alex Associate', email: 'associate@demo.com', role: 'associate' },
-      { id: '22222222-2222-2222-2222-222222222222', name: 'Patricia Partner', email: 'partner@demo.com', role: 'partner' },
-      { id: '33333333-3333-3333-3333-333333333333', name: 'Arthur Admin', email: 'admin@demo.com', role: 'admin' }
+      { id: '11111111-1111-1111-1111-111111111111', organization_id: defaultOrgId, name: 'Alex Associate', email: 'associate@demo.com', role: 'associate' },
+      { id: '22222222-2222-2222-2222-222222222222', organization_id: defaultOrgId, name: 'Patricia Partner', email: 'partner@demo.com', role: 'partner' },
+      { id: '33333333-3333-3333-3333-333333333333', organization_id: defaultOrgId, name: 'Arthur Admin', email: 'admin@demo.com', role: 'admin' }
     ];
 
     for (const u of users) {
       await client.query(
-        `INSERT INTO users (id, name, email, password_hash, role, is_active)
-         VALUES ($1, $2, $3, $4, $5, true)
+        `INSERT INTO users (id, organization_id, name, email, password_hash, role, is_active)
+         VALUES ($1, $2, $3, $4, $5, $6, true)
          ON CONFLICT (email) DO UPDATE
-         SET password_hash = EXCLUDED.password_hash, role = EXCLUDED.role, is_active = true`,
-        [u.id, u.name, u.email, passwordHash, u.role]
+         SET password_hash = EXCLUDED.password_hash,
+             role = EXCLUDED.role,
+             organization_id = EXCLUDED.organization_id,
+             is_active = true`,
+        [u.id, u.organization_id, u.name, u.email, passwordHash, u.role]
       );
     }
     console.log('[Seed] Users seeded: associate@demo.com, partner@demo.com, admin@demo.com');
 
-    // 2. Seed active template
+    // 2. Seed active template (global benchmark, organization_id = NULL)
     const templateId = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
     await client.query(
       `INSERT INTO templates (id, name, description, version, status, created_by)

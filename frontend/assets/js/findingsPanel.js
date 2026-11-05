@@ -8,6 +8,47 @@
 import { api } from './api.js';
 import { showToast } from './toast.js';
 
+const BENCHMARK_CITATIONS = {
+  limitation_of_liability: 'Delaware Commercial Benchmark § 2-719 (Mutual Aggregate Fee Cap)',
+  indemnification: 'Delaware Standard § 4.1 (Bilateral Gross Negligence & Third-Party IP Carveout)',
+  termination: 'Commercial Standard § 8.3 (Bilateral 30-Day Notice for Convenience)',
+  auto_renewal: 'LegalSafe Statutory Standard #3 (Explicit 30-Day Opt-Out Window)',
+  intellectual_property: 'Standard Commercial IP § 5.2 (Customer IP Retention & Work-for-Hire)',
+  confidentiality: 'Delaware Bench § 6 (Standard 3-Year Confidentiality & DTSA Carveout)',
+  governing_law: 'Neutral Jurisdiction (Delaware Court of Chancery / Commercial Division)',
+  non_compete: 'LegalSafe Standard #8 (Narrow Customer Non-Solicitation Only)',
+  data_privacy: 'GDPR Art. 28 / CCPA § 1798 Standard Data Processing Annex',
+  warranty: 'UCC § 2-316 (Express Performance Warranty & 30-Day Cure Period)',
+};
+
+function renderDiffHtml(original, rewrite) {
+  if (!original || !rewrite) return escapeHtml(rewrite || original || '');
+  const origWords = original.trim().split(/\s+/);
+  const rewWords = rewrite.trim().split(/\s+/);
+  if (original.trim() === rewrite.trim()) return escapeHtml(rewrite);
+  let start = 0;
+  while (start < origWords.length && start < rewWords.length && origWords[start].toLowerCase() === rewWords[start].toLowerCase()) {
+    start++;
+  }
+  let origEnd = origWords.length - 1;
+  let rewEnd = rewWords.length - 1;
+  while (origEnd >= start && rewEnd >= start && origWords[origEnd].toLowerCase() === rewWords[rewEnd].toLowerCase()) {
+    origEnd--;
+    rewEnd--;
+  }
+  const prefix = origWords.slice(0, start).join(' ');
+  const delPart = origWords.slice(start, origEnd + 1).join(' ');
+  const addPart = rewWords.slice(start, rewEnd + 1).join(' ');
+  const suffix = origWords.slice(origEnd + 1).join(' ');
+
+  let out = '';
+  if (prefix) out += escapeHtml(prefix) + ' ';
+  if (delPart) out += `<span class="redline-del">${escapeHtml(delPart)}</span> `;
+  if (addPart) out += `<span class="redline-add">${escapeHtml(addPart)}</span> `;
+  if (suffix) out += escapeHtml(suffix);
+  return out;
+}
+
 export class FindingsPanel {
   constructor(containerId, options = {}) {
     this.container = document.getElementById(containerId);
@@ -167,6 +208,9 @@ export class FindingsPanel {
             ? 'clay-badge-rejected'
             : 'clay-badge-processing';
 
+        const benchmarkCite = BENCHMARK_CITATIONS[finding.clause_type] || 'Delaware Statutory Standard / UCC Article 2';
+        const diffMarkup = renderDiffHtml(finding.text_span, finding.suggested_rewrite);
+
         return `
           <div class="clay-finding-card p-3 finding-card" id="finding-card-${finding.id}" data-id="${finding.id}" data-page="${finding.page}">
             <!-- Header -->
@@ -184,6 +228,12 @@ export class FindingsPanel {
                   ${finding.status || 'open'}
                 </span>
               </div>
+            </div>
+
+            <!-- Statutory Benchmark Citation -->
+            <div class="mb-2.5 py-1 px-2 rounded bg-slate-100 border text-slate-700 small d-flex align-items-center gap-1.5" style="font-size: 0.73rem;">
+              <i class="bi bi-shield-check text-primary"></i>
+              <span class="fw-semibold text-truncate">Benchmark: ${escapeHtml(benchmarkCite)}</span>
             </div>
 
             <!-- Excerpt Box -->
@@ -204,18 +254,32 @@ export class FindingsPanel {
               <p class="small text-secondary mb-0 fw-medium">${escapeHtml(finding.reason || '')}</p>
             </div>
 
-            <!-- Safer Rewrite Box -->
+            <!-- SpeedLegal Proposed Redline & Rewrite Box -->
             <div class="clay-rewrite-box mb-3">
               <div class="d-flex justify-content-between align-items-center mb-1">
                 <span class="small fw-bold text-success d-flex align-items-center gap-1">
                   <i class="bi bi-magic"></i>
-                  <span>SUGGESTED SAFER REWRITE</span>
+                  <span>PROPOSED STATUTORY REDLINE</span>
                 </span>
                 <button class="btn btn-sm btn-link text-success p-0 fw-bold copy-rewrite-btn text-decoration-none" data-rewrite="${encodeURIComponent(finding.suggested_rewrite || '')}">
                   <i class="bi bi-clipboard me-1"></i>Copy
                 </button>
               </div>
-              <div class="small text-dark mb-2 rewrite-text" id="rewrite-text-${finding.id}">
+
+              <!-- Redline Diff View -->
+              <div class="p-2 mb-2 rounded bg-white border" style="font-size: 0.82rem; line-height: 1.6;">
+                <div class="small text-muted fw-bold mb-1 d-flex justify-content-between align-items-center" style="font-size: 0.68rem;">
+                  <span>VISUAL REDLINE (DELETIONS / ADDITIONS):</span>
+                  <span class="badge bg-slate-100 text-slate-600 border py-0 px-1.5 font-normal">Auto-Diff</span>
+                </div>
+                <div class="text-slate-800 redline-diff-content font-mono-sm">
+                  ${diffMarkup}
+                </div>
+              </div>
+
+              <!-- Clean Rewrite Text -->
+              <div class="small text-secondary mb-2 rewrite-text" id="rewrite-text-${finding.id}" style="font-size: 0.8rem;">
+                <span class="text-muted fw-bold d-block mb-0.5" style="font-size: 0.68rem;">CLEAN REPLACEMENT CLAUSE:</span>
                 ${escapeHtml(finding.suggested_rewrite || 'Standard benchmark clause recommended.')}
               </div>
 

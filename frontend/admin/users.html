@@ -24,22 +24,45 @@
   <!-- Dynamic Floating Navbar -->
   <div id="navbarPlaceholder"></div>
 
+  <!-- Operational Header -->
+  <div class="operational-subnav py-2 px-3 px-xl-4 shadow-2xs">
+    <div class="container-fluid px-0 d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 text-uppercase fw-semibold" style="font-size: 0.7rem;">
+          <i class="bi bi-person-badge me-1"></i> Enterprise IAM & Role Governance
+        </span>
+        <span class="small text-muted d-none d-md-inline">&bull;</span>
+        <span class="small text-secondary d-none d-md-inline">
+          <i class="bi bi-shield-lock text-success me-1"></i> Multi-Tenant RBAC Active
+        </span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <a href="/admin/analytics.html" class="btn btn-xs btn-outline-secondary rounded-pill px-2.5 py-1 small" style="font-size: 0.75rem;">
+          <i class="bi bi-graph-up me-1"></i> Risk Telemetry
+        </a>
+        <a href="/admin/audit.html" class="btn btn-xs btn-outline-secondary rounded-pill px-2.5 py-1 small" style="font-size: 0.75rem;">
+          <i class="bi bi-shield-check me-1"></i> Audit Trail
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Content -->
-  <main class="main-content container-fluid px-4 py-4">
+  <main class="main-content container-fluid px-4 py-4 max-w-7xl">
     <!-- Header Hero Card -->
-    <div class="clay-card p-4 mb-4">
+    <div class="clay-card p-4 mb-4 border">
       <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
         <div class="d-flex align-items-center gap-3">
-          <div class="clay-icon-sphere primary fs-3">
+          <div class="p-2.5 rounded-circle bg-primary-subtle text-primary fs-4">
             <i class="bi bi-people"></i>
           </div>
           <div>
-            <h3 class="fw-bold text-dark mb-1">User & Role Management</h3>
-            <p class="text-secondary mb-0">Provision and manage internal enterprise users, assign role permissions, and toggle account access.</p>
+            <h3 class="fw-bold text-slate-900 mb-1">User & Role Identity Management (IAM)</h3>
+            <p class="text-secondary small mb-0">Provision internal legal associates, partners, and administrators. Manage cryptographic JWT sessions and permissions.</p>
           </div>
         </div>
         <div>
-          <button class="btn btn-primary px-4 py-2" data-bs-toggle="modal" data-bs-target="#userModal">
+          <button class="btn btn-primary btn-sm px-3.5 py-2 font-medium" data-bs-toggle="modal" data-bs-target="#userModal">
             <i class="bi bi-person-plus me-1"></i>Create New User
           </button>
         </div>
@@ -79,7 +102,7 @@
       <div class="modal-content">
         <form id="userForm">
           <div class="modal-header">
-            <h5 class="modal-title fw-bold text-dark" id="userModalLabel">Create User Account</h5>
+            <h5 class="modal-title fw-bold hero-title" id="userModalLabel">Create User Account</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -120,12 +143,12 @@
       <div class="modal-content">
         <form id="resetPasswordForm">
           <div class="modal-header">
-            <h5 class="modal-title fw-bold text-dark" id="resetModalLabel">Reset User Password</h5>
+            <h5 class="modal-title fw-bold hero-title" id="resetModalLabel">Reset User Password</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <input type="hidden" id="resetUserId">
-            <p class="small text-muted">Set a new password for <strong id="resetUserName" class="text-dark">--</strong>.</p>
+            <p class="small text-muted">Set a new password for <strong id="resetUserName" class="hero-title">--</strong>.</p>
             <div class="mb-3">
               <label for="newPasswordInput" class="form-label small fw-bold text-secondary">NEW PASSWORD (MIN 6 CHARS)</label>
               <input type="password" class="form-control" id="newPasswordInput" placeholder="••••••••" required minlength="6">

@@ -3,7 +3,7 @@
  */
 
 import { api } from '../api.js';
-import { requireAuth, renderNavbar } from '../auth.js';
+import { requireAuth, renderNavbar, getToken } from '../auth.js';
 import { showToast } from '../toast.js';
 
 let contractsList = [];
@@ -223,7 +223,7 @@ function syncProgressStreams() {
 function trackContractProgress(contractId) {
   if (activeEventSources.has(contractId)) return;
 
-  const token = api.getToken();
+  const token = getToken() || api.getToken();
   if (!token) return;
 
   const es = new EventSource(`/api/contracts/${contractId}/progress?token=${encodeURIComponent(token)}`);

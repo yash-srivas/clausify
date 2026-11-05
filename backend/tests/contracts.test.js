@@ -23,10 +23,30 @@ describe('Contracts, Findings, Templates & Workflow API Flow', () => {
 
     const admRes = await request(app).post('/api/auth/login').send({ email: 'admin@demo.com', password: 'Demo@123' });
     adminToken = admRes.body.token;
+
+    // Purge any existing contract matching the sample file hash to prevent 409 collisions
+    const samplePath = path.resolve(__dirname, '../../samples/contract_risky_1.pdf');
+    if (fs.existsSync(samplePath)) {
+      const crypto = require('crypto');
+      const hash = crypto.createHash('sha256').update(fs.readFileSync(samplePath)).digest('hex');
+      const existing = await db.query('SELECT id FROM contracts WHERE file_hash = $1', [hash]);
+      for (const row of existing.rows) {
+        await db.query('DELETE FROM findings WHERE contract_id = $1', [row.id]);
+        await db.query('DELETE FROM approvals WHERE contract_id = $1', [row.id]);
+        await db.query('DELETE FROM contracts WHERE id = $1', [row.id]);
+      }
+    }
   });
 
   afterAll(async () => {
     if (uploadedContractId) {
+      const cRes = await db.query('SELECT file_path FROM contracts WHERE id = $1', [uploadedContractId]);
+      if (cRes.rows.length > 0 && cRes.rows[0].file_path) {
+        const fullP = path.resolve(__dirname, '..', cRes.rows[0].file_path);
+        if (fs.existsSync(fullP)) {
+          try { fs.unlinkSync(fullP); } catch (e) {}
+        }
+      }
       await db.query('DELETE FROM findings WHERE contract_id = $1', [uploadedContractId]);
       await db.query('DELETE FROM approvals WHERE contract_id = $1', [uploadedContractId]);
       await db.query('DELETE FROM contracts WHERE id = $1', [uploadedContractId]);

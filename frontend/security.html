@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security & Trust — Clausify Enterprise Legal Intelligence</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/app.css?v=3.2">
+  <link rel="stylesheet" href="/assets/css/themes.css?v=3.2">
+  <script>
+    (function() {
+      var t = new URLSearchParams(window.location.search).get('theme') || localStorage.getItem('app_theme') || 'claymorphism';
+      var m = new URLSearchParams(window.location.search).get('mode') || localStorage.getItem('app_mode') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+      document.documentElement.setAttribute('data-mode', m);
+      document.documentElement.setAttribute('data-bs-theme', m);
+      localStorage.setItem('app_theme', t);
+      localStorage.setItem('app_mode', m);
+    })();
+  </script>
+</head>
+<body class="public-body">
+
+  <!-- Dynamic Top Global Navigation -->
+  <div id="navbarPlaceholder"></div>
+
+  <!-- Security Header -->
+  <header class="public-header public-hero-gradient py-5 px-3 border-bottom">
+    <div class="container py-3 text-center" style="max-width: 960px;">
+      <div class="d-flex justify-content-center gap-2 mb-3 flex-wrap">
+        <span class="hero-stat-pill"><i class="bi bi-shield-lock-fill text-success me-1"></i> Zero LLM Training Retention</span>
+        <span class="hero-stat-pill"><i class="bi bi-key-fill text-primary me-1"></i> Constant-Time API Authentication</span>
+        <span class="hero-stat-pill"><i class="bi bi-database-check text-info me-1"></i> Cryptographic Multi-Tenant Isolation</span>
+      </div>
+
+      <span class="badge bg-warning-subtle text-warning border border-warning-subtle text-uppercase px-3 py-1 font-semibold text-xs tracking-wider mb-2">
+        LexisNexis & SpeedLegal Trust Architecture
+      </span>
+      <h1 class="display-6 fw-bold hero-title mb-3">Enterprise Security, Privacy & Compliance Architecture</h1>
+      <p class="lead hero-lead mb-4 mx-auto" style="max-width: 760px; font-size: 1.15rem;">
+        Legal contracts contain the most sensitive commercial and intellectual assets of an enterprise. Clausify is architected with multi-tenant database isolation, zero LLM model retention, cryptographic hashing, and tamper-evident audit logging.
+      </p>
+
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="/associate/dashboard.html" class="btn btn-primary px-4 py-2 fw-bold shadow-sm">
+          <i class="bi bi-shield-check me-1"></i> Enter Secure Workspace
+        </a>
+        <a href="/benchmarks.html" class="btn btn-outline-primary px-4 py-2 fw-bold">
+          <i class="bi bi-book me-1"></i> Review Benchmark Standards
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Trust Assurance Strip -->
+  <div class="trust-assurance-bar">
+    <div class="container text-center" style="max-width: 1140px;">
+      <div class="d-flex justify-content-center align-items-center gap-4 gap-md-5 flex-wrap">
+        <span class="trust-badge-item"><i class="bi bi-shield-lock-fill text-success"></i> SOC2 Type II Aligned</span>
+        <span class="trust-badge-item"><i class="bi bi-check2-circle text-primary"></i> GDPR Article 28 Compliant</span>
+        <span class="trust-badge-item"><i class="bi bi-bank text-warning"></i> Delaware Chancery Venue</span>
+        <span class="trust-badge-item"><i class="bi bi-eye-slash text-info"></i> Zero Model Training</span>
+        <span class="trust-badge-item"><i class="bi bi-hdd-network text-secondary"></i> Air-Gapped Ready</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Security Pillars Grid -->
+  <section class="public-section py-5">
+    <div class="container" style="max-width: 1140px;">
+      <div class="text-center mb-5">
+        <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle text-uppercase px-3 py-1 font-semibold text-xs tracking-wider">
+          Defense-in-Depth Principles
+        </span>
+        <h2 class="fw-bold hero-title mt-2">Six Pillars of Enterprise Legal Safe Architecture</h2>
+        <p class="hero-lead mx-auto" style="max-width: 680px;">
+          Our technical safeguards guarantee confidentiality, data integrity, and strict segregation across every tier of the platform.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Pillar 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="p-4 site-card h-100">
+            <div class="rounded bg-primary-subtle text-primary border border-primary-subtle d-inline-flex align-items-center justify-content-center fs-3 mb-3" style="width: 48px; height: 48px;">
+              <i class="bi bi-shield-lock-fill"></i>
+            </div>
+            <h5 class="fw-bold hero-title mb-2">Multi-Tenant Isolation</h5>
+            <p class="hero-lead small mb-0">
+              Every contract, template, finding, and audit record is strictly foreign-keyed to an <code>organization_id</code>. Cross-tenant access is blocked at the database query layer with mandatory 404 security barriers.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="p-4 site-card h-100">
+            <div class="rounded bg-success-subtle text-success border border-success-subtle d-inline-flex align-items-center justify-content-center fs-3 mb-3" style="width: 48px; height: 48px;">
+              <i class="bi bi-fingerprint"></i>
+            </div>
+            <h5 class="fw-bold hero-title mb-2">SHA-256 Deduplication</h5>
+            <p class="hero-lead small mb-0">
+              Streaming SHA-256 cryptographic checksums compute file hashes upon upload, preventing duplicate processing, double database writes, token waste, and accidental double-signatures.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="p-4 site-card h-100">
+            <div class="rounded bg-info-subtle text-info border border-info-subtle d-inline-flex align-items-center justify-content-center fs-3 mb-3" style="width: 48px; height: 48px;">
+              <i class="bi bi-key-fill"></i>
+            </div>
+            <h5 class="fw-bold hero-title mb-2">Internal Service Auth</h5>
+            <p class="hero-lead small mb-0">
+              Microservice communication between Node.js and the Python FastAPI AI service is gated by constant-time verified <code>X-Internal-Key</code> headers, preventing timing attacks and unauthorized direct calls.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="p-4 site-card h-100">
+            <div class="rounded bg-warning-subtle text-warning border border-warning-subtle d-inline-flex align-items-center justify-content-center fs-3 mb-3" style="width: 48px; height: 48px;">
+              <i class="bi bi-journal-text"></i>
+            </div>
+            <h5 class="fw-bold hero-title mb-2">Tamper-Evident Audit</h5>
+            <p class="hero-lead small mb-0">
+              All user logins, contract uploads, analysis runs, findings updates, and partner decisions are immutably logged with timestamp, user ID, client IP address, and entity context.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 5 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="p-4 site-card h-100">
+            <div class="rounded bg-danger-subtle text-danger border border-danger-subtle d-inline-flex align-items-center justify-content-center fs-3 mb-3" style="width: 48px; height: 48px;">
+              <i class="bi bi-hdd-network-fill"></i>
+            </div>
+            <h5 class="fw-bold hero-title mb-2">Air-Gapped Deployment</h5>
+            <p class="hero-lead small mb-0">
+              Clausify supports local deterministic vector embedding and rules evaluation (Mock providers) without sending contract bytes to external cloud APIs, enabling air-gapped on-premise execution.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 6 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="p-4 site-card h-100">
+            <div class="rounded bg-success-subtle text-success border border-success-subtle d-inline-flex align-items-center justify-content-center fs-3 mb-3" style="width: 48px; height: 48px;">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <h5 class="fw-bold hero-title mb-2">Zero Model Retraining</h5>
+            <p class="hero-lead small mb-0">
+              Client contracts are strictly ephemeral processing inputs. Contract texts and redlines are NEVER stored in public weights or utilized to retrain commercial AI models.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Data Lifecycle Architecture Walkthrough -->
+  <section class="public-section-alt py-5">
+    <div class="container" style="max-width: 1140px;">
+      <div class="text-center mb-5">
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle text-uppercase px-3 py-1 font-semibold text-xs tracking-wider">
+          Data Lifecycle Architecture
+        </span>
+        <h2 class="fw-bold hero-title mt-2">End-to-End Cryptographic Security Pipeline</h2>
+        <p class="hero-lead mx-auto" style="max-width: 680px;">
+          How contractual bytes flow through Clausify from initial PDF upload to partner sign-off and audit archival.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="site-card p-4 h-100">
+            <div class="badge bg-primary text-uppercase mb-3">Stage 1: Intake & Hash</div>
+            <h5 class="fw-bold hero-title mb-2">Encrypted Ingestion</h5>
+            <p class="hero-lead small mb-3">
+              Contracts are transmitted via TLS 1.3. A streaming SHA-256 cryptographic checksum is computed in memory before writing to disk, ensuring file integrity.
+            </p>
+            <div class="p-2.5 demo-benchmark-box font-mono text-xs">
+              TLS 1.3 &bull; SHA-256 Checksum &bull; Tenant Isolation
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="site-card p-4 h-100">
+            <div class="badge bg-success text-uppercase mb-3">Stage 2: Embed & Match</div>
+            <h5 class="fw-bold hero-title mb-2">Deterministic pgvector</h5>
+            <p class="hero-lead small mb-3">
+              Clauses are chunked with exact page boundaries and embedded into vector space to compare against Delaware safe playbooks without leaking text.
+            </p>
+            <div class="p-2.5 demo-benchmark-box font-mono text-xs">
+              pgvector 1536d &bull; HNSW Index &bull; Zero Cloud Storage
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="site-card p-4 h-100">
+            <div class="badge bg-warning text-uppercase mb-3">Stage 3: Decision & Sign-off</div>
+            <h5 class="fw-bold hero-title mb-2">Immutable Audit Logging</h5>
+            <p class="hero-lead small mb-3">
+              All findings approvals, redlines, and executive partner decisions are committed to an immutable append-only PostgreSQL audit log.
+            </p>
+            <div class="p-2.5 demo-benchmark-box font-mono text-xs">
+              Append-Only Logs &bull; Partner Signatures &bull; PDF Dossiers
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security & Compliance FAQ -->
+  <section class="public-section py-5">
+    <div class="container" style="max-width: 960px;">
+      <div class="text-center mb-5">
+        <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle text-uppercase px-3 py-1 font-semibold text-xs tracking-wider">
+          Compliance FAQ
+        </span>
+        <h2 class="fw-bold hero-title mt-2">Frequently Asked Security Questions</h2>
+        <p class="hero-lead mx-auto" style="max-width: 680px;">
+          Direct answers for Chief Information Security Officers, General Counsels, and IT Security auditors.
+        </p>
+      </div>
+
+      <div class="accordion" id="securityFaq">
+        <div class="accordion-item mb-3 site-card overflow-hidden">
+          <h2 class="accordion-header" id="faqOneHeading">
+            <button class="accordion-button fw-bold hero-title" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne">
+              Do you train AI models on our proprietary agreements or customer data?
+            </button>
+          </h2>
+          <div id="faqOne" class="accordion-collapse collapse show" data-bs-parent="#securityFaq">
+            <div class="accordion-body hero-lead small">
+              <strong>Absolutely not.</strong> Clausify enforces strict zero-retention policies. Customer agreement bytes, clause extracts, redlines, and negotiation comments are never shared with public model providers, stored in training corpora, or utilized to retrain weights.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item mb-3 site-card overflow-hidden">
+          <h2 class="accordion-header" id="faqTwoHeading">
+            <button class="accordion-button collapsed fw-bold hero-title" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo">
+              How is multi-tenancy enforced at the database layer?
+            </button>
+          </h2>
+          <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#securityFaq">
+            <div class="accordion-body hero-lead small">
+              Every database entity (contracts, findings, templates, users, audit logs) contains a foreign key to <code>organization_id</code>. All controller queries explicitly inject tenant scoping filters. Attempts to query or modify data belonging to another tenant return an immediate HTTP 404 security response.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item mb-3 site-card overflow-hidden">
+          <h2 class="accordion-header" id="faqThreeHeading">
+            <button class="accordion-button collapsed fw-bold hero-title" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree">
+              Can Clausify run entirely in on-premise or air-gapped environments?
+            </button>
+          </h2>
+          <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#securityFaq">
+            <div class="accordion-body hero-lead small">
+              Yes. Clausify includes deterministic mock vector embedding and rules evaluation services that run in containerized Docker environments with zero egress to the public internet, satisfying classified defense, banking, and government compliance requirements.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Unified Enterprise Call-To-Action Banner -->
+  <section class="public-cta-section">
+    <div class="container" style="max-width: 1040px;">
+      <div class="public-cta-card">
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle text-uppercase px-3 py-1 font-semibold text-xs tracking-wider mb-3">
+          Institutional Trust Standard
+        </span>
+        <h2 class="display-6 fw-bold hero-title mb-3">Protect Your Balance Sheet & Client Privacy</h2>
+        <p class="hero-lead mb-4 mx-auto" style="max-width: 640px; font-size: 1.1rem;">
+          Deploy military-grade contract risk intelligence without sacrificing enterprise data governance or confidentiality.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap mb-4">
+          <a href="/associate/dashboard.html" class="btn btn-primary btn-lg px-4 py-2.5 fw-bold shadow-sm">
+            <i class="bi bi-shield-check me-1"></i> Enter Secure Legal Workspace
+          </a>
+          <a href="/solutions.html" class="btn btn-outline-primary btn-lg px-4 py-2.5 fw-bold">
+            <i class="bi bi-diagram-3 me-1"></i> View Enterprise Solutions
+          </a>
+        </div>
+        <div class="small hero-lead d-flex justify-content-center align-items-center gap-3 flex-wrap">
+          <span><i class="bi bi-shield-check text-success me-1"></i> SOC2 Type II Aligned</span>
+          <span>&bull;</span>
+          <span><i class="bi bi-lock text-primary me-1"></i> Zero Model Training</span>
+          <span>&bull;</span>
+          <span><i class="bi bi-bank text-warning me-1"></i> Delaware Chancery Aligned</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Enterprise Footer -->
+  <footer class="public-footer py-5 border-top">
+    <div class="container" style="max-width: 1140px;">
+      <div class="row g-4 mb-4">
+        <div class="col-md-4">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="brand-badge">C</span>
+            <span class="fw-bold text-white fs-5 tracking-tight">CLAUSIFY</span>
+          </div>
+          <p class="small text-slate-400">
+            Intelligent Legal Contract & Vendor Risk Analyzer. Codifying statutory benchmark standards and automating legal due diligence for modern enterprises.
+          </p>
+          <div class="small text-slate-500">
+            &copy; 2026 Clausify Platform. All rights reserved.
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <h6 class="text-white text-uppercase font-mono small fw-bold mb-3">Platform</h6>
+          <ul class="list-unstyled small space-y-2">
+            <li><a href="/" class="text-slate-400 hover:text-white">Overview</a></li>
+            <li><a href="/solutions.html" class="text-slate-400 hover:text-white">Solutions</a></li>
+            <li><a href="/benchmarks.html" class="text-slate-400 hover:text-white">Standards</a></li>
+            <li><a href="/security.html" class="text-slate-400 hover:text-white">Trust</a></li>
+            <li><a href="/demo.html" class="text-slate-400 hover:text-white">Sandbox</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3">
+          <h6 class="text-white text-uppercase font-mono small fw-bold mb-3">Workspaces</h6>
+          <ul class="list-unstyled small space-y-2">
+            <li><a href="/associate/dashboard.html" class="text-slate-400 hover:text-white">Active Matters Hub</a></li>
+            <li><a href="/partner/approvals.html" class="text-slate-400 hover:text-white">Partner Approvals Queue</a></li>
+            <li><a href="/partner/templates.html" class="text-slate-400 hover:text-white">Safe Benchmark Playbooks</a></li>
+            <li><a href="/admin/analytics.html" class="text-slate-400 hover:text-white">Portfolio Risk Analytics</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 class="text-white text-uppercase font-mono small fw-bold mb-3">Compliance</h6>
+          <p class="small text-slate-400 mb-2">
+            SOC2 Type II &bull; GDPR Art. 28 Compliant &bull; Delaware Chancery Standard
+          </p>
+          <span class="badge bg-slate-800 text-slate-300 border border-slate-700 font-mono text-xs">
+            v2.4 Enterprise Release
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="/assets/js/themeSwitcher.js?v=3.2"></script>
+  <script type="module">
+    import { renderNavbar } from '/assets/js/auth.js';
+    renderNavbar('public-trust');
+  </script>
+</body>
+</html>

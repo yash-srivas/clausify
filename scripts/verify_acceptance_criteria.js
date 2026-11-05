@@ -8,7 +8,7 @@ const path = require('path');
 
 const BASE_URL = 'http://localhost:3000/api';
 const AI_URL = 'http://localhost:8000';
-const INTERNAL_KEY = 'legal-internal-secret-key-2026';
+const INTERNAL_KEY = process.env.INTERNAL_API_KEY || 'dev-internal-secret-key-32chars-min!';
 
 let associateToken = '';
 let partnerToken = '';
@@ -126,12 +126,15 @@ async function run() {
     const riskyPdfPath = path.join(__dirname, '../samples/contract_risky_1.pdf');
     if (!fs.existsSync(riskyPdfPath)) throw new Error('contract_risky_1.pdf not found in samples/');
 
-    const pdfBuffer = fs.readFileSync(riskyPdfPath);
+    const pdfBuffer = Buffer.concat([
+      fs.readFileSync(riskyPdfPath),
+      Buffer.from(`\n% test_run_${Date.now()}\n`),
+    ]);
     const pdfBlob = new Blob([pdfBuffer], { type: 'application/pdf' });
 
     const formData = new FormData();
     formData.append('file', pdfBlob, 'contract_risky_1.pdf');
-    formData.append('title', 'Vendor Master Agreement - Acceptance Test');
+    formData.append('title', `Vendor Master Agreement - Acceptance Test ${Date.now()}`);
     formData.append('template_id', activeTemplateId);
 
     const uploadRes = await fetch(`${BASE_URL}/contracts`, {
@@ -179,12 +182,15 @@ async function run() {
     // 5. Test Scanned PDF Threshold (AC 7)
     console.log('\n[Test 5] Uploading scanned (non-extractable text) PDF (AC 7)...');
     const scannedPdfPath = path.join(__dirname, '../samples/contract_scanned.pdf');
-    const scannedBuffer = fs.readFileSync(scannedPdfPath);
+    const scannedBuffer = Buffer.concat([
+      fs.readFileSync(scannedPdfPath),
+      Buffer.from(`\n% test_scanned_${Date.now()}\n`),
+    ]);
     const scannedBlob = new Blob([scannedBuffer], { type: 'application/pdf' });
 
     const scannedFormData = new FormData();
     scannedFormData.append('file', scannedBlob, 'contract_scanned.pdf');
-    scannedFormData.append('title', 'Scanned Document Test');
+    scannedFormData.append('title', `Scanned Document Test ${Date.now()}`);
 
     const scannedUploadRes = await fetch(`${BASE_URL}/contracts`, {
       method: 'POST',

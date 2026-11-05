@@ -22,15 +22,15 @@
   </script>
   <style>
     .workspace-wrapper {
-      height: calc(100vh - 90px);
-      padding: 12px 20px 20px 20px;
+      height: calc(100vh - 108px);
+      padding: 12px 16px 16px 16px;
     }
     .pdf-pane-card {
       height: 100%;
-      background: var(--clay-surface);
-      border-radius: 28px;
-      box-shadow: var(--clay-shadow-card);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      background: var(--bg-surface);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-subtle);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -38,25 +38,25 @@
     .pdf-scroll-area {
       height: 100%;
       overflow-y: auto;
-      background: #EBF0F7;
-      padding: 24px 16px;
+      background: #F1F5F9;
+      padding: 20px 16px;
     }
     html[data-mode="dark"] .pdf-scroll-area {
       background: #090D16 !important;
     }
     .findings-pane-card {
       height: 100%;
-      background: var(--clay-surface);
-      border-radius: 28px;
-      box-shadow: var(--clay-shadow-card);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      background: var(--bg-surface);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-subtle);
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
     .pdf-page-container {
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(100, 116, 139, 0.25), 0 2px 6px rgba(0, 0, 0, 0.05);
+      border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
       overflow: hidden;
     }
   </style>
@@ -64,6 +64,28 @@
 <body>
   <!-- Dynamic Floating Navbar -->
   <div id="navbarPlaceholder"></div>
+
+  <!-- Operational Header -->
+  <div class="operational-subnav py-2 px-3 px-xl-4 shadow-2xs">
+    <div class="container-fluid px-0 d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div class="d-flex align-items-center gap-3">
+        <a href="/associate/dashboard.html" class="btn btn-xs btn-outline-secondary rounded-pill px-2.5 py-1 text-decoration-none" title="Back to Matters">
+          <i class="bi bi-arrow-left me-1"></i> Matters
+        </a>
+        <span class="small text-muted d-none d-md-inline">&bull;</span>
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 text-uppercase fw-semibold" style="font-size: 0.7rem;">
+          <i class="bi bi-file-earmark-pdf me-1"></i> Contract Review Workspace
+        </span>
+        <span class="small text-muted d-none d-md-inline">&bull;</span>
+        <span class="small text-secondary d-none d-md-inline" id="subnavDocLabel">Delaware Vetted Matter</span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <span class="small hero-lead font-mono" style="font-size: 0.72rem;">
+          <i class="bi bi-check-all text-success me-1"></i> Split-Screen Redline Mode
+        </span>
+      </div>
+    </div>
+  </div>
 
   <!-- Workspace Container (Split Pane) -->
   <div class="container-fluid workspace-wrapper">
@@ -79,7 +101,7 @@
                 <i class="bi bi-arrow-left"></i>
               </a>
               <div>
-                <span id="docTitle" class="fw-bold text-dark text-truncate small d-inline-block align-middle" style="max-width: 280px;">Loading document...</span>
+                <span id="docTitle" class="fw-bold hero-title text-truncate small d-inline-block align-middle" style="max-width: 280px;">Loading document...</span>
                 <span id="pageCountBadge" class="clay-badge clay-badge-processing ms-2">-- pages</span>
               </div>
             </div>
@@ -88,7 +110,7 @@
               <button id="zoomOutBtn" class="btn btn-sm btn-link text-secondary p-1 px-2" title="Zoom Out">
                 <i class="bi bi-dash-lg"></i>
               </button>
-              <span id="zoomLevel" class="small fw-bold text-dark px-1" style="min-width: 44px; text-align: center;">115%</span>
+              <span id="zoomLevel" class="small fw-bold hero-title px-1" style="min-width: 44px; text-align: center;">115%</span>
               <button id="zoomInBtn" class="btn btn-sm btn-link text-secondary p-1 px-2" title="Zoom In">
                 <i class="bi bi-plus-lg"></i>
               </button>

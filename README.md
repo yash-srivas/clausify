@@ -135,7 +135,7 @@ Open your browser to `http://localhost:3000`.
 | `JWT_SECRET` | `super-secret-jwt-key-...` | Secret used to sign authentication tokens |
 | `JWT_EXPIRES_IN` | `8h` | Token expiration time |
 | `AI_SERVICE_URL` | `http://localhost:8000` | Internal URL for the AI FastAPI microservice |
-| `INTERNAL_API_KEY` | `legal-internal-secret-key-2026` | Shared secret header `X-Internal-Key` |
+| `INTERNAL_API_KEY` | `dev-internal-secret-key-32chars-min!` | Shared secret header `X-Internal-Key` |
 | `UPLOAD_DIR` | `uploads/` | Directory storing uploaded contract PDFs |
 | `CORS_ORIGIN` | `*` | Allowed CORS origins |
 
@@ -143,7 +143,7 @@ Open your browser to `http://localhost:3000`.
 | Variable | Default Value | Description |
 |---|---|---|
 | `DATABASE_URL` | `postgresql://postgres:postgres@localhost:5432/legal_risk_db` | PostgreSQL connection string |
-| `INTERNAL_API_KEY` | `legal-internal-secret-key-2026` | Secret required on `X-Internal-Key` header |
+| `INTERNAL_API_KEY` | `dev-internal-secret-key-32chars-min!` | Secret required on `X-Internal-Key` header |
 | `EMBEDDING_PROVIDER` | `mock` | `mock` (deterministic unit vectors) or `openai` |
 | `LLM_PROVIDER` | `mock` | `mock` (deterministic pattern reasoner) or `openai` |
 | `OPENAI_API_KEY` | `sk-...` | Optional API key when provider is set to `openai` |

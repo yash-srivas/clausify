@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Redline Sandbox — Clausify</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/app.css?v=3.2">
+  <link rel="stylesheet" href="/assets/css/themes.css?v=3.2">
+  <script>
+    (function() {
+      var t = new URLSearchParams(window.location.search).get('theme') || localStorage.getItem('app_theme') || 'claymorphism';
+      var m = new URLSearchParams(window.location.search).get('mode') || localStorage.getItem('app_mode') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+      document.documentElement.setAttribute('data-mode', m);
+      document.documentElement.setAttribute('data-bs-theme', m);
+      localStorage.setItem('app_theme', t);
+      localStorage.setItem('app_mode', m);
+    })();
+  </script>
+</head>
+<body class="public-body">
+
+  <!-- Dynamic Top Global Navigation -->
+  <div id="navbarPlaceholder"></div>
+
+  <!-- Sandbox Header -->
+  <header class="public-header public-hero-gradient py-5 border-bottom">
+    <div class="container text-center" style="max-width: 960px;">
+      <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill mb-3" style="background: rgba(var(--bs-primary-rgb, 13, 110, 253), 0.1); border: 1px solid rgba(var(--bs-primary-rgb, 13, 110, 253), 0.2);">
+        <span class="badge bg-warning text-dark text-uppercase font-mono text-xs px-2 py-0.5 fw-bold">Live Simulator</span>
+        <span class="small hero-lead fw-semibold">SpeedLegal Red-Flag & 1-Click Redline Engine</span>
+      </div>
+      <h1 class="display-6 fw-bold hero-title mb-3">Interactive Redline & Benchmark Sandbox</h1>
+      <p class="hero-lead lead fs-6 mx-auto mb-4" style="max-width: 760px;">
+        Test real-world contract clauses below or paste your own draft to see Clausify's risk scoring, statutory benchmark comparison, and 1-click redline generation in real-time.
+      </p>
+      <div class="d-flex justify-content-center gap-2 flex-wrap">
+        <span class="hero-stat-pill"><i class="bi bi-lightning-charge text-warning me-1"></i> Sub-Second Clause Scoring</span>
+        <span class="hero-stat-pill"><i class="bi bi-bookmark-check text-success me-1"></i> UCC & Delaware Standard Library</span>
+        <span class="hero-stat-pill"><i class="bi bi-magic text-primary me-1"></i> Multi-Stance Redline Synthesis</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Trust Assurance Strip -->
+  <div class="trust-assurance-bar py-3 border-bottom">
+    <div class="container" style="max-width: 1140px;">
+      <div class="d-flex justify-content-center align-items-center flex-wrap gap-4 text-center">
+        <span class="trust-badge-item"><i class="bi bi-shield-check text-success me-1.5"></i>SOC2 Type II Certified</span>
+        <span class="trust-badge-item"><i class="bi bi-lock-fill text-primary me-1.5"></i>AES-256 + TLS 1.3 Encryption</span>
+        <span class="trust-badge-item"><i class="bi bi-bank text-info me-1.5"></i>Delaware Chancery Precedents</span>
+        <span class="trust-badge-item"><i class="bi bi-file-earmark-check text-warning me-1.5"></i>GDPR Art. 28 Compliant</span>
+        <span class="trust-badge-item"><i class="bi bi-cpu text-secondary me-1.5"></i>Zero Customer Data Training</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Sandbox Workspace -->
+  <main class="public-section py-5">
+    <div class="container" style="max-width: 1140px;">
+      
+      <!-- Sample Selector Bar -->
+      <div class="p-3 mb-4 site-card">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+          <span class="small hero-title fw-bold text-uppercase font-mono" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+            <i class="bi bi-collection-play me-1.5 text-primary"></i> Select a Pre-Configured High-Risk Clause:
+          </span>
+          <span class="small hero-lead font-mono" style="font-size: 0.72rem;">Click to populate simulator &bull; Delaware Standard</span>
+        </div>
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <button class="btn btn-sm btn-outline-danger sample-btn active" data-sample="liability">1. Uncapped Liability</button>
+          <button class="btn btn-sm btn-outline-warning sample-btn" data-sample="termination">2. Unilateral Termination</button>
+          <button class="btn btn-sm btn-outline-danger sample-btn" data-sample="indemnity">3. One-Sided Indemnity</button>
+          <button class="btn btn-sm btn-outline-warning sample-btn" data-sample="auto_renewal">4. Silent Auto-Renewal</button>
+          <button class="btn btn-sm btn-outline-danger sample-btn" data-sample="data_protection">5. Data Privacy Breach</button>
+          <button class="btn btn-sm btn-outline-secondary sample-btn" data-sample="confidentiality">6. Perpetual NDA</button>
+        </div>
+      </div>
+
+      <div class="row g-4 mb-5">
+        <!-- Left: Input Clause Box -->
+        <div class="col-lg-6">
+          <div class="p-4 site-card h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <label for="clauseInput" class="form-label fw-bold hero-title mb-0">Original Contract Provision</label>
+                <div class="small hero-lead" style="font-size: 0.72rem;">Editable draft language for simulation</div>
+              </div>
+              <span class="badge bg-light text-secondary border font-mono text-xs" id="clauseTypeTag">Category: liability</span>
+            </div>
+            
+            <textarea id="clauseInput" class="form-control font-mono text-xs flex-grow-1 p-3 mb-3 demo-textarea" rows="10" placeholder="Paste or edit contract clause text..."></textarea>
+            
+            <div class="d-flex justify-content-between align-items-center pt-2 border-top flex-wrap gap-2">
+              <div class="d-flex align-items-center gap-2">
+                <span class="small hero-lead fw-bold">Negotiation Stance:</span>
+                <select id="toneSelect" class="form-select form-select-sm" style="width: auto;">
+                  <option value="firm" selected>Firm Counsel</option>
+                  <option value="neutral">Neutral & Balanced</option>
+                  <option value="aggressive">Aggressive Enterprise</option>
+                </select>
+              </div>
+              <button id="analyzeBtn" class="btn btn-primary btn-sm px-4 fw-bold shadow-sm">
+                <i class="bi bi-cpu-fill me-1"></i> Analyze Clause
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: SpeedLegal Analysis & Redline Result -->
+        <div class="col-lg-6">
+          <div class="p-4 site-card h-100" id="resultsBox">
+            <!-- Header Result -->
+            <div class="d-flex justify-content-between align-items-start mb-3 pb-2 border-bottom">
+              <div>
+                <span class="badge badge-risk-high text-uppercase px-2.5 py-1" id="resSeverityBadge">HIGH SEVERITY RISK</span>
+                <h5 class="fw-bold hero-title mt-2 mb-0" id="resRiskTitle">Uncapped Consequential Liability Exposure</h5>
+              </div>
+              <div class="text-end">
+                <div class="fs-4 fw-bold text-danger num" id="resScore">88/100</div>
+                <div class="small hero-lead" style="font-size: 0.7rem;">Risk Index</div>
+              </div>
+            </div>
+
+            <!-- Plain English Explanation -->
+            <div class="mb-3">
+              <div class="hero-lead small fw-bold mb-1 text-uppercase font-mono" style="font-size: 0.7rem;">
+                <i class="bi bi-shield-exclamation text-danger me-1"></i> Why This Clause Is Dangerous
+              </div>
+              <p class="small hero-lead mb-0 leading-relaxed" id="resExplanation">
+                The draft eliminates standard mutual liability caps and exposes the enterprise to unbounded indirect, incidental, and consequential damages, directly violating standard Delaware commercial practice.
+              </p>
+            </div>
+
+            <!-- Standard Safe Benchmark -->
+            <div class="p-3 demo-benchmark-box mb-3">
+              <div class="text-success small fw-bold mb-1 text-uppercase font-mono" style="font-size: 0.7rem;">
+                <i class="bi bi-bookmark-check-fill me-1"></i> LegalSafe Statutory Benchmark Standard
+              </div>
+              <p class="small hero-lead mb-0 fst-italic" id="resBenchmark">
+                "Neither party's aggregate liability arising out of or related to this Agreement shall exceed the total amount paid or payable by Customer in the twelve (12) months preceding the incident."
+              </p>
+            </div>
+
+            <!-- SpeedLegal 1-Click Redline Diff -->
+            <div class="p-3 demo-diff-container rounded">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-primary small fw-bold text-uppercase font-mono" style="font-size: 0.7rem;">
+                  <i class="bi bi-magic me-1"></i> 1-Click Proposed Redline Diff
+                </span>
+                <span class="badge bg-light text-secondary border font-mono" style="font-size: 0.65rem;" id="resToneBadge">Tone: Firm Counsel</span>
+              </div>
+              <div class="p-3 demo-diff-box font-mono text-xs leading-relaxed mb-3" id="resRedlineDiff">
+                Neither party aggregate liability <span class="redline-del">shall be wholly unlimited for any breach of performance</span> <span class="redline-add">shall not exceed the total fees paid by Customer during the twelve (12) months preceding the claim</span>.
+              </div>
+              <div class="d-flex justify-content-between align-items-center pt-1 flex-wrap gap-2">
+                <button class="btn btn-sm btn-success px-3 fw-bold" onclick="copyRedline()">
+                  <i class="bi bi-clipboard me-1"></i> Copy Redline Text
+                </button>
+                <a href="/associate/dashboard.html" class="text-primary small fw-semibold">
+                  Open in Full Matter Workspace <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How 1-Click Redline Analysis Works (SpeedLegal Technical Workflow) -->
+      <div class="mb-5">
+        <div class="text-center mb-4">
+          <span class="badge bg-primary-subtle text-primary border border-primary-subtle text-uppercase px-3 py-1 font-semibold text-xs tracking-wider">
+            Engine Architecture
+          </span>
+          <h3 class="fw-bold hero-title mt-2 mb-2">How 1-Click Redline Analysis Operates</h3>
+          <p class="hero-lead mx-auto small" style="max-width: 640px;">
+            Clausify connects semantic vector retrieval directly to codified statutory standards, delivering transparent, verifiable legal redlines in milliseconds.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="p-4 site-card h-100">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <span class="badge bg-primary rounded-circle p-2 text-white font-mono" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">1</span>
+                <h6 class="fw-bold hero-title mb-0">Deterministic Span Extraction</h6>
+              </div>
+              <p class="hero-lead small mb-0">
+                Incoming contract clauses are tokenized and parsed against exact sentence boundaries. No text is hallucinated or modified prior to statutory rule matching.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="p-4 site-card h-100">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <span class="badge bg-primary rounded-circle p-2 text-white font-mono" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">2</span>
+                <h6 class="fw-bold hero-title mb-0">Statutory Benchmark Scoring</h6>
+              </div>
+              <p class="hero-lead small mb-0">
+                The clause is benchmarked against UCC Section 2-719, Delaware Chancery precedents, and GDPR Article 33 to compute an objective risk score from 0 to 100.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="p-4 site-card h-100">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <span class="badge bg-primary rounded-circle p-2 text-white font-mono" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">3</span>
+                <h6 class="fw-bold hero-title mb-0">Surgical Redline Synthesis</h6>
+              </div>
+              <p class="hero-lead small mb-0">
+                Based on your chosen negotiation posture (Firm Counsel, Neutral, or Aggressive), the engine synthesizes minimal surgical diffs ready for counterparty circulation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Pre-Footer Unified Enterprise Call to Action -->
+  <section class="public-cta-section py-5 border-top border-bottom">
+    <div class="container text-center" style="max-width: 960px;">
+      <div class="public-cta-card p-5 rounded-4 shadow-sm">
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle text-uppercase px-3 py-1 font-semibold text-xs tracking-wider mb-3">
+          Institutional Deployment
+        </span>
+        <h2 class="display-6 fw-bold hero-title mb-3">Ready to Analyze Enterprise Contracts at Scale?</h2>
+        <p class="hero-lead lead fs-6 mx-auto mb-4" style="max-width: 680px;">
+          Deploy Clausify across your legal ops, procurement, and risk governance workflows. Ingest multi-page vendor MSAs, generate partner redlines, and stream executive PDF dossiers with zero setup.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <a href="/associate/dashboard.html" class="btn btn-primary btn-lg px-4 py-2.5 fw-bold shadow">
+            <i class="bi bi-lightning-charge-fill me-1"></i> Launch Legal Workspace
+          </a>
+          <a href="/security.html" class="btn btn-outline-primary btn-lg px-4 py-2.5 fw-bold">
+            <i class="bi bi-shield-check me-1"></i> Review Trust & Security
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Enterprise Footer -->
+  <footer class="public-footer py-5">
+    <div class="container" style="max-width: 1140px;">
+      <div class="row g-4 mb-4">
+        <div class="col-md-4">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="brand-badge">C</span>
+            <span class="fw-bold text-white fs-5 tracking-tight">CLAUSIFY</span>
+          </div>
+          <p class="small text-slate-400">
+            Intelligent Legal Contract & Vendor Risk Analyzer. Codifying statutory benchmark standards and automating legal due diligence for modern enterprises.
+          </p>
+          <div class="small text-slate-500">
+            &copy; 2026 Clausify Platform. All rights reserved.
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <h6 class="text-white text-uppercase font-mono small fw-bold mb-3">Platform</h6>
+          <ul class="list-unstyled small space-y-2">
+            <li><a href="/solutions.html" class="text-slate-400 hover:text-white">Solutions</a></li>
+            <li><a href="/benchmarks.html" class="text-slate-400 hover:text-white">Standards</a></li>
+            <li><a href="/security.html" class="text-slate-400 hover:text-white">Trust</a></li>
+            <li><a href="/demo.html" class="text-slate-400 hover:text-white">Sandbox</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3">
+          <h6 class="text-white text-uppercase font-mono small fw-bold mb-3">Workspaces</h6>
+          <ul class="list-unstyled small space-y-2">
+            <li><a href="/associate/dashboard.html" class="text-slate-400 hover:text-white">Active Matters Hub</a></li>
+            <li><a href="/partner/approvals.html" class="text-slate-400 hover:text-white">Partner Approvals Queue</a></li>
+            <li><a href="/partner/templates.html" class="text-slate-400 hover:text-white">Safe Benchmark Playbooks</a></li>
+            <li><a href="/admin/analytics.html" class="text-slate-400 hover:text-white">Portfolio Risk Analytics</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 class="text-white text-uppercase font-mono small fw-bold mb-3">Compliance</h6>
+          <p class="small text-slate-400 mb-2">
+            SOC2 Type II &bull; GDPR Art. 28 Compliant &bull; Delaware Chancery Standard
+          </p>
+          <span class="badge bg-slate-800 text-slate-300 border border-slate-700 font-mono text-xs">
+            v2.4 Enterprise Release
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const SAMPLES = {
+      liability: {
+        type: 'liability',
+        tag: 'Category: Limitation of Liability',
+        text: 'Neither party shall limit its liability for indirect, special, incidental, or consequential damages. Vendor total aggregate liability arising under or relating to this Agreement shall be wholly unlimited for any breach of performance warranty or data disruption event.',
+        title: 'Uncapped Consequential Liability Exposure',
+        score: '88/100',
+        badge: 'HIGH SEVERITY RISK',
+        badgeClass: 'badge-risk-high',
+        explanation: 'The draft eliminates standard mutual liability caps and exposes the enterprise to unbounded indirect, incidental, and consequential damages, directly violating standard Delaware commercial practice.',
+        benchmark: 'Neither party aggregate liability arising out of or related to this Agreement shall exceed the total amount paid or payable by Customer in the twelve (12) months preceding the incident.',
+        diff: 'Vendor total aggregate liability <span class="redline-del">shall be wholly unlimited for any breach</span> <span class="redline-add">shall not exceed the total fees paid by Customer in the twelve (12) months preceding the incident</span>.'
+      },
+      termination: {
+        type: 'termination',
+        tag: 'Category: Termination Notice',
+        text: 'Vendor may terminate this Agreement immediately upon written notice at its sole discretion for convenience. Customer may only terminate upon expiration of the five-year initial term and subject to payment of the full remaining contract balance.',
+        title: 'Asymmetric Immediate Vendor Termination Rights',
+        score: '75/100',
+        badge: 'HIGH SEVERITY RISK',
+        badgeClass: 'badge-risk-high',
+        explanation: 'Grants counterparty the unilateral right to terminate at will while locking the Customer into an irrevocable five-year term with accelerated liquidated damages.',
+        benchmark: 'Either party may terminate this Agreement without cause upon giving at least thirty (30) days prior written notice to the other party.',
+        diff: 'Vendor may terminate <span class="redline-del">immediately upon written notice at its sole discretion</span> <span class="redline-add">upon at least thirty (30) days prior written notice</span>, and Customer <span class="redline-add">shall have reciprocal mutual convenience termination rights</span>.'
+      },
+      indemnity: {
+        type: 'indemnity',
+        tag: 'Category: Indemnification',
+        text: 'Customer shall defend, indemnify, and hold Vendor and its affiliates harmless against all third-party claims, government investigations, losses, and legal costs arising from use of the Services regardless of Vendor negligence.',
+        title: 'Unilateral Customer Indemnity for Vendor Negligence',
+        score: '92/100',
+        badge: 'CRITICAL SEVERITY RISK',
+        badgeClass: 'badge-risk-high',
+        explanation: 'Requires customer to indemnify vendor for vendor own operational negligence and regulatory investigations, creating catastrophic legal liability.',
+        benchmark: 'Each party shall defend, indemnify, and hold harmless the other party from third-party claims arising from the indemnifying party material breach, gross negligence, or IP infringement.',
+        diff: '<span class="redline-add">Each party shall mutually defend and indemnify the other party</span>, excluding <span class="redline-del">claims regardless of Vendor negligence</span> <span class="redline-add">any claims resulting from the indemnified party own negligence or willful misconduct</span>.'
+      },
+      auto_renewal: {
+        type: 'auto_renewal',
+        tag: 'Category: Auto-Renewal',
+        text: 'This Agreement shall automatically renew for additional three-year terms unless Customer provides written notice of non-renewal sent via certified mail at least 180 days prior to the expiration date.',
+        title: 'Aggressive Evergreen Lock-in (180-Day Notice)',
+        score: '58/100',
+        badge: 'MEDIUM SEVERITY RISK',
+        badgeClass: 'badge-risk-medium',
+        explanation: 'An excessive 180-day certified mail notice window creates a high probability of accidental multi-year vendor lock-in.',
+        benchmark: 'This Agreement shall renew automatically only if neither party provides written notice of non-renewal at least sixty (60) days prior to term expiration.',
+        diff: 'Unless Customer provides written notice <span class="redline-del">at least 180 days prior via certified mail</span> <span class="redline-add">at least sixty (60) days prior via electronic mail</span> for successive <span class="redline-del">three-year</span> <span class="redline-add">one-year</span> terms.'
+      },
+      data_protection: {
+        type: 'data_protection',
+        tag: 'Category: Data Privacy & Security',
+        text: 'Vendor may collect, commercialize, and sell aggregated customer telemetry and usage datasets. In the event of a security compromise, Vendor shall notify Customer within thirty days of internal resolution.',
+        title: 'Commercial Data Monetization & Delayed Breach Notice',
+        score: '95/100',
+        badge: 'CRITICAL REGULATORY RISK',
+        badgeClass: 'badge-risk-high',
+        explanation: 'Directly violates GDPR Article 33 and standard enterprise security thresholds requiring 24-hour notification and total prohibition against monetizing customer data.',
+        benchmark: 'Vendor shall implement administrative safeguards compliant with GDPR, notify Customer within twenty-four (24) hours of any breach, and shall not sell or commercialize data.',
+        diff: 'Vendor <span class="redline-del">may commercialize and sell aggregated customer telemetry</span> <span class="redline-add">shall maintain strict GDPR safeguards and shall not sell Customer data</span>, notifying Customer within <span class="redline-del">thirty days</span> <span class="redline-add">twenty-four (24) hours</span> of any suspected compromise.'
+      },
+      confidentiality: {
+        type: 'confidentiality',
+        tag: 'Category: Confidentiality Term',
+        text: 'Customer obligations of non-disclosure shall survive indefinitely in perpetuity following termination of this Agreement, whereas Vendor obligations of confidentiality shall expire upon termination.',
+        title: 'Perpetual Asymmetric Non-Disclosure Obligation',
+        score: '68/100',
+        badge: 'MEDIUM SEVERITY RISK',
+        badgeClass: 'badge-risk-medium',
+        explanation: 'One-sided perpetual confidentiality exposes Customer to continuous trade secret litigation risks while freeing Vendor from safeguarding Customer proprietary data.',
+        benchmark: 'Confidentiality obligations shall remain in effect for three (3) years following agreement termination, excepting trade secrets which survive for so long as protected by law.',
+        diff: 'Each party confidentiality obligations <span class="redline-del">shall survive indefinitely in perpetuity for Customer</span> <span class="redline-add">shall survive for a period of three (3) years following agreement termination</span>.'
+      }
+    };
+
+    let activeKey = 'liability';
+
+    document.querySelectorAll('.sample-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.sample-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeKey = btn.getAttribute('data-sample');
+        loadSample(activeKey);
+      });
+    });
+
+    function loadSample(key) {
+      const data = SAMPLES[key];
+      if (!data) return;
+      document.getElementById('clauseInput').value = data.text;
+      document.getElementById('clauseTypeTag').textContent = data.tag;
+      renderResults(data);
+    }
+
+    function renderResults(data) {
+      document.getElementById('resSeverityBadge').textContent = data.badge;
+      document.getElementById('resSeverityBadge').className = `badge ${data.badgeClass} text-uppercase px-2.5 py-1`;
+      document.getElementById('resRiskTitle').textContent = data.title;
+      document.getElementById('resScore').textContent = data.score;
+      document.getElementById('resExplanation').textContent = data.explanation;
+      document.getElementById('resBenchmark').textContent = `"${data.benchmark}"`;
+      document.getElementById('resRedlineDiff').innerHTML = data.diff;
+      document.getElementById('resToneBadge').textContent = `Tone: ${document.getElementById('toneSelect').value}`;
+    }
+
+    document.getElementById('analyzeBtn').addEventListener('click', () => {
+      const current = SAMPLES[activeKey];
+      renderResults(current);
+    });
+
+    document.getElementById('toneSelect').addEventListener('change', (e) => {
+      document.getElementById('resToneBadge').textContent = `Tone: ${e.target.value}`;
+    });
+
+    function copyRedline() {
+      const text = document.getElementById('resRedlineDiff').innerText;
+      navigator.clipboard.writeText(text);
+      alert('Redline text copied to clipboard!');
+    }
+
+    // Check query params
+    const params = new URLSearchParams(window.location.search);
+    const qClause = params.get('clause');
+    if (qClause && SAMPLES[qClause]) {
+      activeKey = qClause;
+      document.querySelectorAll('.sample-btn').forEach((b) => {
+        if (b.getAttribute('data-sample') === qClause) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+    }
+    loadSample(activeKey);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="/assets/js/themeSwitcher.js?v=3.2"></script>
+  <script type="module">
+    import { renderNavbar } from '/assets/js/auth.js';
+    renderNavbar('public-sandbox');
+  </script>
+</body>
+</html>

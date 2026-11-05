@@ -24,22 +24,42 @@
   <!-- Dynamic Floating Navbar -->
   <div id="navbarPlaceholder"></div>
 
+  <!-- Operational Header -->
+  <div class="operational-subnav py-2 px-3 px-xl-4 shadow-2xs">
+    <div class="container-fluid px-0 d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 text-uppercase fw-semibold" style="font-size: 0.7rem;">
+          <i class="bi bi-gavel me-1"></i> Partner Sign-Off Authority
+        </span>
+        <span class="small text-muted d-none d-md-inline">&bull;</span>
+        <span class="small text-secondary d-none d-md-inline">
+          <i class="bi bi-shield-lock text-success me-1"></i> LexStratum Governance & Decision Trail
+        </span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <a href="/partner/templates.html" class="btn btn-xs btn-outline-secondary rounded-pill px-2.5 py-1 small" style="font-size: 0.75rem;">
+          <i class="bi bi-bookmark-check me-1"></i> Benchmark Playbooks
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Content -->
-  <main class="main-content container-fluid px-4 py-4">
+  <main class="main-content container-fluid px-4 py-4 max-w-7xl">
     <!-- Header Hero Card -->
-    <div class="clay-card p-4 mb-4">
+    <div class="clay-card p-4 mb-4 border">
       <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
         <div class="d-flex align-items-center gap-3">
-          <div class="clay-icon-sphere primary fs-3">
+          <div class="p-2.5 rounded-circle bg-primary-subtle text-primary fs-4">
             <i class="bi bi-shield-check"></i>
           </div>
           <div>
-            <h3 class="fw-bold text-dark mb-1">Partner Approvals Queue</h3>
-            <p class="text-secondary mb-0">Review escalated contracts submitted by associates. 1-click approve, reject, or request changes.</p>
+            <h3 class="fw-bold text-slate-900 mb-1">Executive Partner Approvals Queue</h3>
+            <p class="text-secondary small mb-0">Review escalated contract deviations submitted by associates. Issue binding partner decisions, accept redlines, or request revisions.</p>
           </div>
         </div>
         <div class="d-flex align-items-center gap-2">
-          <button id="refreshQueueBtn" class="btn btn-outline-secondary px-3">
+          <button id="refreshQueueBtn" class="btn btn-outline-secondary btn-sm px-3 font-medium">
             <i class="bi bi-arrow-clockwise me-1"></i>Refresh Queue
           </button>
         </div>
@@ -47,7 +67,7 @@
     </div>
 
     <!-- Approvals Table Card -->
-    <div class="clay-card p-4">
+    <div class="clay-card p-4 border">
       <!-- Filter Bar -->
       <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
         <div class="clay-filter-pills" id="approvalTabs">
@@ -56,21 +76,21 @@
           </button>
           <button class="clay-pill-btn filter-pill" data-status="approved">Approved</button>
           <button class="clay-pill-btn filter-pill" data-status="rejected">Rejected</button>
-          <button class="clay-pill-btn filter-pill" data-status="all">All Contracts</button>
+          <button class="clay-pill-btn filter-pill" data-status="all">All Matters</button>
         </div>
       </div>
 
       <div class="table-responsive">
         <table class="clay-table align-middle">
-          <thead>
+          <thead class="bg-slate-50 border-bottom small text-muted text-uppercase">
             <tr>
-              <th>Contract Document</th>
-              <th>Benchmark Template</th>
+              <th class="ps-3">Agreement Document</th>
+              <th>Benchmark Standard</th>
               <th>Current Status</th>
-              <th>Risk Score</th>
+              <th>RAG Risk Score</th>
               <th>Submitted By</th>
-              <th>Submission Date</th>
-              <th class="text-end">Decision</th>
+              <th>Escalation Date</th>
+              <th class="text-end pe-3">Partner Decision</th>
             </tr>
           </thead>
           <tbody id="approvalsTableBody">
@@ -96,7 +116,7 @@
               <i class="bi bi-gavel"></i>
             </div>
             <div>
-              <h5 class="modal-title fw-bold text-dark mb-0" id="decisionModalLabel">Partner Contract Review</h5>
+              <h5 class="modal-title fw-bold hero-title mb-0" id="decisionModalLabel">Partner Contract Review</h5>
               <div class="small text-muted" id="modalContractTitle">--</div>
             </div>
           </div>
@@ -108,7 +128,7 @@
             <div class="col-md-4">
               <div class="clay-card-flat p-3 text-center">
                 <div class="small text-muted fw-bold mb-1">OVERALL RISK SCORE</div>
-                <div class="h3 fw-bold text-dark mb-0" id="modalRiskScore">--</div>
+                <div class="h3 fw-bold hero-title mb-0" id="modalRiskScore">--</div>
               </div>
             </div>
             <div class="col-md-4">
@@ -126,7 +146,7 @@
           </div>
 
           <!-- Findings Summary Accordion -->
-          <h6 class="fw-bold text-dark mb-2">Findings & Suggested Rewrites</h6>
+          <h6 class="fw-bold hero-title mb-2">Findings & Suggested Rewrites</h6>
           <div class="accordion mb-4" id="modalFindingsAccordion" style="max-height: 260px; overflow-y: auto;">
             <div class="text-muted small p-2">Loading findings...</div>
           </div>

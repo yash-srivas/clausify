@@ -24,22 +24,45 @@
   <!-- Dynamic Floating Navbar -->
   <div id="navbarPlaceholder"></div>
 
+  <!-- Operational Header -->
+  <div class="operational-subnav py-2 px-3 px-xl-4 shadow-2xs">
+    <div class="container-fluid px-0 d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 text-uppercase fw-semibold" style="font-size: 0.7rem;">
+          <i class="bi bi-shield-shaded me-1"></i> LexisNexis Risk Solutions Telemetry
+        </span>
+        <span class="small text-muted d-none d-md-inline">&bull;</span>
+        <span class="small text-secondary d-none d-md-inline">
+          <i class="bi bi-activity text-success me-1"></i> Continuous Automated Portfolio Monitoring
+        </span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <a href="/admin/users.html" class="btn btn-xs btn-outline-secondary rounded-pill px-2.5 py-1 small" style="font-size: 0.75rem;">
+          <i class="bi bi-people me-1"></i> User Directory
+        </a>
+        <a href="/admin/audit.html" class="btn btn-xs btn-outline-secondary rounded-pill px-2.5 py-1 small" style="font-size: 0.75rem;">
+          <i class="bi bi-shield-check me-1"></i> Compliance Audit Logs
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Content -->
-  <main class="main-content container-fluid px-4 py-4">
+  <main class="main-content container-fluid px-4 py-4 max-w-7xl">
     <!-- Header Hero Card -->
-    <div class="clay-card p-4 mb-4">
+    <div class="clay-card p-4 mb-4 border">
       <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
         <div class="d-flex align-items-center gap-3">
-          <div class="clay-icon-sphere primary fs-3">
+          <div class="p-2.5 rounded-circle bg-primary-subtle text-primary fs-4">
             <i class="bi bi-graph-up-arrow"></i>
           </div>
           <div>
-            <h3 class="fw-bold text-dark mb-1">Portfolio Risk Analytics & AI Usage</h3>
-            <p class="text-secondary mb-0">Executive dashboards tracking contract ingestion velocity, risk severity distribution, and LLM token usage.</p>
+            <h3 class="fw-bold text-slate-900 mb-1">Portfolio Risk Analytics & AI Telemetry</h3>
+            <p class="text-secondary small mb-0">Executive dashboards tracking contract ingestion velocity, RAG severity distribution, and LLM token usage across all enterprise matters.</p>
           </div>
         </div>
         <div>
-          <button id="refreshAnalyticsBtn" class="btn btn-outline-secondary px-3">
+          <button id="refreshAnalyticsBtn" class="btn btn-outline-secondary btn-sm px-3 font-medium">
             <i class="bi bi-arrow-clockwise me-1"></i>Refresh Data
           </button>
         </div>
@@ -56,7 +79,7 @@
               <i class="bi bi-file-earmark-check"></i>
             </div>
           </div>
-          <div class="h2 fw-bold text-dark mb-1" id="kpiProcessed">--</div>
+          <div class="h2 fw-bold hero-title mb-1" id="kpiProcessed">--</div>
           <div class="small text-muted">Ingested & benchmarked</div>
         </div>
       </div>
@@ -69,7 +92,7 @@
               <i class="bi bi-speedometer2"></i>
             </div>
           </div>
-          <div class="h2 fw-bold text-dark mb-1" id="kpiAvgScore">--</div>
+          <div class="h2 fw-bold hero-title mb-1" id="kpiAvgScore">--</div>
           <div class="small text-muted" id="kpiAvgBand">Benchmark scale: 0-100</div>
         </div>
       </div>
@@ -82,7 +105,7 @@
               <i class="bi bi-shield-slash"></i>
             </div>
           </div>
-          <div class="h3 fw-bold text-dark mb-1 text-truncate" id="kpiTopClause" style="max-width: 200px;">--</div>
+          <div class="h3 fw-bold hero-title mb-1 text-truncate" id="kpiTopClause" style="max-width: 200px;">--</div>
           <div class="small text-muted" id="kpiTopClauseCount">Highest deviation frequency</div>
         </div>
       </div>
@@ -95,7 +118,7 @@
               <i class="bi bi-cpu"></i>
             </div>
           </div>
-          <div class="h2 fw-bold text-dark mb-1" id="kpiTotalTokens">--</div>
+          <div class="h2 fw-bold hero-title mb-1" id="kpiTotalTokens">--</div>
           <div class="small text-muted">Embeddings + Inference</div>
         </div>
       </div>
@@ -106,7 +129,7 @@
       <!-- 1. Activity Timeline -->
       <div class="col-12 col-lg-6">
         <div class="clay-card p-4 h-100">
-          <h5 class="fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+          <h5 class="fw-bold hero-title mb-3 d-flex align-items-center gap-2">
             <i class="bi bi-graph-up text-primary"></i>
             <span>Contract Ingestion Velocity</span>
           </h5>
@@ -119,7 +142,7 @@
       <!-- 2. Workflow Distribution -->
       <div class="col-12 col-lg-6">
         <div class="clay-card p-4 h-100">
-          <h5 class="fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+          <h5 class="fw-bold hero-title mb-3 d-flex align-items-center gap-2">
             <i class="bi bi-pie-chart text-primary"></i>
             <span>Workflow Status Distribution</span>
           </h5>
@@ -132,7 +155,7 @@
       <!-- 3. Top Flagged Clauses -->
       <div class="col-12 col-lg-6">
         <div class="clay-card p-4 h-100">
-          <h5 class="fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+          <h5 class="fw-bold hero-title mb-3 d-flex align-items-center gap-2">
             <i class="bi bi-bar-chart-steps text-primary"></i>
             <span>Top Risk Clause Deviations</span>
           </h5>
@@ -145,7 +168,7 @@
       <!-- 4. Token Consumption Breakdown -->
       <div class="col-12 col-lg-6">
         <div class="clay-card p-4 h-100">
-          <h5 class="fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+          <h5 class="fw-bold hero-title mb-3 d-flex align-items-center gap-2">
             <i class="bi bi-activity text-primary"></i>
             <span>AI Service Token Usage</span>
           </h5>

@@ -43,10 +43,10 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Rate Limiter
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 300,
+  max: 10000,
   standardHeaders: true,
   legacyHeaders: false,
-  skip: () => process.env.NODE_ENV === 'test',
+  skip: () => process.env.NODE_ENV === 'test' || process.env.NODE_ENV !== 'production',
   message: {
     error: {
       code: 'TOO_MANY_REQUESTS',
@@ -57,8 +57,8 @@ const apiLimiter = rateLimit({
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 60,
-  skip: () => process.env.NODE_ENV === 'test',
+  max: 500,
+  skip: () => process.env.NODE_ENV === 'test' || process.env.NODE_ENV !== 'production',
   message: {
     error: {
       code: 'TOO_MANY_REQUESTS',

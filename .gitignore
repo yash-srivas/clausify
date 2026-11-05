@@ -23,6 +23,7 @@ env/
 !**/.env.example
 
 # Uploaded files
+uploads/
 backend/uploads/*
 !backend/uploads/.gitkeep
 
@@ -51,3 +52,5 @@ coverage/
 # Temporary files
 *.tmp
 *.bak
+_backup_frontend/
+scratch/

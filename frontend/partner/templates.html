@@ -24,23 +24,43 @@
   <!-- Dynamic Floating Navbar -->
   <div id="navbarPlaceholder"></div>
 
+  <!-- Operational Header -->
+  <div class="operational-subnav py-2 px-3 px-xl-4 shadow-2xs">
+    <div class="container-fluid px-0 d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 text-uppercase fw-semibold" style="font-size: 0.7rem;">
+          <i class="bi bi-shield-check me-1"></i> LegalSafe Benchmark Playbook Engine
+        </span>
+        <span class="small text-muted d-none d-md-inline">&bull;</span>
+        <span class="small text-secondary d-none d-md-inline">
+          <i class="bi bi-database-check text-info me-1"></i> Real-Time pgvector Embeddings Sync
+        </span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <a href="/partner/approvals.html" class="btn btn-xs btn-outline-secondary rounded-pill px-2.5 py-1 small" style="font-size: 0.75rem;">
+          <i class="bi bi-check2-circle me-1"></i> Partner Approvals
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Content -->
-  <main class="main-content container-fluid px-4 py-4">
+  <main class="main-content container-fluid px-4 py-4 max-w-7xl">
     <!-- Header Hero Card -->
-    <div class="clay-card p-4 mb-4">
+    <div class="clay-card p-4 mb-4 border">
       <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
         <div class="d-flex align-items-center gap-3">
-          <div class="clay-icon-sphere primary fs-3">
+          <div class="p-2.5 rounded-circle bg-primary-subtle text-primary fs-4">
             <i class="bi bi-file-earmark-lock2"></i>
           </div>
           <div>
-            <h3 class="fw-bold text-dark mb-1">Standard Safe Legal Templates</h3>
-            <p class="text-secondary mb-0">Define organizational gold-standard clauses. Updates trigger automated re-embedding into pgvector.</p>
+            <h3 class="fw-bold text-slate-900 mb-1">Standard Safe Legal Playbooks</h3>
+            <p class="text-secondary small mb-0">Define organizational gold-standard baseline terms. Edits automatically trigger vectorized re-embeddings via pgvector (text-embedding-3-small).</p>
           </div>
         </div>
         <div>
-          <button class="btn btn-primary px-4 py-2" data-bs-toggle="modal" data-bs-target="#createTemplateModal">
-            <i class="bi bi-plus-lg me-1"></i>New Template
+          <button class="btn btn-primary btn-sm px-3.5 py-2 fw-semibold" data-bs-toggle="modal" data-bs-target="#createTemplateModal">
+            <i class="bi bi-plus-lg me-1"></i>New Benchmark Playbook
           </button>
         </div>
       </div>
@@ -50,7 +70,7 @@
       <!-- Left Column: Template Selection List -->
       <div class="col-12 col-lg-3">
         <div class="clay-card p-3">
-          <h6 class="fw-bold text-dark mb-3 px-1">Benchmark Templates</h6>
+          <h6 class="fw-bold hero-title mb-3 px-1">Benchmark Templates</h6>
           <div class="list-group list-group-flush border-0" id="templatesListGroup">
             <div class="text-center py-4 text-muted small">
               <div class="spinner-border spinner-border-sm text-primary me-1" role="status"></div>
@@ -71,11 +91,11 @@
             <!-- Template Metadata Row -->
             <div class="d-flex flex-wrap justify-content-between align-items-start pb-3 mb-4 border-bottom gap-3">
               <div>
-                <h4 class="fw-bold text-dark mb-1" id="templateTitle">Standard Safe Template</h4>
+                <h4 class="fw-bold hero-title mb-1" id="templateTitle">Standard Safe Template</h4>
                 <p class="text-secondary small mb-2" id="templateDescription">Master corporate vendor baseline template</p>
                 <div class="d-flex align-items-center gap-2 flex-wrap">
                   <span id="templateStatusBadge" class="clay-badge clay-badge-approved">ACTIVE</span>
-                  <span id="templateVersionBadge" class="badge bg-light text-dark border">Version 1</span>
+                  <span id="templateVersionBadge" class="badge bg-light hero-title border">Version 1</span>
                   <span class="small text-muted" id="templateLastUpdated"></span>
                 </div>
               </div>
@@ -119,7 +139,7 @@
       <div class="modal-content">
         <form id="createTemplateForm">
           <div class="modal-header">
-            <h5 class="modal-title fw-bold text-dark" id="createModalLabel">Create Safe Template</h5>
+            <h5 class="modal-title fw-bold hero-title" id="createModalLabel">Create Safe Template</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -146,7 +166,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title fw-bold text-dark" id="historyModalLabel">Version Snapshot History</h5>
+          <h5 class="modal-title fw-bold hero-title" id="historyModalLabel">Version Snapshot History</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

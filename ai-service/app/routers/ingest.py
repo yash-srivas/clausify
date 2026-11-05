@@ -53,7 +53,7 @@ async def ingest_contract(
         pages = extract_text_by_pages(str(resolved_path), min_char_threshold=200)
     except NoExtractableTextException as e:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=getattr(status, "HTTP_422_UNPROCESSABLE_CONTENT", 422),
             detail={"error": {"code": "NO_EXTRACTABLE_TEXT", "message": str(e)}}
         )
     except Exception as e:

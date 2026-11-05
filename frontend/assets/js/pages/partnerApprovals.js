@@ -3,7 +3,7 @@
  */
 
 import { api } from '../api.js';
-import { requireAuth, renderNavbar } from '../auth.js';
+import { requireAuth, renderNavbar, getToken } from '../auth.js';
 import { showToast } from '../toast.js';
 
 let contracts = [];
@@ -263,7 +263,7 @@ function setupDecisionButtons() {
       if (!activeContractForDecision) return;
       exportBtn.disabled = true;
       try {
-        const token = localStorage.getItem('auth_token');
+        const token = getToken() || localStorage.getItem('token');
         const res = await fetch(`/api/contracts/${activeContractForDecision.id}/report/pdf`, {
           headers: { Authorization: `Bearer ${token}` },
         });

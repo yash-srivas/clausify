@@ -18,6 +18,7 @@ describe('Priority 7: Multi-Tenancy and Organization Isolation', () => {
   let tokenBetaAdmin;
 
   let contractAlphaId;
+  let findingAlphaId;
   let templateAlphaId;
 
   beforeAll(async () => {
@@ -92,11 +93,13 @@ describe('Priority 7: Multi-Tenancy and Organization Isolation', () => {
     contractAlphaId = cRes.rows[0].id;
 
     // Seed finding for this contract
-    await db.query(
+    const fRes = await db.query(
       `INSERT INTO findings (contract_id, clause_type, risk_level, page, text_span, reason, suggested_rewrite, status, source)
-       VALUES ($1, 'liability', 'HIGH', 1, 'Unlimited Alpha Liability', 'Risk alert', 'Cap liability', 'open', 'rule')`,
+       VALUES ($1, 'liability', 'HIGH', 1, 'Unlimited Alpha Liability', 'Risk alert', 'Cap liability', 'open', 'rule')
+       RETURNING id`,
       [contractAlphaId]
     );
+    findingAlphaId = fRes.rows[0].id;
 
     // 6. Seed a template in Firm Alpha
     const tRes = await db.query(
@@ -219,6 +222,23 @@ describe('Priority 7: Multi-Tenancy and Organization Isolation', () => {
     const userIds = res.body.audit_logs.map((log) => log.user_id);
     expect(userIds).not.toContain(userAlphaPartnerId);
     expect(userIds).not.toContain(userAlphaAssocId);
+  });
+
+  test('Tenant finding isolation: Firm Beta partner cannot update status or read comments of Firm Alpha finding (404)', async () => {
+    const patchRes = await request(app)
+      .patch(`/api/findings/${findingAlphaId}`)
+      .set('Authorization', `Bearer ${tokenBetaPartner}`)
+      .send({ status: 'accepted' });
+
+    expect(patchRes.status).toBe(404);
+    expect(patchRes.body.error.code).toBe('FINDING_NOT_FOUND');
+
+    const getRes = await request(app)
+      .get(`/api/findings/${findingAlphaId}/comments`)
+      .set('Authorization', `Bearer ${tokenBetaPartner}`);
+
+    expect(getRes.status).toBe(404);
+    expect(getRes.body.error.code).toBe('FINDING_NOT_FOUND');
   });
 });
 

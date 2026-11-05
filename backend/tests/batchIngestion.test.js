@@ -39,6 +39,13 @@ describe('Priority 5: Batch Document Ingestion & Deduplication', () => {
 
     // Clean up created contracts from DB
     for (const cid of createdContractIds) {
+      const cRes = await db.query('SELECT file_path FROM contracts WHERE id = $1', [cid]);
+      if (cRes.rows.length > 0 && cRes.rows[0].file_path) {
+        const fullP = path.resolve(__dirname, '..', cRes.rows[0].file_path);
+        if (fs.existsSync(fullP)) {
+          try { fs.unlinkSync(fullP); } catch (e) {}
+        }
+      }
       await db.query('DELETE FROM findings WHERE contract_id = $1', [cid]);
       await db.query('DELETE FROM contracts WHERE id = $1', [cid]);
     }

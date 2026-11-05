@@ -10,7 +10,8 @@ const router = express.Router();
 // Stricter rate limiter for login route
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 20, // 20 attempts per window
+  max: 500, // 500 attempts per window in local/dev
+  skip: () => process.env.NODE_ENV === 'test' || process.env.NODE_ENV !== 'production',
   standardHeaders: true,
   legacyHeaders: false,
   message: {

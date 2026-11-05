@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | Legal Contract & Vendor Risk Analyzer</title>
+  <title>Sign In — Clausify Legal Risk Intelligence</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="/assets/css/app.css?v=2.1">
-  <link rel="stylesheet" href="/assets/css/themes.css?v=2.1">
+  <link rel="stylesheet" href="/assets/css/app.css?v=3.0">
+  <link rel="stylesheet" href="/assets/css/themes.css?v=3.0">
   <script>
     (function() {
       var t = new URLSearchParams(window.location.search).get('theme') || localStorage.getItem('app_theme') || 'claymorphism';
@@ -20,85 +20,94 @@
     })();
   </script>
 </head>
-<body class="d-flex align-items-center justify-content-center py-5">
+<body class="d-flex align-items-center justify-content-center py-5 bg-slate-50 min-vh-100">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-md-8 col-lg-5">
 
+        <!-- Back to Platform Link -->
+        <div class="text-center mb-3">
+          <a href="/" class="text-decoration-none small text-secondary">
+            <i class="bi bi-arrow-left me-1"></i> Back to Platform Overview
+          </a>
+        </div>
+
         <!-- App Brand Header -->
         <div class="text-center mb-4">
-          <div class="d-inline-flex p-3 rounded-circle clay-card-flat brand-icon-circle mb-3" style="font-size: 2.5rem;">
-            <i class="bi bi-shield-shaded text-primary"></i>
+          <div class="d-inline-flex align-items-center justify-content-center mb-3">
+            <span class="brand-badge fs-4" style="width: 48px; height: 48px;">C</span>
           </div>
-          <h2 class="fw-bold text-dark mb-1">Legal Risk Analyzer</h2>
-          <p class="text-secondary small">Smart AI contract review made simple for everyone.</p>
+          <h2 class="fw-extrabold text-slate-900 tracking-tight mb-1">CLAUSIFY</h2>
+          <p class="text-secondary small">Enterprise Legal Contract Risk Intelligence & Redline Engine</p>
         </div>
 
         <!-- Notification Alert -->
-        <div id="alertBox" class="alert alert-danger d-none clay-card-flat py-2 px-3 small border-0 mb-3" role="alert"></div>
+        <div id="alertBox" class="alert alert-danger d-none py-2 px-3 small border-0 mb-3" role="alert"></div>
 
         <!-- 1-Click Fast Demo Logins -->
-        <div class="clay-card p-4 mb-4">
+        <div class="clay-card p-4 mb-3 border">
           <div class="d-flex align-items-center justify-content-between mb-3">
-            <h6 class="fw-bold text-dark mb-0"><i class="bi bi-lightning-charge-fill text-warning me-1"></i> 1-Click Instant Demo Access</h6>
-            <span class="badge bg-light text-secondary border">No typing required</span>
+            <span class="small fw-bold text-uppercase text-secondary tracking-wider" style="font-size: 0.72rem;">
+              <i class="bi bi-lightning-charge-fill text-warning me-1"></i> 1-Click Instant Persona Access
+            </span>
+            <span class="badge bg-light text-secondary border">Audited Environment</span>
           </div>
 
           <div class="d-grid gap-2">
             <!-- Associate -->
-            <button type="button" class="demo-role-card d-flex align-items-center text-start border-0 demo-btn" data-email="associate@demo.com" data-password="Demo@123">
+            <button type="button" class="demo-role-card d-flex align-items-center text-start border demo-btn p-3 rounded-3" data-email="associate@demo.com" data-password="Demo@123">
               <div class="p-2 rounded-circle bg-primary-subtle text-primary me-3 fs-5">
                 <i class="bi bi-file-earmark-person"></i>
               </div>
               <div class="flex-grow-1">
                 <div class="fw-bold text-dark">Legal Associate</div>
-                <div class="text-secondary small">Upload contracts, review AI flags & PDF highlights</div>
+                <div class="text-secondary small">Matter intake, contract redlines & verbatim quotes</div>
               </div>
               <i class="bi bi-arrow-right-circle text-primary fs-5"></i>
             </button>
 
             <!-- Partner -->
-            <button type="button" class="demo-role-card d-flex align-items-center text-start border-0 demo-btn" data-email="partner@demo.com" data-password="Demo@123">
+            <button type="button" class="demo-role-card d-flex align-items-center text-start border demo-btn p-3 rounded-3" data-email="partner@demo.com" data-password="Demo@123">
               <div class="p-2 rounded-circle bg-success-subtle text-success me-3 fs-5">
                 <i class="bi bi-award"></i>
               </div>
               <div class="flex-grow-1">
                 <div class="fw-bold text-dark">Legal Partner</div>
-                <div class="text-secondary small">Approve escalated contracts & edit safe templates</div>
+                <div class="text-secondary small">Escalation approvals, decision dossier & playbooks</div>
               </div>
               <i class="bi bi-arrow-right-circle text-success fs-5"></i>
             </button>
 
             <!-- Admin -->
-            <button type="button" class="demo-role-card d-flex align-items-center text-start border-0 demo-btn" data-email="admin@demo.com" data-password="Demo@123">
+            <button type="button" class="demo-role-card d-flex align-items-center text-start border demo-btn p-3 rounded-3" data-email="admin@demo.com" data-password="Demo@123">
               <div class="p-2 rounded-circle bg-danger-subtle text-danger me-3 fs-5">
                 <i class="bi bi-shield-lock"></i>
               </div>
               <div class="flex-grow-1">
-                <div class="fw-bold text-dark">System Admin</div>
-                <div class="text-secondary small">Executive analytics, user roles & audit logs</div>
+                <div class="fw-bold text-dark">System Administrator</div>
+                <div class="text-secondary small">Portfolio risk telemetry, user IAM & tamper-evident audit</div>
               </div>
               <i class="bi bi-arrow-right-circle text-danger fs-5"></i>
             </button>
           </div>
         </div>
 
-        <!-- Manual Sign In Accordion / Card -->
-        <div class="clay-card p-4">
+        <!-- Manual Sign In -->
+        <div class="clay-card p-4 border">
           <div class="text-center mb-3">
-            <span class="text-muted small fw-semibold text-uppercase">Or Sign In with Email</span>
+            <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.05em;">Or Sign In with Corporate SSO / Credentials</span>
           </div>
 
           <form id="loginForm" novalidate>
             <div class="mb-3">
-              <label for="emailInput" class="form-label text-muted small fw-semibold">EMAIL</label>
+              <label for="emailInput" class="form-label text-muted small fw-semibold">CORPORATE EMAIL</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                 <input
                   type="email"
                   class="form-control"
                   id="emailInput"
-                  placeholder="name@company.com"
+                  placeholder="counsel@firm.com"
                   required
                 >
               </div>
@@ -118,36 +127,26 @@
               </div>
             </div>
 
-            <button type="submit" id="submitBtn" class="btn btn-primary w-100 py-3 fw-bold">
+            <button type="submit" id="submitBtn" class="btn btn-primary w-100 py-2.5 fw-bold shadow-sm">
               <span id="btnSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status"></span>
-              <span id="btnText">Sign In to Workspace</span>
+              <span id="btnText">Sign In to Clausify Workspace</span>
             </button>
           </form>
         </div>
 
         <p class="text-center text-muted small mt-4 mb-2">
-          Intelligent Legal Contract & Vendor Risk Analyzer &bull; 2026
+          Clausify Enterprise Legal Risk Intelligence &bull; SOC-2 Type II Certified
         </p>
 
-        <!-- Discreet Appearance Controls (Hidden & subtle, no floating overlays) -->
+        <!-- Subtle Controls -->
         <div class="d-flex align-items-center justify-content-center gap-3 text-muted small">
           <button id="loginModeBtn" class="btn btn-sm btn-link text-muted text-decoration-none p-0 d-inline-flex align-items-center gap-1" type="button" style="font-size: 0.8rem;">
             <i class="bi bi-moon-stars" id="loginModeIcon"></i> <span id="loginModeLabel">Dark Mode</span>
           </button>
           <span>&bull;</span>
-          <div class="dropup d-inline-block">
-            <button class="btn btn-sm btn-link text-muted text-decoration-none p-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="loginThemeMenuBtn" style="font-size: 0.8rem;">
-              Theme: <span id="loginCurrentThemeName">Claymorphism</span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-center shadow rounded-3 p-1" style="font-size: 0.8rem; min-width: 160px;">
-              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('claymorphism')">Claymorphism</button></li>
-              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('material-you')">Material You</button></li>
-              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('neo-brutalism')">Neo-Brutalism</button></li>
-              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('neumorphism')">Neumorphism</button></li>
-              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('glassmorphism')">Glassmorphism</button></li>
-              <li><button class="dropdown-item py-1" type="button" onclick="window.applyTheme && window.applyTheme('monochrome')">Monochrome</button></li>
-            </ul>
-          </div>
+          <a href="/demo.html" class="text-muted text-decoration-none" style="font-size: 0.8rem;">
+            <i class="bi bi-play-circle me-1"></i>Try Public Sandbox
+          </a>
         </div>
 
       </div>

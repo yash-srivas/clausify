@@ -144,6 +144,10 @@ export const api = {
     }
     return await response.blob();
   },
+
+  getToken() {
+    return localStorage.getItem('token');
+  },
 };
 
 export default api;

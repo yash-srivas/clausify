@@ -6,11 +6,10 @@ import { api } from '../api.js';
 import { setToken, setUser, isLoggedIn, getUser, getDefaultRedirectForRole } from '../auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (isLoggedIn()) {
-    const user = getUser();
-    const params = new URLSearchParams(window.location.search);
-    const returnUrl = params.get('returnUrl');
-    window.location.replace(returnUrl ? decodeURIComponent(returnUrl) : getDefaultRedirectForRole(user.role));
+  const params = new URLSearchParams(window.location.search);
+  const returnUrl = params.get('returnUrl');
+  if (returnUrl && isLoggedIn()) {
+    window.location.replace(decodeURIComponent(returnUrl));
     return;
   }
 
@@ -23,7 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const alertBox = document.getElementById('alertBox');
   const demoButtons = document.querySelectorAll('.demo-btn');
 
-  const params = new URLSearchParams(window.location.search);
+  if (isLoggedIn()) {
+    const curUser = getUser();
+    if (curUser) {
+      showAlert(
+        `Active session: ${curUser.name} (${curUser.role.toUpperCase()}). Select a persona below to switch accounts.`,
+        'info'
+      );
+    }
+  }
+
   if (params.get('expired') === '1') {
     showAlert('Your session has expired. Please log in again.', 'warning');
   }
@@ -96,15 +104,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     await performLogin(email, password);
   });
-
-  // Mode Toggle in Login Footer
-  const loginModeBtn = document.getElementById('loginModeBtn');
-  if (loginModeBtn) {
-    loginModeBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.toggleMode) {
-        window.toggleMode();
-      }
-    });
-  }
 });

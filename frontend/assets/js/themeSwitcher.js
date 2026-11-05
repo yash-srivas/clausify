@@ -53,9 +53,16 @@ export function applyTheme(themeId) {
     userSelect.value = themeId;
   }
 
+  // Sync navbar theme button labels if present
+  const active = THEMES.find((t) => t.id === themeId);
+  if (active) {
+    document.querySelectorAll('.nav-theme-current-label, #guestThemeLabel').forEach((el) => {
+      el.innerText = active.name;
+    });
+  }
+
   // Sync login page theme label if present
   const loginThemeLabel = document.getElementById('loginCurrentThemeName');
-  const active = THEMES.find((t) => t.id === themeId);
   if (loginThemeLabel && active) {
     loginThemeLabel.innerText = active.name;
   }
@@ -134,6 +141,25 @@ export function initThemeSwitcher() {
 
   applyTheme(initialTheme);
   applyMode(initialMode);
+
+  // Wire up fast mode toggle buttons if present on the page
+  const navModeBtn = document.getElementById('navModeToggleBtn');
+  if (navModeBtn && !navModeBtn.dataset.bound) {
+    navModeBtn.dataset.bound = 'true';
+    navModeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleMode();
+    });
+  }
+
+  const loginModeBtn = document.getElementById('loginModeBtn');
+  if (loginModeBtn && !loginModeBtn.dataset.bound) {
+    loginModeBtn.dataset.bound = 'true';
+    loginModeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleMode();
+    });
+  }
 }
 
 // Expose globally for inline or navbar handlers
