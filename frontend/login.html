@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
   <link rel="stylesheet" href="/assets/css/app.css?v=3.0">
   <link rel="stylesheet" href="/assets/css/themes.css?v=3.0">
   <script>
-    (function() {
+    (function () {
       var t = new URLSearchParams(window.location.search).get('theme') || localStorage.getItem('app_theme') || 'claymorphism';
       var m = new URLSearchParams(window.location.search).get('mode') || localStorage.getItem('app_mode') || 'light';
       document.documentElement.setAttribute('data-theme', t);
@@ -20,6 +21,7 @@
     })();
   </script>
 </head>
+
 <body class="d-flex align-items-center justify-content-center py-5 bg-slate-50 min-vh-100">
   <div class="container">
     <div class="row justify-content-center">
@@ -34,9 +36,7 @@
 
         <!-- App Brand Header -->
         <div class="text-center mb-4">
-          <div class="d-inline-flex align-items-center justify-content-center mb-3">
-            <span class="brand-badge fs-4" style="width: 48px; height: 48px;">C</span>
-          </div>
+
           <h2 class="fw-extrabold text-slate-900 tracking-tight mb-1">CLAUSIFY</h2>
           <p class="text-secondary small">Enterprise Legal Contract Risk Intelligence & Redline Engine</p>
         </div>
@@ -55,7 +55,9 @@
 
           <div class="d-grid gap-2">
             <!-- Associate -->
-            <button type="button" class="demo-role-card d-flex align-items-center text-start border demo-btn p-3 rounded-3" data-email="associate@demo.com" data-password="Demo@123">
+            <button type="button"
+              class="demo-role-card d-flex align-items-center text-start border demo-btn p-3 rounded-3"
+              data-email="associate@demo.com" data-password="Demo@123">
               <div class="p-2 rounded-circle bg-primary-subtle text-primary me-3 fs-5">
                 <i class="bi bi-file-earmark-person"></i>
               </div>
@@ -67,7 +69,9 @@
             </button>
 
             <!-- Partner -->
-            <button type="button" class="demo-role-card d-flex align-items-center text-start border demo-btn p-3 rounded-3" data-email="partner@demo.com" data-password="Demo@123">
+            <button type="button"
+              class="demo-role-card d-flex align-items-center text-start border demo-btn p-3 rounded-3"
+              data-email="partner@demo.com" data-password="Demo@123">
               <div class="p-2 rounded-circle bg-success-subtle text-success me-3 fs-5">
                 <i class="bi bi-award"></i>
               </div>
@@ -79,7 +83,9 @@
             </button>
 
             <!-- Admin -->
-            <button type="button" class="demo-role-card d-flex align-items-center text-start border demo-btn p-3 rounded-3" data-email="admin@demo.com" data-password="Demo@123">
+            <button type="button"
+              class="demo-role-card d-flex align-items-center text-start border demo-btn p-3 rounded-3"
+              data-email="admin@demo.com" data-password="Demo@123">
               <div class="p-2 rounded-circle bg-danger-subtle text-danger me-3 fs-5">
                 <i class="bi bi-shield-lock"></i>
               </div>
@@ -95,7 +101,8 @@
         <!-- Manual Sign In -->
         <div class="clay-card p-4 border">
           <div class="text-center mb-3">
-            <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.05em;">Or Sign In with Corporate SSO / Credentials</span>
+            <span class="text-muted small fw-semibold text-uppercase"
+              style="font-size: 0.72rem; letter-spacing: 0.05em;">Or Sign In with Corporate SSO / Credentials</span>
           </div>
 
           <form id="loginForm" novalidate>
@@ -103,13 +110,7 @@
               <label for="emailInput" class="form-label text-muted small fw-semibold">CORPORATE EMAIL</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="emailInput"
-                  placeholder="counsel@firm.com"
-                  required
-                >
+                <input type="email" class="form-control" id="emailInput" placeholder="counsel@firm.com" required>
               </div>
             </div>
 
@@ -117,13 +118,7 @@
               <label for="passwordInput" class="form-label text-muted small fw-semibold">PASSWORD</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="passwordInput"
-                  placeholder="••••••••"
-                  required
-                >
+                <input type="password" class="form-control" id="passwordInput" placeholder="••••••••" required>
               </div>
             </div>
 
@@ -140,7 +135,9 @@
 
         <!-- Subtle Controls -->
         <div class="d-flex align-items-center justify-content-center gap-3 text-muted small">
-          <button id="loginModeBtn" class="btn btn-sm btn-link text-muted text-decoration-none p-0 d-inline-flex align-items-center gap-1" type="button" style="font-size: 0.8rem;">
+          <button id="loginModeBtn"
+            class="btn btn-sm btn-link text-muted text-decoration-none p-0 d-inline-flex align-items-center gap-1"
+            type="button" style="font-size: 0.8rem;">
             <i class="bi bi-moon-stars" id="loginModeIcon"></i> <span id="loginModeLabel">Dark Mode</span>
           </button>
           <span>&bull;</span>
@@ -157,4 +154,5 @@
   <script type="module" src="/assets/js/themeSwitcher.js?v=2.1"></script>
   <script type="module" src="/assets/js/pages/login.js?v=2.1"></script>
 </body>
+
 </html>

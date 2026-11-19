@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
   <link rel="stylesheet" href="/assets/css/app.css?v=3.0">
   <link rel="stylesheet" href="/assets/css/themes.css?v=3.0">
   <script>
-    (function() {
+    (function () {
       var t = new URLSearchParams(window.location.search).get('theme') || localStorage.getItem('app_theme') || 'claymorphism';
       var m = new URLSearchParams(window.location.search).get('mode') || localStorage.getItem('app_mode') || 'light';
       document.documentElement.setAttribute('data-theme', t);
@@ -20,52 +21,32 @@
     })();
   </script>
 </head>
+
 <body class="d-flex flex-column min-vh-100 bg-slate-50 pb-5">
   <!-- Dynamic Top Global Navbar -->
   <div id="navbarPlaceholder"></div>
 
   <!-- Operational Matter Sub-Header (SpeedLegal & LegitQuest Standard) -->
-  <div class="operational-subnav py-2 px-3 px-xl-4 shadow-2xs">
-    <div class="container-fluid px-0 d-flex flex-wrap justify-content-between align-items-center gap-2">
-      <div class="d-flex align-items-center gap-3">
-        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 text-uppercase fw-semibold" style="font-size: 0.7rem;">
-          <i class="bi bi-shield-check me-1"></i> Delaware Benchmark v2.4 Active
-        </span>
-        <span class="small text-muted d-none d-md-inline">&bull;</span>
-        <span class="small text-secondary d-none d-md-inline">
-          <i class="bi bi-lock-fill text-success me-1"></i> Multi-Tenant Isolated Workspace
-        </span>
-      </div>
-      <div class="d-flex align-items-center gap-2">
-        <span class="small hero-lead font-mono" style="font-size: 0.72rem;">
-          <i class="bi bi-clock-history me-1 text-primary"></i> Real-time Ingestion Pipeline
-        </span>
-        <span class="small text-muted d-none d-sm-inline">&bull;</span>
-        <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-0.5 font-mono" style="font-size: 0.65rem;">
-          <i class="bi bi-circle-fill me-1" style="font-size: 0.45rem;"></i> System Ready
-        </span>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Main Content -->
   <main class="container-fluid px-4 py-4 max-w-7xl">
-    
+
     <!-- Hero / Action Area -->
     <div class="row justify-content-center mb-4 mt-1">
       <div class="col-12 col-xl-11">
         <div class="clay-card p-4 p-md-4 border">
           <div class="row align-items-center g-4">
-            
+
             <div class="col-12 col-lg-5">
-              <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1.5 rounded-pill mb-2 font-semibold text-xs">
-                <i class="bi bi-cpu me-1"></i> SpeedLegal Ingestion Engine
-              </span>
+
               <h3 class="fw-bold text-slate-900 mb-2">Automated Contract Risk Intake</h3>
               <p class="text-secondary small mb-3">
-                Upload executable vendor agreements, MSAs, DPAs, or SaaS licenses. Clausify deterministically extracts text spans, identifies non-standard exposures against codified statutory benchmarks, and generates 1-click redlines.
+                Upload executable vendor agreements, MSAs, DPAs, or SaaS licenses. Clausify deterministically extracts
+                text spans, identifies non-standard exposures against codified statutory benchmarks, and generates
+                1-click redlines.
               </p>
-              
+
               <div class="d-flex flex-column gap-1.5 small text-muted">
                 <div class="d-flex align-items-center gap-2">
                   <i class="bi bi-check-circle-fill text-success"></i>
@@ -87,33 +68,40 @@
               <form id="uploadForm">
                 <div class="p-4 rounded-3 dropzone-area text-center border-dashed" id="dropzone">
                   <div class="mb-2">
-                    <span class="d-inline-flex p-2.5 rounded-circle dropzone-icon-circle border shadow-xs" style="font-size: 2rem;">
+                    <span class="d-inline-flex p-2.5 rounded-circle dropzone-icon-circle border shadow-xs"
+                      style="font-size: 2rem;">
                       <i class="bi bi-file-earmark-pdf text-primary"></i>
                     </span>
                   </div>
                   <h6 class="fw-bold text-slate-900 mb-1">Drag and drop vendor contract PDFs here</h6>
-                  <p class="text-muted small mb-3">Support for single or batch intake (up to 10 PDF documents, max 25MB each)</p>
-                  
+                  <p class="text-muted small mb-3">Support for single or batch intake (up to 10 PDF documents, max 25MB
+                    each)</p>
+
                   <input type="file" id="fileInput" class="d-none" accept="application/pdf" multiple>
                   <button type="button" id="browseBtn" class="btn btn-outline-primary btn-sm px-4 py-2 font-medium">
                     <i class="bi bi-folder2-open me-2"></i>Select PDF Files
                   </button>
 
-                  <div id="selectedFileName" class="mt-3 py-1.5 px-3 rounded-pill shadow-xs border small fw-bold text-primary d-inline-block d-none"></div>
+                  <div id="selectedFileName"
+                    class="mt-3 py-1.5 px-3 rounded-pill shadow-xs border small fw-bold text-primary d-inline-block d-none">
+                  </div>
                 </div>
 
                 <!-- Template Selector & Submit -->
                 <div class="row g-2 mt-3 align-items-center">
                   <div class="col-12 col-sm-6">
-                    <label for="templateSelect" class="form-label small fw-bold text-muted mb-1" style="font-size: 0.72rem; letter-spacing: 0.04em;">COMPARE AGAINST BENCHMARK PLAYBOOK</label>
+                    <label for="templateSelect" class="form-label small fw-bold text-muted mb-1"
+                      style="font-size: 0.72rem; letter-spacing: 0.04em;">COMPARE AGAINST BENCHMARK PLAYBOOK</label>
                     <select class="form-select form-select-sm" id="templateSelect" required>
                       <option value="">Loading benchmark playbooks...</option>
                     </select>
                   </div>
                   <div class="col-12 col-sm-6 text-sm-end pt-sm-3">
                     <input type="hidden" id="contractTitleInput">
-                    <button type="submit" id="startUploadBtn" class="btn btn-primary w-100 py-2 fw-bold shadow-xs" disabled>
-                      <span id="uploadSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status"></span>
+                    <button type="submit" id="startUploadBtn" class="btn btn-primary w-100 py-2 fw-bold shadow-xs"
+                      disabled>
+                      <span id="uploadSpinner" class="spinner-border spinner-border-sm me-2 d-none"
+                        role="status"></span>
                       <span id="uploadBtnText"><i class="bi bi-magic me-1"></i> Run Risk Analysis</span>
                     </button>
                   </div>
@@ -132,7 +120,7 @@
     <!-- Contracts Library Section -->
     <div class="row justify-content-center">
       <div class="col-12 col-xl-11">
-        
+
         <!-- Controls Bar -->
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-3">
           <div>
@@ -193,4 +181,5 @@
   <script type="module" src="/assets/js/themeSwitcher.js?v=2.1"></script>
   <script type="module" src="/assets/js/pages/associateDashboard.js?v=2.1"></script>
 </body>
+
 </html>
